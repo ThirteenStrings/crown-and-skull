@@ -1,5 +1,13 @@
 # CHANGELOG
 
-## 1.2.0
+## 1.0.0
 
-- Add support for Foundry v10
+- Minimum viable product for system.
+
+Todo:
+
+- Create functional combat tracker for the phase system.
+- Refactor code.
+- Clean up HTML.
+- More localization.
+- Light mode compatibility.
