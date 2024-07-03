@@ -1,0 +1,32 @@
+{{! Rewards Tab }}
+<section class='tab tactics {{tab.cssClass}}' data-group='primary' data-tab='tactics' style="overflow-y: auto; max-height: 460px;">
+    <div class="grid grid-3col flexrow">
+        <div class="flexcol">
+            <h2>{{localize 'CRASK.Actor.base.FIELDS.tactic1.label'}}</h2>
+            {{#if editable}} 
+                <prose-mirror style="margin-top: -10px;" name="system.tactic1" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.tactic1}}" collaborate="true" toggled="true">
+                {{{enrichedTactic1}}}
+                </prose-mirror>
+            {{else}} {{{enrichedTactic1}}}
+            {{/if}}
+        </div>
+        <div class="flexcol">
+            <h2>{{localize 'CRASK.Actor.base.FIELDS.tactic25.label'}}</h2>
+            {{#if editable}} 
+                <prose-mirror style="margin-top: -10px;" name="system.tactic25" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.tactic25}}" collaborate="true" toggled="true">
+                {{{enrichedTactic25}}}
+                </prose-mirror>
+            {{else}} {{{enrichedTactic25}}}
+            {{/if}}
+        </div>
+        <div class="flexcol">
+            <h2>{{localize 'CRASK.Actor.base.FIELDS.tactic6.label'}}</h2>
+            {{#if editable}} 
+                <prose-mirror style="margin-top: -10px;" name="system.tactic6" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.tactic6}}" collaborate="true" toggled="true">
+                {{{enrichedTactic6}}}
+                </prose-mirror>
+            {{else}} {{{enrichedTactic6}}}
+            {{/if}}
+        </div>
+    </div>
+</section>

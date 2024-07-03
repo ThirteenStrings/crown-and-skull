@@ -1,0 +1,751 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+:root {
+  --crask-c-dark: #191813;
+  --crask-c-faint: #c9c7b8;
+  --crask-c-beige: #b5b3a4;
+  --crask-c-tan: #444444;
+  --crask-c-white: #ffffff;
+  --crask-c-black: #000000;
+  --crask-c-groove: #eeede0;
+}
+
+.theme-dark {
+  --crask-c-dark: #c9c7b8;
+  --crask-c-faint: #191813;
+  --crask-c-beige: #444444;
+  --crask-c-tan: #b5b3a4;
+  --crask-c-white: #000000;
+  --crask-c-black: #ffffff;
+  --crask-c-groove: #11121f;
+}
+
+@font-face {
+  font-family: 'GoudyMediaeval';
+  src: url('../assets/fonts/GoudyMediaevalRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Global styles */
+.window-app {
+  font-family: "Roboto", sans-serif;
+}
+
+.rollable:hover, .rollable:focus {
+  color: var(--crask-c-black);
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+
+.clickable:hover, .clickable:focus {
+  color: var(--crask-c-black);
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+
+.grid,
+.grid-2col {
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.grid-3col {
+  grid-column: span 3/span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4col {
+  grid-column: span 4/span 4;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-5col {
+  grid-column: span 5/span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-6col {
+  grid-column: span 6/span 6;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-7col {
+  grid-column: span 7/span 7;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-8col {
+  grid-column: span 8/span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-9col {
+  grid-column: span 9/span 9;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.grid-10col {
+  grid-column: span 10/span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.grid-11col {
+  grid-column: span 11/span 11;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.grid-12col {
+  grid-column: span 12/span 12;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.grid-start-2 {
+  grid-column-start: 2;
+}
+
+.grid-start-3 {
+  grid-column-start: 3;
+}
+
+.grid-start-4 {
+  grid-column-start: 4;
+}
+
+.grid-start-5 {
+  grid-column-start: 5;
+}
+
+.grid-start-6 {
+  grid-column-start: 6;
+}
+
+.grid-start-7 {
+  grid-column-start: 7;
+}
+
+.grid-start-8 {
+  grid-column-start: 8;
+}
+
+.grid-start-9 {
+  grid-column-start: 9;
+}
+
+.grid-start-10 {
+  grid-column-start: 10;
+}
+
+.grid-start-11 {
+  grid-column-start: 11;
+}
+
+.grid-start-12 {
+  grid-column-start: 12;
+}
+
+.grid-span-2 {
+  grid-column-end: span 2;
+}
+
+.grid-span-3 {
+  grid-column-end: span 3;
+}
+
+.grid-span-4 {
+  grid-column-end: span 4;
+}
+
+.grid-span-5 {
+  grid-column-end: span 5;
+}
+
+.grid-span-6 {
+  grid-column-end: span 6;
+}
+
+.grid-span-7 {
+  grid-column-end: span 7;
+}
+
+.grid-span-8 {
+  grid-column-end: span 8;
+}
+
+.grid-span-9 {
+  grid-column-end: span 9;
+}
+
+.grid-span-10 {
+  grid-column-end: span 10;
+}
+
+.grid-span-11 {
+  grid-column-end: span 11;
+}
+
+.grid-span-12 {
+  grid-column-end: span 12;
+}
+
+.flex-group-center,
+.flex-group-left,
+.flex-group-right {
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+}
+
+.flex-group-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.flex-group-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.flexshrink {
+  flex: 0;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.flexlarge {
+  flex: 2;
+}
+
+.align-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.align-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.align-center {
+  justify-content: center;
+  text-align: center;
+}
+
+/* Styles limited to crask sheets */
+.crask .item-form {
+  font-family: "Roboto", sans-serif;
+}
+.crask .sheet-header {
+  flex: 0 auto;
+  overflow: hidden;
+}
+.crask .sheet-header .profile-img {
+  height: 120px;
+}
+.crask .sheet-header .hero-coin {
+  height: 120px;
+  margin-right: 0px;
+}
+.crask .sheet-phase-selector {
+  background-image: url(../assets/PhaseTrackerOverlay.png);
+  background-size: 250px;
+  background-repeat: no-repeat;
+  background-position: -10px -10px;
+  width: 230px;
+  height: 45px;
+  position: relative;
+}
+.crask .phase-label {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 40px;
+}
+.crask .phase-checkbox {
+  appearance: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  cursor: pointer !important;
+  position: relative !important;
+  transition: background-color 0.3s ease !important;
+  background: transparent !important;
+  --checkbox-size: 30px !important;
+}
+.crask .phase-checkbox:checked::before {
+  content: "✘" !important;
+  color: red !important;
+  position: absolute !important;
+  left: 70% !important;
+  top: 150% !important;
+  transform: translate(-50%, -50%) !important;
+  font-size: 30px !important;
+  line-height: 16px !important;
+}
+.crask .phase-checkbox::before {
+  color: transparent !important;
+}
+.crask .defense-value {
+  background-image: url(../assets/Shield.svg);
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 50% 0px;
+  height: 50px;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+}
+.crask .sheet-header .header-fields {
+  min-width: 620px;
+  margin-top: -10px;
+  align-items: flex-start;
+}
+.crask .header-first-row {
+  flex-direction: row;
+}
+.crask .sheet-header h1.charname input {
+  font-size: 25px;
+  font-family: GoudyMediaeval;
+  text-align: center;
+  background-image: url(../assets/TitleUnderline.svg);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position-y: 40px;
+  height: 60px;
+}
+.crask .origin-select {
+  font-family: GoudyMediaeval;
+  margin: 0px;
+}
+.crask h2 {
+  font-size: 35px;
+  font-family: GoudyMediaeval;
+  text-align: center;
+  margin-top: 0px;
+}
+.crask .sheet-header .header-center-column {
+  margin-top: -10px;
+}
+.crask .sheet-body,
+.crask .sheet-body .tab,
+.crask .sheet-body .tab .editor {
+  height: 100%;
+}
+.crask .tab.biography {
+  flex: 1;
+}
+.crask .tab.biography .editor {
+  height: 100%;
+}
+.crask .tab.description {
+  flex: 1;
+}
+.crask .tab.description .editor {
+  height: 100%;
+}
+.crask .tox .tox-editor-container {
+  background: var(--crask-c-white);
+}
+.crask .tox .tox-edit-area {
+  padding: 0 8px;
+}
+.crask .hero-points-label {
+  margin-right: 10px;
+}
+.crask .resource-label {
+  font-family: 'GoudyMediaeval';
+  font-size: 20px;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+.crask .resource {
+  text-align: center;
+}
+.crask .resource-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.crask .input-group {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.crask .input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  text-align: center;
+  margin-right: 10px;
+  height: 40px;
+}
+.crask .input-wrapper input:last-of-type {
+  margin-right: 0;
+}
+.crask .ability {
+  margin-bottom: 2px;
+}
+.crask .ability-score,
+.crask .ability-mod {
+  flex: 0 0 44px;
+}
+.crask .item-header {
+  margin-top: -15px;
+}
+.crask .ul.tab-list {
+  padding: 0px;
+}
+.crask .items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: var(--crask-c-tan);
+}
+.crask .items-list .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.crask .items-list .item-name {
+  flex: 2;
+  margin: 0;
+  overflow: hidden;
+  font-size: 16px;
+  text-align: left;
+  align-items: flex-start;
+  display: flex;
+}
+.crask .items-list .item-name h3, .crask .items-list .item-name h4 {
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+.crask .items-list .item-controls {
+  display: flex;
+  flex: 0 0 100px;
+  justify-content: flex-end;
+}
+.crask .items-list .item-controls a {
+  font-size: 12px;
+  text-align: center;
+  margin: 0 6px;
+}
+.crask .items-list .item {
+  align-items: center;
+  padding: 0 2px;
+  border-bottom: 1px solid var(--crask-c-faint);
+}
+.crask .items-list .item:last-child {
+  border-bottom: none;
+}
+.crask .items-list .item .item-name {
+  color: var(--crask-c-dark);
+}
+.crask .items-list .item .item-name .item-image {
+  flex: 0 0 30px;
+  height: 35px;
+  background-size: 30px;
+  border: none;
+  margin-right: 5px;
+}
+.crask .items-list .item-prop {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+.crask .items-list .items-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove var(--crask-c-groove);
+  font-weight: bold;
+}
+.crask .items-list .items-header > * {
+  font-size: 12px;
+  text-align: center;
+}
+.crask .items-list .items-header .item-name {
+  padding-left: 5px;
+  text-align: left;
+}
+.crask .item-formula {
+  flex: 0 0 200px;
+  padding: 0 8px;
+}
+.crask .effects-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove var(--crask-c-groove);
+  font-weight: bold;
+}
+.crask .effects-header > * {
+  font-size: 14px;
+  text-align: center;
+}
+.crask .effects-header .effect-name {
+  font-weight: bold;
+  padding-left: 5px;
+  text-align: left;
+  display: flex;
+}
+.crask .effects-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: var(--crask-c-tan);
+}
+.crask .effects-list .effect-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.crask .effects-list .effect-name {
+  flex: 2;
+  margin: 0;
+  overflow: hidden;
+  font-size: 13px;
+  text-align: left;
+  align-items: center;
+  display: flex;
+}
+.crask .effects-list .effect-name h3, .crask .effects-list .effect-name h4 {
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+.crask .effects-list .effect-controls {
+  display: flex;
+  flex: 0 0 100px;
+  justify-content: flex-end;
+}
+.crask .effects-list .effect-controls a {
+  font-size: 12px;
+  text-align: center;
+  margin: 0 6px;
+}
+.crask .effects-list .effect {
+  align-items: center;
+  padding: 0 2px;
+  border-bottom: 1px solid var(--crask-c-faint);
+}
+.crask .effects-list .effect:last-child {
+  border-bottom: none;
+}
+.crask .effects-list .effect .effect-name {
+  color: var(--crask-c-dark);
+}
+.crask .effects-list .effect .effect-name .effect-image {
+  flex: 0 0 30px;
+  height: 30px;
+  background-size: 30px;
+  border: none;
+  margin-right: 5px;
+}
+.crask .effects-list .effect-prop {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+.crask .effects-list .effects-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove var(--crask-c-groove);
+  font-weight: bold;
+}
+.crask .effects-list .effects-header > * {
+  font-size: 12px;
+  text-align: center;
+}
+.crask .effects-list .effects-header .effect-name {
+  padding-left: 5px;
+  text-align: left;
+}
+.crask .effect-formula {
+  flex: 0 0 200px;
+  padding: 0 8px;
+}
+.crask .effects .item .effect-source,
+.crask .effects .item .effect-duration,
+.crask .effects .item .effect-controls {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+.crask .effects .item .effect-controls {
+  border: none;
+}
+.crask .equipment-left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: -15px;
+  margin-top: 5px;
+  max-width: 50px;
+}
+.crask .equipment-right-column {
+  height: 67px;
+}
+.crask .smallitem-left-column {
+  align-items: center;
+}
+.crask .smallitem-right-column {
+  flex-grow: 3;
+  height: 62px;
+  margin-left: 5px;
+}
+.crask .pouches .grid {
+  margin-top: -15px; 
+  margin-left: -10px; 
+  gap: 13px;
+}
+.crask .pouches .item-description {
+  height: 50px;
+}
+.crask .flaw .item-description {
+  height: 50px;
+}
+.crask .skills-left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: -15px;
+  margin-top: 5px;
+  max-width: 50px;
+  min-width: 50px;
+}
+.crask .skills-center-column {
+  flex-grow: 7;
+  margin-right: 1px;
+}
+.crask .skills-center-column .item-description {
+  height: 50px;
+}
+.crask .skills-right-column {
+  min-width: 45px;
+  text-align: center;
+}
+.crask .rewards-center-column {
+  flex-grow: 5;
+  margin-right: 1px;
+  margin-top: -5px;
+}
+.crask .rewards-center-column .item-description {
+  font-size: smaller;
+  font-style: italic;
+  height: 51px;
+  overflow: hidden;
+  margin-top: -7px;
+}
+.crask .rewards-right-column {
+  text-align: right;
+}
+.crask .skill-target {
+  font-size: 40px;
+}
+.crask .reward-value {
+  font-size: 50px;
+}
+.crask .item-details {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+.crask .item-details > div {
+  flex: 1;
+  text-align: left;
+}
+.crask .item-description {
+  font-size: smaller;
+  font-style: italic;
+  height: 37px;
+  overflow: hidden;
+  margin-top: -7px;
+}
+.crask .damaged {
+  color: red;
+}
+.crask .zero-uses {
+  color: darkorange;
+}
+.crask .item-toggles {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.crask .item-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  height: 15px;
+  width: 15px;
+}
+.crask .tab-list {
+  margin-left: -30px;
+}
+.crask .tab-list .item {
+  margin-bottom: 5px;
+  width: 300px;
+  height: 100px;
+}
+.crask .item.flaw {
+  background-image: url("../assets/FlawBorder.svg");
+  background-size: 300px 100px;
+  padding: 15px 20px;
+}
+.crask .item.equipment {
+  background-image: url("../assets/EquipmentBorder.svg");
+  background-size: 300px 100px;
+  padding: 20px;
+}
+.crask .item.smallitem {
+  background-image: url(../assets/SmallItemBorder.svg);
+    background-size: 150px 100px;
+    padding: 10px;
+    width: 150px;
+    height: 100px;
+}
+.crask .item.skill {
+  background-image: url("../assets/SkillBorder.svg");
+  background-size: 300px 100px;
+  padding: 17px 20px;
+}
+.crask .item.spell {
+  background-image: url("../assets/SpellBorder.svg");
+  background-size: 300px 100px;
+  padding: 20px;
+}
+.crask .item.reward {
+  background-image: url("../assets/RewardBorder.svg");
+  background-size: 300px 100px;
+  padding: 0px 20px;
+}
+.crask .fixoverflow {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */  
+}
+.crask .fixoverflow::-webkit-scrollbar {
+  display: none;
+}

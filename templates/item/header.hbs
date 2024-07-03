@@ -1,0 +1,272 @@
+<header class='sheet-header'>
+  <div class="grid grid-2col flexrow" style="align-items: flex-start; margin-top: -10px;">
+    <img
+      class='profile-img'
+      src='{{item.img}}'
+      data-edit='img'
+      data-action='editImage'
+      title='{{item.name}}'
+    />
+    <div class='item-header'>
+      <h1 class='charname'>
+        <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
+      </h1>
+
+      {{! Equipment Header }}
+      {{#if (eq item.type 'equipment')}}
+        <div class='grid grid-4col flexrow' style="margin: -10px 0px;">
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.dmg.label'}}</label>
+            <input
+              type='text'
+              name='system.dmg'
+              value='{{system.dmg}}'
+              data-dtype='String'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
+            <input
+              type='text'
+              name='system.def'
+              value='{{system.def}}'
+              data-dtype='Number'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.cost.label'}}</label>
+            <input
+              type='text'
+              name='system.cost'
+              value='{{system.cost}}'
+              data-dtype='Number'
+            />
+          </div>       
+          <div class="resource flexcol" style="min-width: 90px;">
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.uses.label'}}</label>
+            <div class='flexrow'>
+              <input
+                id="current-item-uses"
+                type='number'
+                name='system.uses.current'
+                value={{item.system.uses.current}}
+                data-dtype='Number'
+              />
+              <span style="margin: 0 5px;"> / </span>
+              <input
+                id="max-item-uses"
+                type='number'
+                name='system.uses.max'
+                value={{item.system.uses.max}}
+                data-dtype='Number'
+              />
+          </div>
+        </div>
+      {{/if}}
+
+      {{! Small Item Header }}
+      {{#if (eq item.type 'smallitem')}}
+        <div class='grid grid-4col flexrow' style="margin: -10px 0px;">
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.dmg.label'}}</label>
+            <input
+              type='text'
+              name='system.dmg'
+              value='{{system.dmg}}'
+              data-dtype='String'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
+            <input
+              type='text'
+              name='system.def'
+              value='{{system.def}}'
+              data-dtype='Number'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.cost.label'}}</label>
+            <input
+              type='text'
+              name='system.cost'
+              value='{{system.cost}}'
+              data-dtype='Number'
+            />
+          </div>       
+          <div class="resource flexcol"  style="min-width: 90px;">
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.uses.label'}}</label>
+            <div class='flexrow'>
+              <input
+                id="current-item-uses"
+                type='number'
+                name='system.uses.current'
+                value={{item.system.uses.current}}
+                data-dtype='Number'
+                style="width: 30px; text-align: center;"
+              />
+              <span style="margin: 0 5px;"> / </span>
+              <input
+                id="max-item-uses"
+                type='number'
+                name='system.uses.max'
+                value={{item.system.uses.max}}
+                data-dtype='Number'
+                style="width: 30px; text-align: center;"
+              />
+          </div>
+        </div>
+      {{/if}}
+
+      {{! Skill Header}}
+      {{#if (eq item.type 'skill')}}
+        <div class='grid grid-2col' style="margin: -10px 0px;">
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.target.label'}}</label>
+            <input
+              type='text'
+              name='system.cost'
+              value='{{system.cost}}'
+              data-dtype='Number'
+            />
+          </div>       
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.modifiers.label'}}</label>
+            <input
+              type='number'
+              name='system.modifier'
+              value='{{system.modifier}}'
+              data-dtype='Number'
+            />
+          </div>  
+        </div>
+      {{/if}}
+
+      {{! Spell Header }}
+      {{#if (eq item.type 'spell')}}
+        <div class='grid grid-3col' style="margin: -10px 0px;">
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.effect.label'}}</label>
+            <input
+              type='text'
+              name='system.dmg'
+              value='{{system.dmg}}'
+              data-dtype='String'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
+            <input
+              type='text'
+              name='system.def'
+              value='{{system.def}}'
+              data-dtype='Number'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.cost.label'}}</label>
+            <input
+              type='text'
+              name='system.cost'
+              value='{{system.cost}}'
+              data-dtype='Number'
+            />
+          </div>
+        </div>
+        <div class="grid grid-3col" style="margin: -10px 0px;"> 
+          <div class="resource flexcol" style="flex: 1; display: flex; flex-direction: column; align-items: flex-start;">
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.uses.label'}}</label>
+            <div class='flexrow'>
+              <input
+                id="current-item-uses"
+                type='number'
+                name='system.uses.current'
+                value={{item.system.uses.current}}
+                data-dtype='Number'
+              />
+              <span style="margin: 0 5px;"> / </span>
+              <input
+                id="max-item-uses"
+                type='number'
+                name='system.uses.max'
+                value={{item.system.uses.max}}
+                data-dtype='Number'
+              />
+            </div>
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.range.label'}}</label>
+            <select name='system.range' data-dtype='String'>
+              <option value="NA" {{#ifEquals system.range "NA"}}selected{{/ifEquals}}>NA</option>
+              <option value="Touch" {{#ifEquals system.range "Touch"}}selected{{/ifEquals}}>Touch</option>
+              <option value="Ranged" {{#ifEquals system.range "Ranged"}}selected{{/ifEquals}}>Ranged</option>
+              <option value="Area" {{#ifEquals system.range "Area"}}selected{{/ifEquals}}>Area</option>
+            </select>
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.duration.label'}}</label>
+            <input
+              type='text'
+              name='system.duration'
+              value='{{system.duration}}'
+              data-dtype='String'
+            />
+          </div> 
+        </div>
+        </div>
+      {{/if}}
+
+      {{! Reward Header}}
+      {{#if (eq item.type 'reward')}}
+        <div class='resource flexcol'>
+          <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}</label>
+          <input
+            type='text'
+            name='system.cost'
+            value='{{system.cost}}'
+            data-dtype='Number'
+          />
+        </div>
+      {{/if}}
+
+      {{! Large Item Header}}
+      {{#if (eq item.type 'largeitem')}}
+        <div class='resource flexcol'>
+          <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}</label>
+          <input
+            type='text'
+            name='system.cost'
+            value='{{system.cost}}'
+            data-dtype='Number'
+          />
+        </div>
+      {{/if}}
+
+      {{! Advancement Header}}
+      {{#if (eq item.type 'advancement')}}
+        <div class='resource flexcol'>
+          <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}</label>
+          <input
+            type='text'
+            name='system.cost'
+            value='{{system.cost}}'
+            data-dtype='Number'
+          />
+        </div>
+      {{/if}}
+
+      {{! Companion Header}}
+      {{#if (eq item.type 'companion')}}
+        <div class='resource flexcol'>
+          <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}</label>
+          <input
+            type='text'
+            name='system.cost'
+            value='{{system.cost}}'
+            data-dtype='Number'
+          />
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</header>

@@ -1,0 +1,174 @@
+{{! Magic Tab }}
+<section class='tab spells {{tab.cssClass}} fixoverflow' data-group='primary' data-tab='magic' style="overflow-y: auto; max-height: 460px;">
+  <div class="grid grid-2col" style="margin-top: -15px; gap: 35px">
+    {{#splitColumns spells}}
+    <div class="flexcol">
+      <ul class="tab-list">
+        {{#each leftColumn as |item id|}}
+        <li class='item spell flexrow {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+          <!-- Left column for item image and controls -->
+          <div class="equipment-left-column">
+            <div class='item-image'>
+              <a data-action='viewDoc'>
+                <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+              </a>
+            </div>
+            <div class='item-controls flexrow'>
+              {{#if @root.editable}}
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+              <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+            </div>
+          </div>
+          <!-- Right column for item details -->
+          <div class="equipment-right-column">
+            <div class='item-name'>{{item.name}}</div>
+            <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
+            <div class='item-details'>
+              {{#if item.system.uses.max}}
+                <div title="Uses Remaining, Click to Decrease, Ctr+Click to Increase" class="uses-remaining clickable" data-action="updateUses">
+                  <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
+                </div>
+              {{/if}}
+              {{#if item.system.dmg}}
+                <div title="Effect" class="rollable" data-roll-type="item" data-action="roll"><i class="fas fa-wand-sparkles"></i> {{item.system.dmg}}</div>
+              {{/if}}
+              {{#if item.system.duration}}
+                <div title="Duration" class="rollable" data-roll-type="item" data-action="roll"><i class="fas fa-hourglass-half"></i> {{item.system.duration}}</div>
+              {{/if}}
+              {{#if item.system.def}}
+                <div title="{{#if item.system.equipped}}Currently Active, Click to Deactivate{{else}}Not Currently Active, Click to Activate{{/if}}" class="clickable" data-action="equipToggle" style="max-width:30px;"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
+                  {{#if item.system.equipped}}{{item.system.def}}{{else}}-{{/if}}
+                </div>
+              {{/if}}
+              {{#ifEquals item.system.range "NA"}}{{else}}
+                <div title="Range: {{item.system.range}}" class="clickable" data-action="rangeToggle" style="max-width: 35px">
+                  <i class="fas 
+                    {{#ifEquals item.system.range "Touch"}}fa-hand-sparkles{{/ifEquals}}
+                    {{#ifEquals item.system.range "Ranged"}}fa-share{{/ifEquals}}
+                    {{#ifEquals item.system.range "Area"}}fa-burst{{/ifEquals}}">
+                  </i>
+                </div>
+              {{/ifEquals}}
+            </div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="flexcol">
+      <ul class="tab-list">
+        {{#each rightColumn as |item id|}}
+        <li class='item spell flexrow {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+          <!-- Left column for item image and controls -->
+          <div class="equipment-left-column">
+            <div class='item-image'>
+              <a data-action='viewDoc'>
+                <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+              </a>
+            </div>
+            <div class='item-controls flexrow'>
+              {{#if @root.editable}}
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+              <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+            </div>
+          </div>
+          <!-- Right column for item details -->
+          <div class="equipment-right-column">
+            <div class='item-name'>{{item.name}}</div>
+            <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/splitColumns}}
+  </div>
+
+  <h2 style="margin-top:10px;">{{localize 'CRASK.Actor.base.FIELDS.advancements.label'}}</h2>
+  <div class="grid grid-2col" style="margin-top: -15px; gap: 35px">
+    {{#splitColumns advancements}}
+    <div class="flexcol">
+      <ul class="tab-list">
+        {{#each leftColumn as |item id|}}
+        <li class='item spell flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+          <!-- Left column for item image and controls -->
+          <div class="equipment-left-column">
+            <div class='item-image'>
+              <a data-action='viewDoc'>
+                <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+              </a>
+            </div>
+            <div class='item-controls flexrow'>
+              {{#if @root.editable}}
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+              <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+            </div>
+          </div>
+          <!-- Right column for item details -->
+          <div class="equipment-right-column">
+            <div class='item-name'>{{item.name}}</div>
+            <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="flexcol">
+      <ul class="tab-list">
+        {{#each rightColumn as |item id|}}
+        <li class='item spell flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+          <!-- Left column for item image and controls -->
+          <div class="equipment-left-column">
+            <div class='item-image'>
+              <a data-action='viewDoc'>
+                <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+              </a>
+            </div>
+            <div class='item-controls flexrow'>
+              {{#if @root.editable}}
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+              <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+            </div>
+          </div>
+          <!-- Right column for item details -->
+          <div class="equipment-right-column">
+            <div class='item-name'>{{item.name}}</div>
+            <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
+            <div class='item-details'>
+              <div class="toggle-state clickable" title="{{#if item.system.damaged}}Damaged: Click to Repair{{else}}Intact: Click to Break{{/if}}" data-action="dmgToggle" style="margin-right: 5px;">
+                <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
+              </div>
+              {{#if item.system.def}}
+                <div title="Defense{{#if item.system.equipped}}: Currently Equipped, Click to Doff{{else}}: Not Currently Equipped, Click to Don{{/if}}" class="clickable" data-action="equipToggle"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
+                  {{#if item.system.equipped}}{{item.system.def}}{{else}}-{{/if}}
+                </div>
+              {{/if}}
+              {{#if item.system.uses.max}}
+                <div title="Uses Remaining, Click to Decrease, Ctr+Click to Increase" class="uses-remaining clickable" data-action="updateUses">
+                  <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
+                </div>
+              {{/if}}
+              {{#if item.system.dmg}}
+                <div title="Damage" class="rollable" data-roll-type="item" data-action="roll"><i class="fas fa-swords"></i> {{item.system.dmg}}</div>
+              {{/if}}
+            </div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/splitColumns}}
+  </div>
+</section>

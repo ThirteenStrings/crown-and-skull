@@ -1,0 +1,85 @@
+{{! Equipment Tab }}
+<section class='tab skills {{tab.cssClass}}' data-group='primary' data-tab='skills' style="overflow-y: auto; max-height: 460px;">
+  <div class="grid grid-2col" style="margin-top: -15px; gap: 35px">
+    {{#splitColumns skills}}
+    <div class="flexcol">
+      <ul class="tab-list">
+        {{#each leftColumn as |item id|}}
+        <li class='item skill flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+          <!-- Left column for item image and controls -->
+          <div class="skills-left-column">
+            <div class='item-image'>
+              <a data-action='viewDoc'>
+                <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+              </a>
+            </div>
+            <div class='item-controls flexrow'>
+              {{#if @root.editable}}
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+              <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+            </div>
+          </div>
+          <!-- Center column for item details -->
+          <div class="skills-center-column">
+            <div class='item-name'>{{item.name}}</div>
+            <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
+          </div>
+          <!-- Right column for target number and controls -->
+          <div class="skills-right-column">
+            <div class='skill-target'>{{item.system.cost}}</div>
+            <div class='item-controls flexrow' style="margin-top: -5px;">
+              <div class="toggle-state clickable" title="{{#if item.system.damaged}}Damaged: Click to Restore{{else}}Intact: Click to Damage{{/if}}" data-action="dmgToggle">
+                <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
+              </div>
+              <div title="External Modifiers">{{#ifGreaterThan item.system.modifier -1}}+{{item.system.modifier}}{{else}}{{item.system.modifier}}{{/ifGreaterThan}}</div>
+            </div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="flexcol">
+      <ul class="tab-list">
+        {{#each rightColumn as |item id|}}
+        <li class='item skill flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+          <!-- Left column for item image and controls -->
+          <div class="skills-left-column">
+            <div class='item-image'>
+              <a data-action='viewDoc'>
+                <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+              </a>
+            </div>
+            <div class='item-controls flexrow'>
+              {{#if @root.editable}}
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+              <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+            </div>
+          </div>
+          <!-- Center column for item details -->
+          <div class="skills-center-column">
+            <div class='item-name'>{{item.name}}</div>
+            <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
+          </div>
+          <!-- Right column for target number and controls -->
+          <div class="skills-right-column">
+            <div class='skill-target'>{{item.system.cost}}</div>
+            <div class='item-controls flexrow' style="margin-top: -5px;">
+              <div class="toggle-state clickable" title="{{#if item.system.damaged}}Damaged: Click to Restore{{else}}Intact: Click to Damage{{/if}}" data-action="dmgToggle">
+                <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
+              </div>
+              <div title="External Modifiers">{{#ifGreaterThan item.system.modifier -1}}+{{item.system.modifier}}{{else}}{{item.system.modifier}}{{/ifGreaterThan}}</div>
+            </div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/splitColumns}}
+  </div>
+</section>

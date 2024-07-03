@@ -1,0 +1,121 @@
+{
+  "CRASK": {
+    "SheetLabels": {
+      "Actor": "CROWN and SKULL Actor Sheet",
+      "Item": "CROWN and SKULL Item Sheet"
+    },
+    "Actor": {
+      "Tabs": {
+        "Biography": "Biography",
+        "Equipment": "Equipment",
+        "Skills": "Skills",
+        "Pouches": "Pouches",
+        "Magic": "Magic",
+        "Rewards": "Rewards",
+        "Tactics": "Tactics"
+      },
+      "base": {
+        "FIELDS": {
+          "name": {"label": "Character Name"},
+          "biography": {"label": "Biography"},
+          "health": {"label": "Health"},
+          "power": {"label": "Power"},
+          "heropoints": {"label": "Hero Points"},
+          "current": {"label": "Current"},
+          "remaining": {"label": "Remaining"},
+          "lost": {"label": "Lost"},
+          "phasetracker": {"label": "Combat Phase Selector"},
+          "defense": {"label": "Defense"},
+          "itempouch": {"label": "Item Pouch"},
+          "herbalistpouch": {"label": "Herbalist's Pouch"},
+          "charactersummary": {"label": "Character Summary"},
+          "enemydescription": {"label": "Enemy Description"},
+          "npcsummary": {"label": "NPC Summary"},
+          "companiondescription": {"label": "Companion Description"},
+          "flaws": {"label": "Flaws"},
+          "hp": {"label": "HP"},
+          "atk": {"label": "ATK"},
+          "def": {"label": "DEF"},
+          "tactics": {"label": "TACTICS"},
+          "tactic1": {"label": "Tactic 1"},
+          "tactic25": {"label": "Tactic 2-5"},
+          "tactic6": {"label": "Tactic 6"},
+          "location": {"label": "Location"},
+          "known": {"label": "Widely Known"},
+          "quest": {"label": "Quest"},
+          "attack": {"label": "Attack"},
+          "largeitems": {"label": "Large Items"},
+          "advancements": {"label": "Advancements"}
+        }
+      },
+      "Character": {
+        "FIELDS": {
+          "level": {"label": "Level"}
+        }
+      },
+      "NPC": {
+        "FIELDS": {
+          "cr": {"label": "CR"},
+          "xp": {"label": "XP"}
+        }
+      }
+    },
+    "Item": {
+      "Tabs": {
+        "Attributes": "Attributes",
+        "Description": "Description",
+        "Effects": "Effects"
+      },
+      "Gear": {
+        "FIELDS": {
+          "rollFormula": {"label": "Roll Formula"},
+          "numDice": {"label": "Number of Dice"},
+          "dieSize": {"label": "Die Size"},
+          "rollMod": {"label": "Roll Modifier"},
+          "quantity": {"label": "Quantity"},
+          "weight": {"label": "Weight"},
+          "dmg": {"label": "Damage"},
+          "def": {"label": "Defense"},
+          "cost": {"label": "Cost"},
+          "uses": {"label": "Uses"},
+          "target": {"label": "Skill Value"},
+          "modifiers": {"label": "External Modifiers"},
+          "effect": {"label": "Effect"},
+          "range": {"label": "Range"},
+          "targets": {"label": "Targets"},
+          "duration": {"label": "Duration"},
+          "value": {"label": "Value"}
+        }
+      }
+    },
+    "Effect": {
+      "Source": "Source",
+      "Toggle": "Toggle Effect",
+      "Temporary": "Temporary Effects",
+      "Passive": "Passive Effects",
+      "Inactive": "Inactive Effects"
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "character": "Character",
+      "npc": "NPC",
+      "enemy": "Enemy",
+      "companion": "Companion"
+    },
+    "Item": {
+      "equipment": "Equipment",
+      "smallitem": "Small Item",
+      "largeitem": "Large Item",
+      "skill": "Skill",
+      "spell": "Spell",
+      "reward": "Reward",
+      "advancement": "Advancement",
+      "alchemical": "Alchemical",
+      "flaw": "Flaw",
+      "flora": "Flora",
+      "companion": "Companion",
+      "ability": "Ability"
+    }
+  }
+}

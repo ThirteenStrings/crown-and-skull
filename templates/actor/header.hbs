@@ -1,0 +1,328 @@
+{{! Sheet Header }}
+<header class='sheet-header'>
+  {{#ifEquals actor.type 'character'}}
+    {{! Header First Row}}
+    <div class='header-fields grid grid-3col flexrow'>
+      {{! First Column Character Image}}
+      <img
+        class='profile-img'
+        src='{{actor.img}}'
+        data-edit='img'
+        title='{{actor.name}}'
+        height='120'
+        width='120'
+        data-action="editImage"
+      />
+      {{! Second Column Details}}
+      <div class="flexcol">
+        <h1 class='charname header-center-column'>
+          <input
+            name='name'
+            type='text'
+            value='{{actor.name}}'
+            placeholder='Name'
+          />
+        </h1>
+        <div class="grid grid-2col flexrow origin-select">
+          <div>
+            <select name='system.hometown' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important; background: black">
+              <option value="Gardenburrow" {{#ifEquals system.hometown "Gardenburrow"}}selected{{/ifEquals}}>Gardenburrow</option>
+              <option value="Rivergate" {{#ifEquals system.hometown "Rivergate"}}selected{{/ifEquals}}>Rivergate</option>
+              <option value="Slimshire" {{#ifEquals system.hometown "Slimshire"}}selected{{/ifEquals}}>Slimshire</option>
+            </select>
+          </div>
+          <div>
+            <select name='system.lineage' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important; background: black">
+              <option value="Human" {{#ifEquals system.lineage "Human"}}selected{{/ifEquals}}>Human</option>
+              <option value="Elf" {{#ifEquals system.lineage "Elf"}}selected{{/ifEquals}}>Elf</option>
+              <option value="Stout Folk" {{#ifEquals system.lineage "Stout Folk"}}selected{{/ifEquals}}>Stout Folk</option>
+              <option value="Proudfoot" {{#ifEquals system.lineage "Proudfoot"}}selected{{/ifEquals}}>Proudfoot</option>
+              <option value="Frog-kin" {{#ifEquals system.lineage "Frog-kin"}}selected{{/ifEquals}}>Frog-Kin</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      {{! Third Column Hero Coin}}
+      <img
+        class='hero-coin clickable'
+        src="systems/crown-and-skull/assets/HeroCoin{{#if actor.system.heroCoinAvailable}}Gold{{/if}}.svg"
+        title='Use Hero Coin'
+        height='120'
+        width='120'
+        data-action="useHeroCoin"
+      />
+    </div>
+
+    {{! Header Second Row}}
+    <div class="header-fields grid grid-3col flexrow" style="margin-top:-25px">
+
+      {{! Hero Points Section}}
+      <div class='resource-content' style="flex: 4">
+        <label for='system.heropoints.value' class='resource-label' style="width:298px">
+          {{localize 'CRASK.Actor.base.FIELDS.heropoints.label'}}
+        </label>
+        <div class="input-wrapper">
+          <div class="input-group">
+            <label class="hero-points-label">{{localize 'CRASK.Actor.base.FIELDS.current.label'}}: </label>
+            <input
+              id="current-hero-points"
+              title="Current Hero Points"
+              type='text'
+              name='system.heropoints.used'
+              value={{actor.system.heropoints.used}}
+              data-dtype='Number'
+              readonly
+            /> / 
+            <input
+              id="max-hero-points"
+              title="Max Hero Points"
+              type='text'
+              name='system.heropoints.max'
+              value={{actor.system.heropoints.max}}
+              data-dtype='Number'
+              readonly
+            />
+          </div>
+          <div class="input-group">
+            <label class="hero-points-label">{{localize 'CRASK.Actor.base.FIELDS.lost.label'}}: </label>
+            <div class="input-wrapper">
+              <input
+                id="lost-hero-points"
+                title="Hero Points Lost to Consumables and Destroyed Equipment"
+                type='text'
+                name='system.heropoints.lost'
+                value={{actor.system.heropoints.lost}}
+                data-dtype='Number'
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{! Phase Selector }}
+      <div class="phase-selector">
+        <label class="resource-label">{{localize 'CRASK.Actor.base.FIELDS.phasetracker.label'}}</label>
+        <div class="resource-content sheet-phase-selector flexrow">
+          <label class="phase-label" style="left: 6px;">
+            <input type="checkbox" name="one" class="phase-checkbox" data-action="checkboxChange" {{#if actor.system.phase.one}}checked{{/if}}>
+          </label>
+          <label class="phase-label" style="left: 53px;">
+            <input type="checkbox" name="two" class="phase-checkbox" data-action="checkboxChange" {{#if actor.system.phase.two}}checked{{/if}}>
+          </label>
+          <label class="phase-label" style="left: 97px;">
+            <input type="checkbox" name="three" class="phase-checkbox" data-action="checkboxChange" {{#if actor.system.phase.three}}checked{{/if}}>
+          </label>
+          <label class="phase-label" style="left: 144px;">
+            <input type="checkbox" name="four" class="phase-checkbox" data-action="checkboxChange" {{#if actor.system.phase.four}}checked{{/if}}>
+          </label>
+          <label class="phase-label" style="left: 190px;">
+            <input type="checkbox" name="five" class="phase-checkbox" data-action="checkboxChange" {{#if actor.system.phase.five}}checked{{/if}}>
+          </label>
+        </div>
+      </div>
+      
+      {{! Defense Value}}
+      <div class="resource flex-group-center">
+        <label class="resource-label">{{localize 'CRASK.Actor.base.FIELDS.defense.label'}}</label>
+        <div class="flexrow defense-value">
+          {{actor.system.defense.value}}
+        </div>
+      </div>
+    </div>
+  {{/ifEquals}}
+  {{#ifEquals actor.type 'enemy'}}
+    {{! Header First Row}}
+    <div class='grid grid-2col flexrow' style="margin-top: -15px;">
+      {{! First Column Character Image}}
+      <img
+        class='profile-img'
+        src='{{actor.img}}'
+        data-edit='img'
+        title='{{actor.name}}'
+        height='120'
+        width='120'
+        data-action="editImage"
+      />
+      {{! Second Column Information}}
+      <div class='item-header'>
+        <h1 class='charname'>
+          <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
+        </h1>
+        <input style="padding: 10px; background: black; text-align: center"
+          id="enemy-description"
+          type='text'
+          name='system.description'
+          value='{{system.description}}'
+          data-dtype='String'
+        />
+        <div class='grid grid-4col' style="margin: 0px 0px -10px 0px;">
+          <div class="resource flexcol" style="flex: 1; display: flex; flex-direction: column; align-items: flex-start;">
+            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.hp.label'}}</label>
+            <div class='flexrow'>
+              <input
+                id="current-hp"
+                type='number'
+                name='system.hp.current'
+                value={{system.hp.current}}
+                data-dtype='Number'
+              />
+              <span style="margin: 0 5px;"> / </span>
+              <input
+                id="max-hp"
+                type='number'
+                name='system.hp.max'
+                value={{system.hp.max}}
+                data-dtype='Number'
+              />
+            </div>
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.atk.label'}}</label>
+            <input
+              type='number'
+              name='system.atk'
+              value={{system.atk}}
+              data-dtype='Number'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.def.label'}}</label>
+            <input
+              type='number'
+              name='system.def'
+              value='{{system.def}}'
+              data-dtype='Number'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.tactics.label'}}</label>
+            <input
+              type='number'
+              name='system.tactics'
+              value='{{system.tactics}}'
+              data-dtype='Number'
+            />
+          </div>       
+        </div>
+        {{! Phase Selector }}
+        <div class="grid grid-3col flexrow" style="margin-top: 15px;">
+          <div></div>
+          <div class="phase-selector">
+            <label class="resource-label">{{localize 'CRASK.Actor.base.FIELDS.phasetracker.label'}}</label>
+            <div class="resource-content sheet-phase-selector flexrow">
+              <label class="phase-label" style="left: 6px;">
+                <input type="checkbox" name="phase1" class="phase-checkbox">
+              </label>
+              <label class="phase-label" style="left: 53px;">
+                <input type="checkbox" name="phase2" class="phase-checkbox">
+              </label>
+              <label class="phase-label" style="left: 97px;">
+                <input type="checkbox" name="phase3" class="phase-checkbox">
+              </label>
+              <label class="phase-label" style="left: 144px;">
+                <input type="checkbox" name="phase4" class="phase-checkbox">
+              </label>
+              <label class="phase-label" style="left: 190px;">
+                <input type="checkbox" name="phase5" class="phase-checkbox">
+              </label>
+            </div>
+          </div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  {{/ifEquals}}
+  {{#ifEquals actor.type 'companion'}}
+    {{! Header First Row}}
+    <div class='grid grid-2col flexrow' style="margin-top: -15px;">
+      {{! First Column Character Image}}
+      <img
+        class='profile-img'
+        src='{{actor.img}}'
+        data-edit='img'
+        title='{{actor.name}}'
+        height='120'
+        width='120'
+        data-action="editImage"
+      />
+      {{! Second Column Information}}
+      <div class='item-header'>
+        <h1 class='charname'>
+          <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
+        </h1>
+        <div class='grid grid-2col' style="margin: 0px 0px -10px 0px;">
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.attack.label'}}</label>
+            <input
+              type='text'
+              name='system.attack'
+              value={{system.attack}}
+              data-dtype='String'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.def.label'}}</label>
+            <input
+              type='number'
+              name='system.defense'
+              value='{{system.defense}}'
+              data-dtype='Number'
+            />
+          </div>    
+        </div>
+      </div>
+    </div>
+  {{/ifEquals}}
+  {{#ifEquals actor.type 'npc'}}
+    <div class="flexcol">
+      {{! Header First Row}}
+      <div class='grid grid-2col flexrow' style="margin-top: -15px;">
+        {{! First Column Character Image}}
+        <img
+          class='profile-img'
+          src='{{actor.img}}'
+          data-edit='img'
+          title='{{actor.name}}'
+          height='120'
+          width='120'
+          data-action="editImage"
+        />
+        {{! Second Column Information}}
+        <div class='item-header'>
+          <h1 class='charname'>
+            <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
+          </h1>
+          <label class="resource-label" for="npc-location">{{localize 'CRASK.Actor.base.FIELDS.location.label'}}</label>
+          <input style="padding: 10px; background: black; text-align: center"
+            id="npc-location"
+            type='text'
+            name='system.description'
+            value='{{system.description}}'
+            data-dtype='Text'
+          />
+        </div>
+      </div>
+      {{! How Known and Quests}}
+      <div class="grid grid-2col flexrow">
+        <div class="flexcol">
+          <h2>{{localize 'CRASK.Actor.base.FIELDS.known.label'}}</h2>
+          {{#if editable}} 
+            <prose-mirror style="margin-top: -10px;" name="system.known" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.known}}" collaborate="true" toggled="true">
+            {{{enrichedKnown}}}
+            </prose-mirror>
+          {{else}} {{{enrichedKnown}}}
+          {{/if}}
+        </div>
+        <div class="flexcol">
+          <h2>{{localize 'CRASK.Actor.base.FIELDS.quest.label'}}</h2>
+          {{#if editable}} 
+            <prose-mirror style="margin-top: -10px;" name="system.quest" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.quest}}" collaborate="true" toggled="true">
+            {{{enrichedQuest}}}
+            </prose-mirror>
+          {{else}} {{{enrichedQuest}}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  {{/ifEquals}}
+</header>

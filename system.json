@@ -1,0 +1,83 @@
+{
+  "id": "crown-and-skull",
+  "title": "CROWN and SKULL",
+  "description": "Unofficial CROWN and SKULL (Runehammer Games) Foundry VTT system. https://www.runehammer.online",
+  "authors": [
+    {
+      "name": "Jacob W. (System)",
+      "discord": "ThirteenStrings"
+    },
+    {
+      "name": "Asacolips (Boilerplate)",
+      "discord": "asacolips"
+    },
+    {
+      "name": "Lee Talman (Boilerplate)",
+      "discord": ".pizzaWizard"
+    },
+    {
+      "name": "Joseph M. (Boilerplate)",
+      "url": "https://joseph-meehan.carrd.co/",
+      "discord": "chaosos"
+    }
+  ],
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "html", "hbs", "json"],
+      "paths": ["css", "lang", "templates"]
+    }
+  },
+  "url": "Replace this with a link to your public repository",
+  "license": "LICENSE.txt",
+  "readme": "README.md",
+  "bugs": "Replace this with a link to file issues or tickets",
+  "changelog": "CHANGELOG.md",
+  "media": [
+    {
+      "type": "setup",
+      "url": "systems/crown-and-skull/assets/anvil-impact.png",
+      "thumbnail": "systems/crown-and-skull/assets/anvil-impact.png"
+    }
+  ],
+  "version": "3.0.0",
+  "compatibility": {
+    "minimum": 12,
+    "verified": "12.327"
+  },
+  "esmodules": ["module/crask.mjs"],
+  "styles": ["css/crask.css"],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "packs": [
+    {
+      "name": "pgItems",
+      "label": "Players' Guide Items",
+      "path": "/packs/pgItems.db",
+      "entity": "Item"
+    },
+    {
+      "name": "pgActors",
+      "label": "Players' Guide Actors",
+      "path": "/packs/pgActors.db",
+      "entity": "Actor"
+    }
+  ],
+  "packFolders": [],
+  "socket": false,
+  "manifest": "Replace this with a link to the /latest release system.json so people can receive updates after they've installed the system",
+  "download": "This must link to a .zip file of the current version",
+  "background": "systems/crown-and-skull/assets/anvil-impact.png",
+  "grid": {
+    "type": 1,
+    "distance": 5,
+    "units": "ft",
+    "diagonals": 0
+  },
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "power"
+}
