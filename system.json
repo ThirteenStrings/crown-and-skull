@@ -58,13 +58,15 @@
       "name": "pgItems",
       "label": "Players' Guide Items",
       "path": "/packs/pgItems.db",
-      "entity": "Item"
+      "entity": "Item",
+      "system": "crown-and-skull"
     },
     {
       "name": "pgActors",
       "label": "Players' Guide Actors",
       "path": "/packs/pgActors.db",
-      "entity": "Actor"
+      "entity": "Actor",
+      "system": "crown-and-skull"
     }
   ],
   "packFolders": [],
