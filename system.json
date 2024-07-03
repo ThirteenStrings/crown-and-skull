@@ -71,8 +71,8 @@
   ],
   "packFolders": [],
   "socket": false,
-  "manifest": "Replace this with a link to the /latest release system.json so people can receive updates after they've installed the system",
-  "download": "This must link to a .zip file of the current version",
+  "manifest": "https://raw.githubusercontent.com/ThirteenStrings/crown-and-skull/main/system.json",
+  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/latest.zip",
   "background": "systems/crown-and-skull/assets/anvil-impact.png",
   "grid": {
     "type": 1,
