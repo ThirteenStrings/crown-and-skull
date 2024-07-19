@@ -1,9 +1,9 @@
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
- * @extends {Combatant}
+ * @extends {Combat}
  */
 
-export class CraskCombatant extends Combatant {
+export class CraskCombat extends Combat {
     /** @override */
     prepareData() {
       // Prepare data for the actor. Calling the super version of this executes
@@ -13,15 +13,4 @@ export class CraskCombatant extends Combatant {
       super.prepareData();
     }
 
-    /**
-   * Override for default artwork
-   * @override
-   */
-    static _onUpdateDescendantDocuments(parent, collection, documents, data, options, userId) {
-
-        console.log(parent);  
-
-        super._onUpdateDescendantDocuments();
-        
-    };
 }

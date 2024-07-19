@@ -107,10 +107,10 @@ export class CraskActor extends Actor {
     static getDefaultArtwork(itemData) {
   
       const defaultImages = {
-        character: 'systems/crown-and-skull/assets/icons/Character.svg',
-        enemy: 'systems/crown-and-skull/assets/icons/Enemy.svg',
-        companion: 'systems/crown-and-skull/assets/icons/Companion.svg',
-        npc: 'systems/crown-and-skull/assets/icons/NPC.svg'
+        character: 'systems/crown-and-skull/assets/icons/Black/character.svg',
+        enemy: 'systems/crown-and-skull/assets/icons/Black/Enemy.svg',
+        companion: 'systems/crown-and-skull/assets/icons/Black/Companion.svg',
+        npc: 'systems/crown-and-skull/assets/icons/Black/NPC.svg'
       };
 
       // Check if the item type exists in defaultImages object
@@ -120,4 +120,5 @@ export class CraskActor extends Actor {
       
       return super.getDefaultArtwork(itemData);
     };
+
 }

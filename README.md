@@ -15,3 +15,7 @@ Crown and Skull is by Runehammer. https://www.runehammer.online
 This *unofficial* system was created with permission by the author of Crown and Skull.
 
 Artwork, rules, and materials presented in this system are mostly available in the free players' guide: https://www.runehammer.online/_files/ugd/62a178_f3bf455a874b4257aa515a09d0366b0c.pdf 
+
+## This System
+
+Created by ThirteenStrings (Discord). Feel free to message with any suggestions or requests. Collaborators with more coding experience are welcome.

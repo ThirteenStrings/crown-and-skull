@@ -10,13 +10,13 @@
 }
 
 .theme-dark {
-  --crask-c-dark: #c9c7b8;
-  --crask-c-faint: #191813;
-  --crask-c-beige: #444444;
-  --crask-c-tan: #b5b3a4;
-  --crask-c-white: #000000;
-  --crask-c-black: #ffffff;
-  --crask-c-groove: #11121f;
+  --crask-c-dark: #191813;
+  --crask-c-faint: #c9c7b8;
+  --crask-c-beige: #b5b3a4;
+  --crask-c-tan: #444444;
+  --crask-c-white: #ffffff;
+  --crask-c-black: #000000;
+  --crask-c-groove: #eeede0;
 }
 
 @font-face {
@@ -32,13 +32,13 @@
 }
 
 .rollable:hover, .rollable:focus {
-  color: var(--crask-c-black);
+  color: black;
   text-shadow: 0 0 10px red;
   cursor: pointer;
 }
 
 .clickable:hover, .clickable:focus {
-  color: var(--crask-c-black);
+  color: black;
   text-shadow: 0 0 10px red;
   cursor: pointer;
 }
@@ -240,9 +240,14 @@
 .crask .item-form {
   font-family: "Roboto", sans-serif;
 }
-.crask .sheet-header {
-  flex: 0 auto;
-  overflow: hidden;
+.crask {
+  background-image: url(../assets/Cardstock.jpeg);
+  background-size: contain;
+  font-size: 16px;
+  color: black;
+}
+.crask img {
+  border: 0px;
 }
 .crask .sheet-header .profile-img {
   height: 120px;
@@ -304,9 +309,6 @@
   margin-top: -10px;
   align-items: flex-start;
 }
-.crask .header-first-row {
-  flex-direction: row;
-}
 .crask .sheet-header h1.charname input {
   font-size: 25px;
   font-family: GoudyMediaeval;
@@ -316,6 +318,8 @@
   background-repeat: no-repeat;
   background-position-y: 40px;
   height: 60px;
+  border: none;
+  color: black;
 }
 .crask .origin-select {
   font-family: GoudyMediaeval;
@@ -325,7 +329,10 @@
   font-size: 35px;
   font-family: GoudyMediaeval;
   text-align: center;
-  margin-top: 0px;
+  margin: 0px;
+  text-shadow: 1px 1px 4px darkgrey;
+  color: black;
+  border-bottom: 1px solid var(--crask-c-black)
 }
 .crask .sheet-header .header-center-column {
   margin-top: -10px;
@@ -346,12 +353,6 @@
 }
 .crask .tab.description .editor {
   height: 100%;
-}
-.crask .tox .tox-editor-container {
-  background: var(--crask-c-white);
-}
-.crask .tox .tox-edit-area {
-  padding: 0 8px;
 }
 .crask .hero-points-label {
   margin-right: 10px;
@@ -374,7 +375,7 @@
 .crask .input-group {
   display: flex;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 .crask .input-wrapper {
   display: flex;
@@ -388,100 +389,8 @@
 .crask .input-wrapper input:last-of-type {
   margin-right: 0;
 }
-.crask .ability {
-  margin-bottom: 2px;
-}
-.crask .ability-score,
-.crask .ability-mod {
-  flex: 0 0 44px;
-}
 .crask .item-header {
   margin-top: -15px;
-}
-.crask .ul.tab-list {
-  padding: 0px;
-}
-.crask .items-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  color: var(--crask-c-tan);
-}
-.crask .items-list .item-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.crask .items-list .item-name {
-  flex: 2;
-  margin: 0;
-  overflow: hidden;
-  font-size: 16px;
-  text-align: left;
-  align-items: flex-start;
-  display: flex;
-}
-.crask .items-list .item-name h3, .crask .items-list .item-name h4 {
-  margin: 0;
-  white-space: nowrap;
-  overflow-x: hidden;
-}
-.crask .items-list .item-controls {
-  display: flex;
-  flex: 0 0 100px;
-  justify-content: flex-end;
-}
-.crask .items-list .item-controls a {
-  font-size: 12px;
-  text-align: center;
-  margin: 0 6px;
-}
-.crask .items-list .item {
-  align-items: center;
-  padding: 0 2px;
-  border-bottom: 1px solid var(--crask-c-faint);
-}
-.crask .items-list .item:last-child {
-  border-bottom: none;
-}
-.crask .items-list .item .item-name {
-  color: var(--crask-c-dark);
-}
-.crask .items-list .item .item-name .item-image {
-  flex: 0 0 30px;
-  height: 35px;
-  background-size: 30px;
-  border: none;
-  margin-right: 5px;
-}
-.crask .items-list .item-prop {
-  text-align: center;
-  border-left: 1px solid #c9c7b8;
-  border-right: 1px solid #c9c7b8;
-  font-size: 12px;
-}
-.crask .items-list .items-header {
-  height: 28px;
-  margin: 2px 0;
-  padding: 0;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.05);
-  border: 2px groove var(--crask-c-groove);
-  font-weight: bold;
-}
-.crask .items-list .items-header > * {
-  font-size: 12px;
-  text-align: center;
-}
-.crask .items-list .items-header .item-name {
-  padding-left: 5px;
-  text-align: left;
-}
-.crask .item-formula {
-  flex: 0 0 200px;
-  padding: 0 8px;
 }
 .crask .effects-header {
   height: 28px;
@@ -508,7 +417,7 @@
   padding: 0;
   overflow-y: auto;
   scrollbar-width: thin;
-  color: var(--crask-c-tan);
+  color: black;
 }
 .crask .effects-list .effect-list {
   list-style: none;
@@ -548,7 +457,7 @@
   border-bottom: none;
 }
 .crask .effects-list .effect .effect-name {
-  color: var(--crask-c-dark);
+  color: black;
 }
 .crask .effects-list .effect .effect-name .effect-image {
   flex: 0 0 30px;
@@ -595,71 +504,6 @@
 .crask .effects .item .effect-controls {
   border: none;
 }
-.crask .equipment-left-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: -15px;
-  margin-top: 5px;
-  max-width: 50px;
-}
-.crask .equipment-right-column {
-  height: 67px;
-}
-.crask .smallitem-left-column {
-  align-items: center;
-}
-.crask .smallitem-right-column {
-  flex-grow: 3;
-  height: 62px;
-  margin-left: 5px;
-}
-.crask .pouches .grid {
-  margin-top: -15px; 
-  margin-left: -10px; 
-  gap: 13px;
-}
-.crask .pouches .item-description {
-  height: 50px;
-}
-.crask .flaw .item-description {
-  height: 50px;
-}
-.crask .skills-left-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: -15px;
-  margin-top: 5px;
-  max-width: 50px;
-  min-width: 50px;
-}
-.crask .skills-center-column {
-  flex-grow: 7;
-  margin-right: 1px;
-}
-.crask .skills-center-column .item-description {
-  height: 50px;
-}
-.crask .skills-right-column {
-  min-width: 45px;
-  text-align: center;
-}
-.crask .rewards-center-column {
-  flex-grow: 5;
-  margin-right: 1px;
-  margin-top: -5px;
-}
-.crask .rewards-center-column .item-description {
-  font-size: smaller;
-  font-style: italic;
-  height: 51px;
-  overflow: hidden;
-  margin-top: -7px;
-}
-.crask .rewards-right-column {
-  text-align: right;
-}
 .crask .skill-target {
   font-size: 40px;
 }
@@ -672,73 +516,71 @@
   flex-wrap: wrap;
   margin-top: 2px;
 }
-.crask .item-details > div {
-  flex: 1;
-  text-align: left;
-}
-.crask .item-description {
-  font-size: smaller;
-  font-style: italic;
-  height: 37px;
-  overflow: hidden;
-  margin-top: -7px;
+.crask .zero-uses {
+  color: darkorange;
 }
 .crask .damaged {
   color: red;
 }
-.crask .zero-uses {
-  color: darkorange;
-}
-.crask .item-toggles {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
-}
-.crask .item-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1em;
-  height: 15px;
-  width: 15px;
-}
 .crask .tab-list {
-  margin-left: -30px;
+  padding: 0px;
 }
 .crask .tab-list .item {
-  margin-bottom: 5px;
   width: 300px;
   height: 100px;
+  padding: 15px 10px;
+}
+.crask .tab-list .item-name {
+  margin-bottom: 2px;
+  font-weight: bold;
+}
+.crask .tab-list .item-image {
+  max-width: 40px;
+}
+.crask .tab-list .item-description {
+  font-size: smaller;
+  font-style: italic;
+  height: 40px;
+  overflow: hidden;
+  margin-top: -11px;
+}
+.crask .tab-list .line3 {
+  height: 57px;
+}
+.crask .tab-list .small-control {
+  max-width: 15px;
+  margin-right: 5px;
+}
+.crask .tab-list .left-simple {
+  max-width: 45px;
+  align-items: center;
+  margin-right: 5px;
 }
 .crask .item.flaw {
-  background-image: url("../assets/FlawBorder.svg");
+  background-image: url("../assets/borders/Black/FlawBorder.svg");
   background-size: 300px 100px;
-  padding: 15px 20px;
 }
 .crask .item.equipment {
-  background-image: url("../assets/EquipmentBorder.svg");
+  background-image: url("../assets/borders/Black/EquipmentBorder.svg");
   background-size: 300px 100px;
-  padding: 20px;
 }
 .crask .item.smallitem {
-  background-image: url(../assets/SmallItemBorder.svg);
-    background-size: 150px 100px;
-    padding: 10px;
-    width: 150px;
-    height: 100px;
+  background-image: url(../assets/borders/Black/SmallItemBorder.svg);
+  background-size: 150px 100px;
+  padding: 10px;
+  width: 150px;
+  height: 100px;
 }
 .crask .item.skill {
-  background-image: url("../assets/SkillBorder.svg");
+  background-image: url("../assets/borders/Black/SkillBorder.svg");
   background-size: 300px 100px;
-  padding: 17px 20px;
 }
 .crask .item.spell {
-  background-image: url("../assets/SpellBorder.svg");
+  background-image: url("../assets/borders/Black/SpellBorder.svg");
   background-size: 300px 100px;
-  padding: 20px;
 }
 .crask .item.reward {
-  background-image: url("../assets/RewardBorder.svg");
+  background-image: url("../assets/borders/Black/RewardBorder.svg");
   background-size: 300px 100px;
   padding: 0px 20px;
 }

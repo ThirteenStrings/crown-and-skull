@@ -45,7 +45,9 @@
           "quest": {"label": "Quest"},
           "attack": {"label": "Attack"},
           "largeitems": {"label": "Large Items"},
-          "advancements": {"label": "Advancements"}
+          "advancements": {"label": "Advancements"},
+          "coreability": {"label": "Core Ability"},
+          "companion": {"label": "Companion"}
         }
       },
       "Character": {

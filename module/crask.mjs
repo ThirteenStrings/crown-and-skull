@@ -4,6 +4,8 @@ import { CraskItem } from './documents/item.mjs';
 // Import sheet classes.
 import { CraskActorSheet } from './sheets/actor-sheet.mjs';
 import { CraskItemSheet } from './sheets/item-sheet.mjs';
+// Import combat classes.
+import { CraskCombat } from './documents/combat.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -103,22 +105,19 @@ Hooks.once('ready', function () {
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */
 
-/**
- * Create a Macro from an Item drop.
- * Get an existing item macro if one exists, otherwise create a new one.
- * @param {Object} data     The dropped data
- * @param {number} slot     The hotbar slot to use
- * @returns {Promise}
- */
-async function createDocMacro(data, slot) {
+function createDocMacro(data, slot) {
   // First, determine if this is a valid owned item.
   if (data.type !== 'Item') return;
   if (!data.uuid.includes('Actor.') && !data.uuid.includes('Token.')) {
-    return ui.notifications.warn(
+    ui.notifications.warn(
       'You can only create macro buttons for owned Items'
     );
   }
-  // If it is, retrieve it based on the uuid.
+  _createDocMacro(data, slot);
+  return false;
+}
+
+async function _createDocMacro(data, slot) {
   const item = await Item.fromDropData(data);
 
   // Create the macro command using the uuid.
@@ -126,6 +125,7 @@ async function createDocMacro(data, slot) {
   let macro = game.macros.find(
     (m) => m.name === item.name && m.command === command
   );
+  console.log(macro);
   if (!macro) {
     macro = await Macro.create({
       name: item.name,
@@ -133,10 +133,11 @@ async function createDocMacro(data, slot) {
       img: item.img,
       command: command,
       flags: { 'crask.itemMacro': true },
+      thumbnail: item.img,
     });
+    
   }
   game.user.assignHotbarMacro(macro, slot);
-  return false;
 }
 
 /**

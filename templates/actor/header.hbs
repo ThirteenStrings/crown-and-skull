@@ -25,14 +25,14 @@
         </h1>
         <div class="grid grid-2col flexrow origin-select">
           <div>
-            <select name='system.hometown' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important; background: black">
+            <select name='system.hometown' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important">
               <option value="Gardenburrow" {{#ifEquals system.hometown "Gardenburrow"}}selected{{/ifEquals}}>Gardenburrow</option>
               <option value="Rivergate" {{#ifEquals system.hometown "Rivergate"}}selected{{/ifEquals}}>Rivergate</option>
               <option value="Slimshire" {{#ifEquals system.hometown "Slimshire"}}selected{{/ifEquals}}>Slimshire</option>
             </select>
           </div>
           <div>
-            <select name='system.lineage' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important; background: black">
+            <select name='system.lineage' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important">
               <option value="Human" {{#ifEquals system.lineage "Human"}}selected{{/ifEquals}}>Human</option>
               <option value="Elf" {{#ifEquals system.lineage "Elf"}}selected{{/ifEquals}}>Elf</option>
               <option value="Stout Folk" {{#ifEquals system.lineage "Stout Folk"}}selected{{/ifEquals}}>Stout Folk</option>
@@ -54,11 +54,11 @@
     </div>
 
     {{! Header Second Row}}
-    <div class="header-fields grid grid-3col flexrow" style="margin-top:-25px">
+    <div class="header-fields grid grid-3col flexrow">
 
       {{! Hero Points Section}}
-      <div class='resource-content' style="flex: 4">
-        <label for='system.heropoints.value' class='resource-label' style="width:298px">
+      <div class='resource-content'>
+        <label for='system.heropoints.value' class='resource-label' style="width:265px">
           {{localize 'CRASK.Actor.base.FIELDS.heropoints.label'}}
         </label>
         <div class="input-wrapper">
@@ -72,7 +72,7 @@
               value={{actor.system.heropoints.used}}
               data-dtype='Number'
               readonly
-            /> / 
+            />/
             <input
               id="max-hero-points"
               title="Max Hero Points"

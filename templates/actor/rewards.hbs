@@ -1,73 +1,34 @@
 {{! Rewards Tab }}
-<section class='tab rewards {{tab.cssClass}}' data-group='primary' data-tab='rewards' style="overflow-y: auto; max-height: 460px;">
-  <div class="grid grid-2col" style="margin-top: -15px; gap: 35px">
-    {{#splitColumns rewards}}
-    <div class="flexcol">
-      <ul class="tab-list">
-        {{#each leftColumn as |item id|}}
-          <li class='item reward flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
-            <!-- Left column for item image and controls -->
-            <div class="skills-left-column">
-              <div class='item-image'>
-                <a data-action='viewDoc'>
-                  <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
-                </a>
-              </div>
-            </div>
-            <!-- Center column for item details -->
-            <div class="rewards-center-column">
-              <div class='item-name'>{{item.name}}</div>
-              <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
-            </div>
-            <!-- Right column for target number and controls -->
-            <div class="rewards-right-column flexrow">
-              <div class='reward-value'>{{item.system.cost}}</div>
-              
-            </div>
-            <div class='item-controls' style="margin-right: -7px; margin-left: 5px; max-width: 10px">
-                {{#if @root.editable}}
-                  <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Reward'}}' data-action='deleteDoc'>
-                    <i class='fas fa-trash'></i>
-                  </a>
-                {{/if}}
-            </div>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-    <div class="flexcol">
-      <ul class="tab-list">
-        {{#each rightColumn as |item id|}}
-          <li class='item reward flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
-            <!-- Left column for item image and controls -->
-            <div class="skills-left-column">
-              <div class='item-image'>
-                <a data-action='viewDoc'>
-                  <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
-                </a>
-              </div>
-            </div>
-            <!-- Center column for item details -->
-            <div class="rewards-center-column">
-              <div class='item-name'>{{item.name}}</div>
-              <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
-            </div>
-            <!-- Right column for target number and controls -->
-            <div class="rewards-right-column flexrow">
-              <div class='reward-value'>{{item.system.cost}}</div>
-              
-            </div>
-            <div class='item-controls' style="margin-right: -7px; margin-left: 5px; max-width: 10px">
-                {{#if @root.editable}}
-                  <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Reward'}}' data-action='deleteDoc'>
-                    <i class='fas fa-trash'></i>
-                  </a>
-                {{/if}}
-            </div>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-    {{/splitColumns}}
-  </div>
+<section class='tab rewards fixoverflow {{tab.cssClass}}' data-group='primary' data-tab='rewards' style="overflow-y: auto; max-height: 460px;">
+  <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
+    {{#each rewards as |item id|}}
+      <li class='item reward flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+        <!-- Left column for item image and controls -->
+        <div class="left-simple" style="margin-left: -8px; margin-top: 16px;">
+          <div class='item-image'>
+            <a data-action='viewDoc'>
+              <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+            </a>
+          </div>
+        </div>
+        <!-- Center column for item details -->
+        <div class="flexcol" style="flex-grow: 5">
+          <div class='item-name'>{{item.name}}</div>
+          <div class='item-description line3'>{{{item.system.enrichedDescription}}}</div>
+        </div>
+        <!-- Right column for target number and controls -->
+        <div class="flexrow" style="text-align: right">
+          <div class='reward-value'>{{item.system.cost}}</div>
+          
+        </div>
+        <div class='item-controls' style="margin-right: -7px; margin-left: 5px; max-width: 10px">
+            {{#if @root.editable}}
+              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Reward'}}' data-action='deleteDoc'>
+                <i class='fas fa-trash'></i>
+              </a>
+            {{/if}}
+        </div>
+      </li>
+    {{/each}}
+  </ul>
 </section>

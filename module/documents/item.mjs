@@ -75,17 +75,17 @@ export class CraskItem extends Item {
     static getDefaultArtwork(itemData) {
   
       const defaultImages = {
-        equipment: 'systems/crown-and-skull/assets/icons/Equipment.svg',
-        smallitem: 'systems/crown-and-skull/assets/icons/SmallItem.svg',
-        largeitem: 'systems/crown-and-skull/assets/icons/Equipment.svg',
-        skill: 'systems/crown-and-skull/assets/icons/d20.svg',
-        spell: 'systems/crown-and-skull/assets/icons/Spellbook.svg',
-        advancement: 'systems/crown-and-skull/assets/icons/Spellbook.svg',
-        reward: 'systems/crown-and-skull/assets/icons/Ring.svg',
-        flora: 'systems/crown-and-skull/assets/icons/Herb.svg',
-        flaw: 'systems/crown-and-skull/assets/icons/Skull.svg',
-        companion: 'systems/crown-and-skull/assets/icons/Companion.svg',
-        ability: 'systems/crown-and-skull/assets/icons/Ability.svg'
+        equipment: 'systems/crown-and-skull/assets/icons/Black/Equipment.svg',
+        smallitem: 'systems/crown-and-skull/assets/icons/Black/SmallItem.svg',
+        largeitem: 'systems/crown-and-skull/assets/icons/Black/Equipment.svg',
+        skill: 'systems/crown-and-skull/assets/icons/Black/d20.svg',
+        spell: 'systems/crown-and-skull/assets/icons/Black/Spellbook.svg',
+        advancement: 'systems/crown-and-skull/assets/icons/Black/Spellbook.svg',
+        reward: 'systems/crown-and-skull/assets/icons/Black/Ring.svg',
+        flora: 'systems/crown-and-skull/assets/icons/Black/Herb.svg',
+        flaw: 'systems/crown-and-skull/assets/icons/Black/Skull.svg',
+        companion: 'systems/crown-and-skull/assets/icons/Black/Companion.svg',
+        ability: 'systems/crown-and-skull/assets/icons/Black/Ability.svg'
       };
 
       // Check if the item type exists in defaultImages object

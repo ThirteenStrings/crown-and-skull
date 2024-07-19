@@ -439,6 +439,9 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     const updateData = {};
     updateData[`system.phase.${phaseNumber}`] = phaseState;
     await this.actor.update(updateData);
+
+    // Match initiative
+    this.actor.rollInitiative({createCombatants: true, initiativeOptions: {formula: '13'}})
   }
 
   /**
