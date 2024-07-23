@@ -1,5 +1,5 @@
 {{! Magic Tab }}
-<section class='tab spells {{tab.cssClass}} fixoverflow' data-group='primary' data-tab='magic' style="overflow-y: auto; max-height: 460px;">
+<section class='tab spells {{tab.cssClass}} fixoverflow' data-group='primary' data-tab='magic' style="overflow-y: auto; max-height: 540px;">
 
   {{! Character Spells }}
   <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
@@ -56,32 +56,35 @@
   </ul>
 
   {{! Advancements Section}}
-  <h2 style="margin-top:10px;">{{localize 'CRASK.Actor.base.FIELDS.advancements.label'}}</h2>
-  <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
-    {{#each advancements as |item id|}}
-    <li class='item spell flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
-      <!-- Left column for item image and controls -->
-      <div class="flexcol left-simple">
-        <div class='item-image'>
-          <a data-action='viewDoc'>
-            <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
-          </a>
-        </div>
-        <div class='item-controls flexrow'>
-          {{#if @root.editable}}
-            <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
-              <i class='fas fa-trash'></i>
+  {{#ifGreaterThan advancements.length 0}}
+    <h2 style="margin-top:10px;">{{localize 'CRASK.Actor.base.FIELDS.advancements.label'}}</h2>
+    <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
+      {{#each advancements as |item id|}}
+      <li class='item spell flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+        <!-- Left column for item image and controls -->
+        <div class="flexcol left-simple">
+          <div class='item-image'>
+            <a data-action='viewDoc'>
+              <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
             </a>
-          {{/if}}
-          <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+          </div>
+          <div class='item-controls flexrow'>
+            {{#if @root.editable}}
+              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                <i class='fas fa-trash'></i>
+              </a>
+            {{/if}}
+            <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+          </div>
         </div>
-      </div>
-      <!-- Right column for item details -->
-      <div class="flaw-right-column">
-        <div class='item-name'>{{item.name}}</div>
-        <div class='item-description line3'>{{{item.system.enrichedDescription}}}</div>
-      </div>
-    </li>
-    {{/each}}
-  </ul>
+        <!-- Right column for item details -->
+        <div class="flaw-right-column">
+          <div class='item-name'>{{item.name}}</div>
+          <div class='item-description line3'>{{{item.system.enrichedDescription}}}</div>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  {{/ifGreaterThan}}
+
 </section>

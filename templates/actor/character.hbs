@@ -1,0 +1,189 @@
+{{! Character Tab }}
+<section class='tab character fixoverflow {{tab.cssClass}}' data-group='primary' data-tab='character' style="overflow-y: auto; max-height: 540px;">
+
+  {{! Character Information First Row}}
+  <div class='grid grid-2col flexrow' style="padding: 0px;">
+    {{! First Column Character Image}}
+    <img
+      class='profile-img'
+      src='{{actor.img}}'
+      data-edit='img'
+      title='{{actor.name}}'
+      height='120'
+      width='120'
+      data-action="editImage"
+    />
+    {{! Second Column Details}}
+    <div class="flexcol">
+      <h1 class='charname header-center-column'>
+        <input
+          name='name'
+          type='text'
+          value='{{actor.name}}'
+          placeholder='Name'
+        />
+      </h1>
+      <div class="grid grid-2col flexrow origin-select">
+        <div>
+          <select name='system.hometown' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important">
+            <option value="Gardenburrow" {{#ifEquals system.hometown "Gardenburrow"}}selected{{/ifEquals}}>Gardenburrow</option>
+            <option value="Rivergate" {{#ifEquals system.hometown "Rivergate"}}selected{{/ifEquals}}>Rivergate</option>
+            <option value="Slimshire" {{#ifEquals system.hometown "Slimshire"}}selected{{/ifEquals}}>Slimshire</option>
+          </select>
+        </div>
+        <div>
+          <select name='system.lineage' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important">
+            <option value="Human" {{#ifEquals system.lineage "Human"}}selected{{/ifEquals}}>Human</option>
+            <option value="Elf" {{#ifEquals system.lineage "Elf"}}selected{{/ifEquals}}>Elf</option>
+            <option value="Stout Folk" {{#ifEquals system.lineage "Stout Folk"}}selected{{/ifEquals}}>Stout Folk</option>
+            <option value="Proudfoot" {{#ifEquals system.lineage "Proudfoot"}}selected{{/ifEquals}}>Proudfoot</option>
+            <option value="Frog-kin" {{#ifEquals system.lineage "Frog-kin"}}selected{{/ifEquals}}>Frog-Kin</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{! Core Ability Section}}
+  {{#ifGreaterThan abilities.length 0}}
+    <div class="flexcol">
+      <h2>{{localize 'CRASK.Actor.base.FIELDS.coreability.label'}}</h2>
+      <ul class="tab-list" style="margin-top: 5px;">
+        {{#each abilities as |item id|}}
+          <li class='item flaw flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+            <!-- Ability image and controls -->
+            <div class="flexcol left-simple">
+              <div class='item-image'>
+                  <a data-action='viewDoc'>
+                    <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+                  </a>
+              </div>
+              <div class='item-controls flexrow'>
+                  {{#if @root.editable}}
+                  <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Flora'}}' data-action='deleteDoc'>
+                      <i class='fas fa-trash'></i>
+                  </a>
+                  {{/if}}
+              </div>
+            </div>
+            <!-- Ability details -->
+            <div class="flexcol" style="height: 75px;">
+              <div class='item-name'>{{item.name}}</div>
+              <div class='item-description line3'>{{{item.system.enrichedDescription}}}</div>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/ifGreaterThan}}
+
+  {{! Companion Section }}
+  {{#ifGreaterThan companions.length 0}}
+    <div class="flexcol">
+      <h2>{{localize 'CRASK.Actor.base.FIELDS.companion.label'}}</h2>
+      <ul class="tab-list" style="margin-top: 5px;">
+        {{#each companions as |item id|}}
+            <li class='item flaw flexrow' 
+                data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+              <!-- Item image and controls -->
+              <div class="left-simple flexcol">
+                <div class='item-image'>
+                    <a data-action='viewDoc'>
+                    <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+                    </a>
+                </div>
+                <div class='item-controls flexrow'>
+                    {{#if @root.editable}}
+                    <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Flora'}}' data-action='deleteDoc'>
+                        <i class='fas fa-trash'></i>
+                    </a>
+                    {{/if}}
+                </div>
+              </div>
+              <!-- Item details -->
+              <div class="flexcol">
+                <div class='item-name'>{{item.name}}</div>
+                <div class='item-description line3'>{{{item.system.enrichedDescription}}}</div>
+              </div>
+            </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/ifGreaterThan}}
+  
+  {{! Flaws Section }}
+  {{#ifGreaterThan flaws.length 0}}
+    <h2>{{localize 'CRASK.Actor.base.FIELDS.flaws.label'}}</h2>
+    <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
+      {{#each flaws as |item id|}}
+      <li class='item flaw flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+        <!-- Left column for item image and controls -->
+        <div class="flexcol left-simple">
+          <div class='item-image'>
+            <a data-action='viewDoc'>
+              <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+            </a>
+          </div>
+          <div class='item-controls flexrow'>
+            {{#if @root.editable}}
+              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                <i class='fas fa-trash'></i>
+              </a>
+            {{/if}}
+          </div>
+        </div>
+        <!-- Right column for item details -->
+        <div class="flaw-right-column">
+          <div class='item-name'>{{item.name}}</div>
+          <div class='item-description line3'>{{{item.system.enrichedDescription}}}</div>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  {{/ifGreaterThan}}
+
+  {{! Rewards Section }}
+  {{#ifGreaterThan rewards.length 0}}
+    <h2>{{localize 'CRASK.Actor.base.FIELDS.rewards.label'}}</h2>
+    <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
+      {{#each rewards as |item id|}}
+        <li class='item reward flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+          <!-- Left column for item image and controls -->
+          <div class="left-simple" style="margin-left: -8px; margin-top: 16px;">
+            <div class='item-image'>
+              <a data-action='viewDoc'>
+                <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+              </a>
+            </div>
+          </div>
+          <!-- Center column for item details -->
+          <div class="flexcol" style="flex-grow: 5">
+            <div class='item-name'>{{item.name}}</div>
+            <div class='item-description line3'>{{{item.system.enrichedDescription}}}</div>
+          </div>
+          <!-- Right column for target number and controls -->
+          <div class="flexrow" style="text-align: right">
+            <div class='reward-value'>{{item.system.cost}}</div>
+            
+          </div>
+          <div class='item-controls' style="margin-right: -7px; margin-left: 5px; max-width: 10px">
+              {{#if @root.editable}}
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Reward'}}' data-action='deleteDoc'>
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{/ifGreaterThan}}
+
+  {{! Editable Character Biography Section }}
+  <h2>{{localize 'CRASK.Actor.base.FIELDS.charactersummary.label'}}</h2>
+  {{#if editable}} 
+    <prose-mirror name="system.biography" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.biography}}" collaborate="true" toggled="true">
+      {{{enrichedBiography}}}
+    </prose-mirror>
+  {{else}} {{{enrichedBiography}}}
+  {{/if}}
+</section>

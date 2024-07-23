@@ -1,5 +1,5 @@
 <header class='sheet-header'>
-  <div class="grid grid-2col flexrow" style="align-items: flex-start; margin-top: -10px;">
+  <div class="grid grid-2col flexrow" style="margin-top: -15px;">
     <img
       class='profile-img'
       src='{{item.img}}'
@@ -174,7 +174,7 @@
           </div>
         </div>
         <div class="grid grid-3col" style="margin: -10px 0px;"> 
-          <div class="resource flexcol" style="flex: 1; display: flex; flex-direction: column; align-items: flex-start;">
+          <div class="resource flexcol">
             <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.uses.label'}}</label>
             <div class='flexrow'>
               <input
@@ -218,8 +218,8 @@
 
       {{! Reward Header}}
       {{#if (eq item.type 'reward')}}
-        <div class='resource flexcol'>
-          <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}</label>
+        <div class='resource flexrow'>
+          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}: </label>
           <input
             type='text'
             name='system.cost'
@@ -231,8 +231,8 @@
 
       {{! Large Item Header}}
       {{#if (eq item.type 'largeitem')}}
-        <div class='resource flexcol'>
-          <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}</label>
+        <div class='resource flexrow'>
+          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}: </label>
           <input
             type='text'
             name='system.cost'
@@ -244,8 +244,8 @@
 
       {{! Advancement Header}}
       {{#if (eq item.type 'advancement')}}
-        <div class='resource flexcol'>
-          <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}</label>
+        <div class='resource flexrow'>
+          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}: </label>
           <input
             type='text'
             name='system.cost'
@@ -257,8 +257,8 @@
 
       {{! Companion Header}}
       {{#if (eq item.type 'companion')}}
-        <div class='resource flexcol'>
-          <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}</label>
+        <div class='resource flexrow'>
+          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}: </label>
           <input
             type='text'
             name='system.cost'

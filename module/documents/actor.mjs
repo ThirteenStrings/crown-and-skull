@@ -37,6 +37,7 @@ export class CraskActor extends Actor {
     // things organized.
     this._prepareCharacterData(actorData);
     this._prepareNpcData(actorData);
+    this._prepareEnemyData(actorData);
   }
 
   /**
@@ -59,6 +60,14 @@ export class CraskActor extends Actor {
     // Make modifications to data here. For example:
     const systemData = actorData.system;
   
+  }
+
+  _prepareEnemyData(actorData) {
+    if (actorData.type !== 'enemy') return;
+
+    // Make modifications to data here. For example:
+    const systemData = actorData.system;
+
   }
 
   /**

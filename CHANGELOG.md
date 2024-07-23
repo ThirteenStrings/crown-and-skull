@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## 1.2.0
+
+- Major sheet layout changes
+- Clean up HTML and code
+- Phase tracker -more- functional
+- Initiative now counts from low to high
+- Fixed dark mode text color issues
+- Pouches and item sections only appear when an item is added under that category
+- Enemy tactics button
+
+### Known Issues
+
+- Cannot use "Roll All" and "Roll NPCs" initiative buttons in combat
+- Pushing enemy combatants multiple times does not delete existing combatants for that actor
+
+### Future Plans
+- Splash introduction to explain sheet usage
+- Improved phase selection process
+- Tactics button for GM only output
+- Better roll outputs
+
 ## 1.1.0
 
 - Visual Style Change

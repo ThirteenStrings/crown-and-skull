@@ -242,34 +242,102 @@
 }
 .crask {
   background-image: url(../assets/Cardstock.jpeg);
-  background-size: contain;
+  background-size: 100%;
   font-size: 16px;
   color: black;
 }
 .crask img {
   border: 0px;
 }
-.crask .sheet-header .profile-img {
-  height: 120px;
+.crask textarea {
+  font-family: 'Signika';
+  font-size: 16px;
+  border: black 0px;
+  padding: 5px;
 }
-.crask .sheet-header .hero-coin {
+.crask .profile-img {
   height: 120px;
+  max-width: 120px;
+}
+.crask .hero-coin {
+  height: 64px;
   margin-right: 0px;
+  max-width:64px;
 }
-.crask .sheet-phase-selector {
+.crask h1 {
+  margin-top: -10px;
+}
+.crask h1.charname {
+  border: none;
+  margin: 0px;
+}
+.crask h1.charname input {
+  font-size: 25px;
+  font-family: GoudyMediaeval;
+  text-align: center;
+  background-image: url(../assets/TitleUnderline.svg);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position-y: 40px;
+  height: 60px !important;
+  border: none;
+  color: black;
+}
+.dialog .phase-checkbox:checked::before {
+  content: "✘" !important;
+  color: red !important;
+  position: absolute !important;
+  left: 70% !important;
+  top: 150% !important;
+  transform: translate(-50%, -50%) !important;
+  font-size: 42px !important;
+  line-height: 16px !important;
+}
+.dialog .resource-label {
+  font-family: 'GoudyMediaeval';
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: -10px;
+}
+.dialog .sheet-phase-selector{
   background-image: url(../assets/PhaseTrackerOverlay.png);
   background-size: 250px;
   background-repeat: no-repeat;
   background-position: -10px -10px;
   width: 230px;
   height: 45px;
-  position: relative;
 }
-.crask .phase-label {
-  position: absolute;
+.dialog .phase-label {
   display: flex;
   justify-content: center;
   width: 40px;
+  height: 38px;
+  margin-top: -20px;
+}
+.dialog .phase-checkbox {
+  appearance: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  cursor: pointer !important;
+  position: relative !important;
+  transition: background-color 0.3s ease !important;
+  background: transparent !important;
+  --checkbox-size: 30px !important;
+}
+.dialog .phase-checkbox::before {
+  color: transparent !important;
+}
+.crask .phase-selector {
+  font-size: 32px;
+  max-width: 64px;
+}
+.crask .sheet-phase-selector {
+  background-image: url(../assets/PhaseTrackerOverlay.png);
+  background-size: 140px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 25px;
 }
 .crask .phase-checkbox {
   appearance: none !important;
@@ -284,11 +352,6 @@
 .crask .phase-checkbox:checked::before {
   content: "✘" !important;
   color: red !important;
-  position: absolute !important;
-  left: 70% !important;
-  top: 150% !important;
-  transform: translate(-50%, -50%) !important;
-  font-size: 30px !important;
   line-height: 16px !important;
 }
 .crask .phase-checkbox::before {
@@ -296,46 +359,58 @@
 }
 .crask .defense-value {
   background-image: url(../assets/Shield.svg);
-  background-size: 40px;
+  background-size: 46px;
   background-repeat: no-repeat;
   background-position: 50% 0px;
-  height: 50px;
+  height: 60px;
   font-size: 25px;
   display: flex;
   justify-content: center;
-}
-.crask .sheet-header .header-fields {
-  min-width: 620px;
-  margin-top: -10px;
-  align-items: flex-start;
-}
-.crask .sheet-header h1.charname input {
-  font-size: 25px;
-  font-family: GoudyMediaeval;
-  text-align: center;
-  background-image: url(../assets/TitleUnderline.svg);
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position-y: 40px;
-  height: 60px;
-  border: none;
-  color: black;
+  max-width: 64px;
 }
 .crask .origin-select {
   font-family: GoudyMediaeval;
   margin: 0px;
+}
+.crask .origin-select select {
+  cursor: pointer;
 }
 .crask h2 {
   font-size: 35px;
   font-family: GoudyMediaeval;
   text-align: center;
   margin: 0px;
+  margin-top: 10px !important;
   text-shadow: 1px 1px 4px darkgrey;
   color: black;
   border-bottom: 1px solid var(--crask-c-black)
 }
+.crask.actor .sheet-tabs.tabs {
+  gap: 0px;
+  border: 0px;
+}
+.crask.actor .sheet-tabs a {
+  background-image: url("../assets/borders/Black/TabBackground.svg");
+  background-size: cover;
+  background-position: center;
+  width: 150px;
+  height: 52px;
+  font-family: 'GoudyMediaeval';
+  font-size: 28px;
+  padding: 10px !important;
+  color: #666;
+}
+.crask.actor .sheet-tabs a.active {
+  color: black;
+  text-shadow: none;
+  text-decoration: underline;
+}
 .crask .sheet-header .header-center-column {
   margin-top: -10px;
+}
+.crask .sheet-header .flexrow {
+  padding: 0px;
+  margin-top: 0px;
 }
 .crask .sheet-body,
 .crask .sheet-body .tab,
@@ -355,27 +430,15 @@
   height: 100%;
 }
 .crask .hero-points-label {
-  margin-right: 10px;
+  width: 70px;
 }
 .crask .resource-label {
   font-family: 'GoudyMediaeval';
-  font-size: 20px;
+  font-size: 22px;
   text-align: center;
-  display: block;
-  width: 100%;
 }
 .crask .resource {
   text-align: center;
-}
-.crask .resource-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.crask .input-group {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
 }
 .crask .input-wrapper {
   display: flex;
@@ -388,9 +451,6 @@
 }
 .crask .input-wrapper input:last-of-type {
   margin-right: 0;
-}
-.crask .item-header {
-  margin-top: -15px;
 }
 .crask .effects-header {
   height: 28px;
@@ -590,4 +650,20 @@
 }
 .crask .fixoverflow::-webkit-scrollbar {
   display: none;
+}
+.crask .enemy-stats {
+  max-width: 154px;
+  text-align: center;
+  margin-right: 15px;
+  padding-right: 20px;
+  border-right: 2px solid black;
+}
+.crask .enemy-stats input {
+  margin-bottom: 10px;
+}
+.message-sender {
+  font-size: 30px;
+  color: black;
+  font-family: GoudyMediaeval;
+  padding: 6px 0px;
 }

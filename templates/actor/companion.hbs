@@ -1,0 +1,94 @@
+{{! Companion Sheet }}
+<section data-tab='companion'>
+   
+    {{! Header First Row}}
+    <div class='grid grid-2col flexrow' style="margin-top: -15px;">
+
+      {{! First Column Character Image}}
+      <img
+        class='profile-img'
+        src='{{actor.img}}'
+        data-edit='img'
+        title='{{actor.name}}'
+        height='120'
+        width='120'
+        data-action="editImage"
+      />
+
+      {{! Second Column Information}}
+      <div class='item-header'>
+        <h1 class='charname'>
+          <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
+        </h1>
+        <div class='grid grid-2col' style="margin: 0px 0px -10px 0px;">
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.attack.label'}}</label>
+            <input
+              type='text'
+              name='system.attack'
+              value={{system.attack}}
+              data-dtype='String'
+            />
+          </div>
+          <div class='resource flexcol'>
+            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.def.label'}}</label>
+            <input
+              type='number'
+              name='system.defense'
+              value='{{system.defense}}'
+              data-dtype='Number'
+            />
+          </div>    
+        </div>
+      </div>
+    </div>
+
+    {{! Skills Section }}
+    <h2>Companion Skills</h2>
+    <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
+        {{#each skills as |item id|}}
+        <li class='item skill flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+        <!-- Left column for item image and controls -->
+        <div class="flexcol left-simple">
+            <div class='item-image'>
+            <a data-action='viewDoc'>
+                <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+            </a>
+            </div>
+            <div class='item-controls flexrow'>
+            {{#if @root.editable}}
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                <i class='fas fa-trash'></i>
+                </a>
+            {{/if}}
+            <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+            </div>
+        </div>
+        <!-- Center column for item details -->
+        <div class="flexcol" style="height: 75px;">
+            <div class='item-name'>{{item.name}}</div>
+            <div class='item-description line3'>{{{item.system.enrichedDescription}}}</div>
+        </div>
+        <!-- Right column for target number and controls -->
+        <div class="flexcol left-simple">
+            <div class='skill-target'>{{item.system.cost}}</div>
+            <div class='item-controls flexrow' style="margin-top: -5px;">
+            <div class="toggle-state clickable" title="{{#if item.system.damaged}}Damaged: Click to Restore{{else}}Intact: Click to Damage{{/if}}" data-action="dmgToggle">
+                <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
+            </div>
+            <div title="External Modifiers">{{#ifGreaterThan item.system.modifier -1}}+{{item.system.modifier}}{{else}}{{item.system.modifier}}{{/ifGreaterThan}}</div>
+            </div>
+        </div>
+        </li>
+        {{/each}}
+    </ul>
+    
+    {{! Editable Character Biography Section }}
+    <h2>{{localize 'CRASK.Actor.base.FIELDS.companiondescription.label'}}</h2>
+    {{#if editable}} 
+        <prose-mirror name="system.biography" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.biography}}" collaborate="true" toggled="true">
+        {{{enrichedBiography}}}
+        </prose-mirror>
+    {{else}} {{{enrichedBiography}}}
+    {{/if}}
+</section>

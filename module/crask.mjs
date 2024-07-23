@@ -17,6 +17,7 @@ globalThis.crask = {
   documents: {
     CraskActor,
     CraskItem,
+    CraskCombat,
   },
   applications: {
     CraskActorSheet,
@@ -33,13 +34,14 @@ Hooks.once('init', function () {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: '1d20',
-    decimals: 2,
+    formula: null,
+    decimals: 0,
   };
 
   // Define custom Document classes
   CONFIG.Actor.documentClass = CraskActor;
   CONFIG.Item.documentClass = CraskItem;
+  CONFIG.Combat.documentClass = CraskCombat;
 
   // Active Effects are never copied to the Actor,
   // but will still apply to the Actor from within the Item
@@ -92,6 +94,11 @@ Handlebars.registerHelper('ifGreaterThan', function(arg1, arg2, options) {
   return (arg1 > arg2) ? options.fn(this) : options.inverse(this);
 });
 
+// Add an `includes` helper
+Handlebars.registerHelper('includes', function(check, inList) {
+  return inList.includes(check);
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
@@ -100,6 +107,7 @@ Hooks.once('ready', function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
 });
+
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

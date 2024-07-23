@@ -19,3 +19,8 @@ Artwork, rules, and materials presented in this system are mostly available in t
 ## This System
 
 Created by ThirteenStrings (Discord). Feel free to message with any suggestions or requests. Collaborators with more coding experience are welcome.
+
+### Adding Items
+Most of the functionality of the sheet comes from dragging and dropping items. Be sure to import the compendiums for player's guide items and starter actors. Many sections of the sheet are hidden until appropriate items are added in order to reduce visual clutter.
+
+When beginning a new combat, players will press the "Phase Selection" button on their character sheet to choose their phase. GMs can push enemy combatants into the turn tracker via the button on enemy character sheets.

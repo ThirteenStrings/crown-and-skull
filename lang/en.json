@@ -6,7 +6,7 @@
     },
     "Actor": {
       "Tabs": {
-        "Biography": "Biography",
+        "Character": "Character",
         "Equipment": "Equipment",
         "Skills": "Skills",
         "Pouches": "Pouches",
@@ -17,14 +17,14 @@
       "base": {
         "FIELDS": {
           "name": {"label": "Character Name"},
-          "biography": {"label": "Biography"},
+          "character": {"label": "Character"},
           "health": {"label": "Health"},
           "power": {"label": "Power"},
           "heropoints": {"label": "Hero Points"},
           "current": {"label": "Current"},
           "remaining": {"label": "Remaining"},
           "lost": {"label": "Lost"},
-          "phasetracker": {"label": "Combat Phase Selector"},
+          "phases": {"label": "Phases"},
           "defense": {"label": "Defense"},
           "itempouch": {"label": "Item Pouch"},
           "herbalistpouch": {"label": "Herbalist's Pouch"},
@@ -33,10 +33,10 @@
           "npcsummary": {"label": "NPC Summary"},
           "companiondescription": {"label": "Companion Description"},
           "flaws": {"label": "Flaws"},
-          "hp": {"label": "HP"},
+          "hp": {"label": "Hit Points"},
           "atk": {"label": "ATK"},
           "def": {"label": "DEF"},
-          "tactics": {"label": "TACTICS"},
+          "tactics": {"label": "Tactics"},
           "tactic1": {"label": "Tactic 1"},
           "tactic25": {"label": "Tactic 2-5"},
           "tactic6": {"label": "Tactic 6"},
@@ -47,7 +47,8 @@
           "largeitems": {"label": "Large Items"},
           "advancements": {"label": "Advancements"},
           "coreability": {"label": "Core Ability"},
-          "companion": {"label": "Companion"}
+          "companion": {"label": "Companion"},
+          "rewards": {"label": "Rewards"}
         }
       },
       "Character": {

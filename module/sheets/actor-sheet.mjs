@@ -34,7 +34,9 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       equipToggle: this._equipToggle,
       editImage: this._editImage,
       useHeroCoin: this._useHeroCoin,
-      checkboxChange: this._onCheckboxChange
+      initiativeSelect: this._initiativeSelect,
+      initiativePush: this._initiativePush,
+      rollTactic: this._rollTactic
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -46,15 +48,15 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
 
   /** @override */
   static PARTS = {
-    header: {
-      template: 'systems/crown-and-skull/templates/actor/header.hbs',
-    },
     tabs: {
       // Foundry-provided generic template
       template: 'templates/generic/tab-navigation.hbs',
     },
-    biography: {
-      template: 'systems/crown-and-skull/templates/actor/biography.hbs',
+    header: {
+      template: 'systems/crown-and-skull/templates/actor/header.hbs',
+    },
+    character: {
+      template: 'systems/crown-and-skull/templates/actor/character.hbs',
     },
     equipment: {
       template: 'systems/crown-and-skull/templates/actor/equipment.hbs'
@@ -65,14 +67,14 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     magic: {
       template: 'systems/crown-and-skull/templates/actor/magic.hbs',
     },
-    pouches: {
-      template: 'systems/crown-and-skull/templates/actor/pouches.hbs',
+    enemy: {
+      template: 'systems/crown-and-skull/templates/actor/enemy.hbs',
     },
-    rewards: {
-      template: 'systems/crown-and-skull/templates/actor/rewards.hbs',
+    companion: {
+      template: 'systems/crown-and-skull/templates/actor/companion.hbs',
     },
-    tactics: {
-      template: 'systems/crown-and-skull/templates/actor/tactics.hbs',
+    npc: {
+      template: 'systems/crown-and-skull/templates/actor/npc.hbs',
     }
   };
 
@@ -80,19 +82,23 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
   _configureRenderOptions(options) {
     super._configureRenderOptions(options);
     // Not all parts always render
-    options.parts = ['header', 'tabs', 'biography'];
+    options.parts = [];
     // Don't show the other tabs if only limited view
     if (this.document.limited) return;
     // Control which parts show based on document subtype
     switch (this.document.type) {
       case 'character':
-        options.parts.push('equipment', 'skills', 'magic', 'pouches', 'rewards');
+        options.parts.push('header','tabs','character','equipment', 'skills', 'magic');
         break;
       case 'enemy':
-        options.parts.push('tactics');
+        options.parts.push('enemy');
         break;
       case 'companion':
-        options.parts.push('skills')
+        options.parts.push('companion');
+        break;
+      case 'npc':
+        options.parts.push('npc');
+        break;
     }
   }
 
@@ -138,8 +144,6 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       case 'equipment':
       case 'skills':
       case 'magic':
-      case 'pouches':
-      case 'rewards':
       case 'header':
         context.tab = context.tabs[partId];
         //Enrich tactics info for display
@@ -167,43 +171,55 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
             relativeTo: this.actor,
           }
         );
-      case 'tactics':
+      case 'character':
         context.tab = context.tabs[partId];
-        //Enrich tactics info for display
-        context.enrichedTactic1 = await TextEditor.enrichHTML(
-          this.actor.system.tactic1,
+        // Enrich biography info for display
+        // Enrichment turns text like `[[/r 1d20]]` into buttons
+        context.enrichedBiography = await TextEditor.enrichHTML(
+          this.actor.system.biography,
           {
             // Whether to show secret blocks in the finished html
             secrets: this.document.isOwner,
             // Data to fill in for inline rolls
             rollData: this.actor.getRollData(),
-            //Relative UUID resolution
+            // Relative UUID resolution
             relativeTo: this.actor,
           }
         );
-        context.enrichedTactic25 = await TextEditor.enrichHTML(
-          this.actor.system.tactic25,
+        break;
+      case 'enemy':
+        context.tab = context.tabs[partId];
+        // Enrich biography info for display
+        // Enrichment turns text like `[[/r 1d20]]` into buttons
+        context.enrichedBiography = await TextEditor.enrichHTML(
+          this.actor.system.biography,
           {
             // Whether to show secret blocks in the finished html
             secrets: this.document.isOwner,
             // Data to fill in for inline rolls
             rollData: this.actor.getRollData(),
-            //Relative UUID resolution
+            // Relative UUID resolution
             relativeTo: this.actor,
           }
         );
-        context.enrichedTactic6 = await TextEditor.enrichHTML(
-          this.actor.system.tactic6,
+        break;
+      case 'companion':
+        context.tab = context.tabs[partId];
+        // Enrich biography info for display
+        // Enrichment turns text like `[[/r 1d20]]` into buttons
+        context.enrichedBiography = await TextEditor.enrichHTML(
+          this.actor.system.biography,
           {
             // Whether to show secret blocks in the finished html
             secrets: this.document.isOwner,
             // Data to fill in for inline rolls
             rollData: this.actor.getRollData(),
-            //Relative UUID resolution
+            // Relative UUID resolution
             relativeTo: this.actor,
           }
         );
-      case 'biography':
+        break;
+        case 'npc':
         context.tab = context.tabs[partId];
         // Enrich biography info for display
         // Enrichment turns text like `[[/r 1d20]]` into buttons
@@ -233,7 +249,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     // If you have sub-tabs this is necessary to change
     const tabGroup = 'primary';
     // Default tab for first time it's rendered this session
-    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'biography';
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'character';
     return parts.reduce((tabs, partId) => {
       const tab = {
         cssClass: '',
@@ -249,9 +265,9 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
         case 'header':
         case 'tabs':
           return tabs;
-        case 'biography':
-          tab.id = 'biography';
-          tab.label += 'Biography';
+        case 'character':
+          tab.id = 'character';
+          tab.label += 'Character';
           break;
         case 'equipment':
           tab.id = 'equipment';
@@ -265,10 +281,6 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
           tab.id = 'magic';
           tab.label += 'Magic';
           break;        
-        case 'pouches':
-          tab.id = 'pouches';
-          tab.label += 'Pouches';
-          break;
         case 'rewards':
           tab.id = 'rewards';
           tab.label += 'Rewards';
@@ -431,18 +443,79 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @protected
    */
-  static async _onCheckboxChange(event, target) {
-    const phaseNumber = target.name; // e.g., "one", "two", etc.
-    const phaseState = target.checked;
-
-    // Update the actor's phase state
-    const updateData = {};
-    updateData[`system.phase.${phaseNumber}`] = phaseState;
-    await this.actor.update(updateData);
-
-    // Match initiative
-    this.actor.rollInitiative({createCombatants: true, initiativeOptions: {formula: '13'}})
+  static async _initiativeSelect(event, target) {
+    
+    // Initiative Selection Dialog
+    const initiativeDialogContent = await renderTemplate('./systems/crown-and-skull/templates/dialog/playerInitiativeDialog.hbs')
+    const selectedInitiative = await foundry.applications.api.DialogV2.prompt({
+      window: { title: "Combat Phase Selection" },
+      content: initiativeDialogContent,
+      ok: {
+        label: "Confirm",
+        callback: (event,button) => {
+          this.actor.rollInitiative({createCombatants: true, rerollInitiative: true, initiativeOptions: {formula: button.form.elements.phase.value}});
+        }
+      },
+      rejectClose: false
+    });
   }
+
+  /**
+   * Handles pushing enemy combatants to combat tracker
+   *
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+  static async _initiativePush(event, target) {
+    let actorTokens = this.actor.getActiveTokens()
+    let to_create = this.actor.system.phases.filter(p => p).map(phase => ({actorId: this.actor.id, initiative: phase, tokenId: actorTokens.id}));
+    await game.combat.createEmbeddedDocuments('Combatant', to_create);
+
+  }
+
+  /**
+   * Handles enemy tactic roll
+   *
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+    static async _rollTactic(event, target) {
+      // Roll 1d6
+      let roll = await new Roll("1d6").evaluate();
+      await game.dice3d.showForRoll(roll, game.user, true);
+
+      // Determine the output message based on the roll result
+      let result = roll.total;
+      let messageContent = '';
+
+      if (result === 1) {
+          messageContent = `
+          <p><b>Tactic Roll Result:</b> ${roll.total}</p>
+          <p>${this.actor.system.tactic1}</p>`;
+      } else if (result >= 2 && result <= 5) {
+          messageContent = `
+          <p><b>Tactic Roll Result:</b> ${roll.total}</p>
+          <p>${this.actor.system.tactic25}</p>`;
+      } else if (result === 6) {
+          messageContent = `
+          <p><b>Tactic Roll Result:</b> ${roll.total}</p>
+          <p>${this.actor.system.tactic6}</p>`;
+      }
+
+      // Send the message to the chat
+      if (messageContent) {
+          ChatMessage.create({
+              speaker: ChatMessage.getSpeaker({actor: this.actor}),
+              content: messageContent,
+              type: CONST.CHAT_MESSAGE_STYLES.OTHER
+          });
+      }
+
+    }
 
   /**
    * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined in the HTML dataset

@@ -21,14 +21,7 @@
       },
       "heroCoinAvailable": false,
       "lineage": "Human",
-      "hometown": "Gardenburrow",
-      "phase": {
-        "one": true,
-        "two": true,
-        "three": false,
-        "four": true,
-        "five": false
-      }
+      "hometown": "Gardenburrow"
     },
     "npc": {
       "templates": ["base"],
@@ -44,13 +37,7 @@
       },
       "atk": 0,
       "def": 1,
-      "phase": {
-        "one": true,
-        "two": true,
-        "three": false,
-        "four": true,
-        "five": false
-      },
+      "phases": [1],
       "tactics": 1,
       "tactic1": "",
       "tactic25": "",
