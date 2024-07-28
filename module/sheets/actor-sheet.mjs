@@ -1,6 +1,7 @@
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { updateHeroPoints } from '../helpers/heropoints.mjs';
 import { updateDefense } from '../helpers/defensecalc.mjs' ;
+import { updateAttrition } from '../helpers/attritioncalc.mjs'
 
 const { api, sheets } = foundry.applications;
 
@@ -36,7 +37,11 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       useHeroCoin: this._useHeroCoin,
       initiativeSelect: this._initiativeSelect,
       initiativePush: this._initiativePush,
-      rollTactic: this._rollTactic
+      rollTactic: this._rollTactic,
+      rollEquipmentAttrition: this._rollEquipmentAttrition,
+      rollFleshAttrition: this._rollFleshAttrition,
+      damageRoll: this._damageRoll,
+      skillRoll: this._skillRoll,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -146,31 +151,6 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       case 'magic':
       case 'header':
         context.tab = context.tabs[partId];
-        //Enrich tactics info for display
-        context.enrichedKnown = await TextEditor.enrichHTML(
-          this.actor.system.known,
-          {
-            // Whether to show secret blocks in the finished html
-            secrets: this.document.isOwner,
-            // Data to fill in for inline rolls
-            rollData: this.actor.getRollData(),
-            //Relative UUID resolution
-            relativeTo: this.actor,
-          }
-        );
-        context.tab = context.tabs[partId];
-        //Enrich tactics info for display
-        context.enrichedQuest = await TextEditor.enrichHTML(
-          this.actor.system.quest,
-          {
-            // Whether to show secret blocks in the finished html
-            secrets: this.document.isOwner,
-            // Data to fill in for inline rolls
-            rollData: this.actor.getRollData(),
-            //Relative UUID resolution
-            relativeTo: this.actor,
-          }
-        );
       case 'character':
         context.tab = context.tabs[partId];
         // Enrich biography info for display
@@ -304,9 +284,13 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
   _prepareItems(context) {
     // Initialize containers.
     const equipment = [];
+    const undamagedEquipment = [];
+    const damagedEquipment = [];
     const smallitems = [];
     const largeitems = [];
     const skills = [];
+    const undamagedSkills = [];
+    const damagedSkills = [];
     const spells = [];
     const alchemical = [];
     const rewards = [];
@@ -322,6 +306,11 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       // Append to equipment.
       if (i.type === 'equipment') {
         equipment.push(i);
+        if (i.damaged) {
+          damagedEquipment.push(i);
+        } else {
+          undamagedEquipment.push(i);
+        }
       }
       // Append to small items.
       else if (i.type === 'smallitem') {
@@ -334,6 +323,11 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       // Append to skills.
       else if (i.type === 'skill') {
         skills.push(i);
+        if (i.damaged) {
+          damagedSkills.push(i);
+        } else {
+          undamagedSkills.push(i);
+        }
       }
       // Append to spells.
       else if (i.type === 'spell') {
@@ -382,10 +376,13 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     context.flaws = flaws.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.abilities = abilities.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.companions = companions.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.undamagedEquipment = undamagedEquipment.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.undamagedSkills = undamagedSkills.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
     // Integrate hero points preparation
     updateHeroPoints(this.actor);
     updateDefense(this.actor);
+    updateAttrition(this.actor);
   }
 
   /**
@@ -418,8 +415,26 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    * @protected
    */
   static async _viewDoc(event, target) {
-    const doc = this._getEmbeddedDocument(target);
-    doc.sheet.render(true);
+
+    if (event.ctrlKey || event.altKey) {
+      const item = this._getEmbeddedDocument(target);
+      const whisperTarget = event.altKey ? [game.user.id] : null;
+      // Send the item to the chat
+      console.log(this.actor.user);
+      let flavorText = "❖ " + item.type.charAt(0).toUpperCase() + item.type.slice(1) + " ❖ " + item.name + " ❖";
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({actor: this.actor.id}),
+        flavor: flavorText,//flavorText,
+        content: item.system.enrichedDescription,//messageContent,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER,
+        whisper: whisperTarget
+      });
+    } else {
+      // Open the item sheet
+      const doc = this._getEmbeddedDocument(target);
+      doc.sheet.render(true);
+    }
+    
   }
 
   /**
@@ -431,8 +446,26 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    * @protected
    */
   static async _deleteDoc(event, target) {
-    const doc = this._getEmbeddedDocument(target);
-    await doc.delete();
+
+    if(event.ctrlKey) {
+      const doc = this._getEmbeddedDocument(target);
+      await doc.delete();
+    } else {
+      Dialog.confirm({
+        title: "Delete Confirmation",
+        content: "Are you sure you want to delete this item? \n",
+        yes: (Yes) => { 
+          const doc = this._getEmbeddedDocument(target);
+          doc.delete();
+         },
+        no: (No) => { 
+          
+         },
+      })
+    }
+    
+      
+
   }
 
   /**
@@ -445,19 +478,37 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    */
   static async _initiativeSelect(event, target) {
     
-    // Initiative Selection Dialog
-    const initiativeDialogContent = await renderTemplate('./systems/crown-and-skull/templates/dialog/playerInitiativeDialog.hbs')
-    const selectedInitiative = await foundry.applications.api.DialogV2.prompt({
-      window: { title: "Combat Phase Selection" },
-      content: initiativeDialogContent,
-      ok: {
-        label: "Confirm",
-        callback: (event,button) => {
-          this.actor.rollInitiative({createCombatants: true, rerollInitiative: true, initiativeOptions: {formula: button.form.elements.phase.value}});
-        }
-      },
-      rejectClose: false
-    });
+    if ( !game.combat ) {
+			ui.notifications.warn("COMBAT.NoneActive", {localize: true});
+			return null;
+		} else {
+      // Initiative Selection Dialog
+      const initiativeDialogContent = await renderTemplate('./systems/crown-and-skull/templates/dialog/playerInitiativeDialog.hbs')
+      const selectedInitiative = await foundry.applications.api.DialogV2.prompt({
+        window: { title: "Combat Phase Selection" },
+        content: initiativeDialogContent,
+        ok: {
+          label: "Confirm",
+          callback: (event,button) => {
+            let to_create = [{actorId: this.actor.id, initiative: button.form.elements.phase.value}];
+            game.combat.createEmbeddedDocuments('Combatant', to_create);
+            //this.actor.rollInitiative({createCombatants: true, rerollInitiative: true, initiativeOptions: {formula: button.form.elements.phase.value}});
+
+            let flavorText = "Pushed to phase " + button.form.elements.phase.value + "!";
+            let messageContent = this.actor.name + " has selected phase " + button.form.elements.phase.value + " for this combat."
+
+            // Send the message to the chat
+            ChatMessage.create({
+              speaker: ChatMessage.getSpeaker({actor: this.actor}),
+              flavor: flavorText,
+              content: messageContent,
+              type: CONST.CHAT_MESSAGE_STYLES.OTHER
+            });
+          }
+        },
+        rejectClose: false
+      });
+    }
   }
 
   /**
@@ -470,9 +521,39 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    */
   static async _initiativePush(event, target) {
     let actorTokens = this.actor.getActiveTokens()
-    let to_create = this.actor.system.phases.filter(p => p).map(phase => ({actorId: this.actor.id, initiative: phase, tokenId: actorTokens.id}));
-    await game.combat.createEmbeddedDocuments('Combatant', to_create);
+    let phases = this.actor.system.phases.filter(p => p);
+    let to_create = phases.map(phase => ({actorId: this.actor.id, initiative: phase, tokenId: actorTokens.id}));
 
+    if ( !game.combat ) {
+			ui.notifications.warn("COMBAT.NoneActive", {localize: true});
+			return null;
+		} else {
+      await game.combat.createEmbeddedDocuments('Combatant', to_create);
+    }
+    
+    let flavorText = 'Pushed to combat tracker!';
+    let messageContent = this.actor.name + ' has selected ';
+
+    if (phases.length > 1) {
+      // Join all but the last phase with commas, and append the last one with "and"
+      messageContent += "phases " + phases.slice(0, -1).join(", ") + " and " + phases[phases.length - 1];
+    } else if (phases.length === 1) {
+      // Handle the case with only one phase
+      messageContent += "phase " + phases[0];
+    } else {
+      // Handle the case with no phases
+      messageContent += "no phases";
+    }
+
+    messageContent += ' for this combat.'
+    
+    // Send the message to the chat
+    ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({actor: this.actor}),
+        flavor: flavorText,
+        content: messageContent,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER
+    });
   }
 
   /**
@@ -486,36 +567,279 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     static async _rollTactic(event, target) {
       // Roll 1d6
       let roll = await new Roll("1d6").evaluate();
-      await game.dice3d.showForRoll(roll, game.user, true);
+      
+      if (game.modules.get('dice-so-nice')?.active) {
+        await game.dice3d.showForRoll(roll, game.user, true);
+      }
 
       // Determine the output message based on the roll result
       let result = roll.total;
       let messageContent = '';
 
       if (result === 1) {
-          messageContent = `
-          <p><b>Tactic Roll Result:</b> ${roll.total}</p>
-          <p>${this.actor.system.tactic1}</p>`;
+          messageContent = `<p>${this.actor.system.tactic1}</p>`;
       } else if (result >= 2 && result <= 5) {
-          messageContent = `
-          <p><b>Tactic Roll Result:</b> ${roll.total}</p>
-          <p>${this.actor.system.tactic25}</p>`;
+          messageContent = `<p>${this.actor.system.tactic25}</p>`;
       } else if (result === 6) {
-          messageContent = `
-          <p><b>Tactic Roll Result:</b> ${roll.total}</p>
-          <p>${this.actor.system.tactic6}</p>`;
+          messageContent = `<p>${this.actor.system.tactic6}</p>`;
       }
 
       // Send the message to the chat
       if (messageContent) {
           ChatMessage.create({
               speaker: ChatMessage.getSpeaker({actor: this.actor}),
+              flavor: `Tactic Roll Result: ${roll.total}`,
               content: messageContent,
               type: CONST.CHAT_MESSAGE_STYLES.OTHER
           });
       }
 
     }
+
+  /**
+   * Handles item damage rolls
+   *
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+    static async _damageRoll(event, target) {
+      // Get the item
+      const item = this._getEmbeddedDocument(target);
+      let dieCount = 0;
+      let gridCount = 0;
+      let constant = 0;
+      let rollType = event.target.dataset.rollType;
+      let rollString = '';
+
+      if (rollType == "Damage" || rollType == "Effect") {
+        rollString = item.system.dmg;
+      } else if (rollType == "Duration") {
+        rollString = item.system.duration;
+      }
+
+      // Validate roll string
+      if (!Roll.validate(rollString)) {
+        ui.notifications.warn('Roll string is invalid!');
+        return;
+      }
+
+      let roll = await new Roll(rollString).evaluate();
+      
+      // Roll Dice if DSN Present
+      if (game.modules.get('dice-so-nice')?.active) {
+        await game.dice3d.showForRoll(roll, game.user, true);
+      }
+
+      // Extract results and create message content
+      let messageContent = ``;
+
+      // Extract Numeric Terms
+      for (let i = 0; i < roll.terms.length; i++) {
+        const term = roll.terms[i];
+        if (term.constructor.name === "NumericTerm") {
+          if (i>0 && roll.terms[i-1].operator === "-") {
+            constant -= term.number;
+          } else {
+              constant += term.number;
+          }
+        }
+      }
+      
+      // For each die rolled, create a die picture with the number on top of it.
+      for (const dieRoll of roll.dice) {
+        let dieType = 'D' + dieRoll.faces;
+        for (const dieResult of dieRoll.results) {
+          dieCount ++;
+          gridCount = Math.min(dieCount, 4);
+          messageContent += `<div class="die-container">
+                                <img src="./systems/crown-and-skull/assets/icons/Black/${dieType}.svg" class="die-img">
+                                <span class="die-result">
+                                  ${dieResult.result}
+                                </span>
+                            </div>`;
+        }
+      }
+
+      // Add numeric result div if needed
+      if (constant != 0) {
+        dieCount ++;
+        gridCount = Math.min(dieCount, 4);
+        constant = `${constant >= 0 ? '+' : ''}${constant}`;
+        messageContent += `<div class="die-container">
+                                <span class="constant-result">
+                                  ${constant}
+                                </span>
+                            </div>`;
+      }
+
+      // Check: if only one element eliminate grid class, add classes to opening div
+      if (gridCount > 1 ) {
+        messageContent = `<div class="grid grid-${gridCount}col flexrow roll-container">` + messageContent;
+      } else {
+        messageContent = `<div class="flexrow roll-container">` + messageContent;
+      }
+
+      // Finish div
+      messageContent += `</div>`;
+
+      // Determine flavor text
+      let flavorText = item.name + ' ❖ ' + rollType + ' Roll '
+
+      if (dieCount > 1) {
+        flavorText += '<br>' + rollString + ' <span style="color: red;">>></span> Total: <span style="color: darkred; text-shadow: 0px 0px 3px white">' + roll.total + '</span>';
+      } else {
+        flavorText += '❖ ' + rollString;
+      }
+        
+
+      // Send the message to the chat
+      if (messageContent) {
+          ChatMessage.create({
+              speaker: ChatMessage.getSpeaker({actor: this.actor}),
+              flavor: flavorText,
+              content: messageContent,
+              type: CONST.CHAT_MESSAGE_STYLES.OTHER
+          });
+      }
+    }
+
+  /**
+   * Handles skill rolls
+   *
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+  static async _skillRoll(event, target) {
+
+    let item;
+    const rollType = event.target.dataset.rollType;
+
+    // Determine target number
+    let targetNumber;
+
+    if (rollType === "Defense") {
+      targetNumber = this.actor.system.defense.value;
+    } else{
+      item = this._getEmbeddedDocument(target);
+      targetNumber = item.system.cost + item.system.modifier;
+    }
+    
+    // Dialog popup
+    let situationalModifier;
+    let dialogTitle = rollType + " Roll Modifier"
+    
+    if (event.ctrlKey) {
+      situationalModifier = 0;
+    } else {
+      situationalModifier = await foundry.applications.api.DialogV2.wait({
+        window: {
+          title: dialogTitle,
+          modal: true
+        },
+        content: `
+          <form>
+            <div style="margin-bottom: 10px; display: inline;">
+              <label for="penalty">Situational Modifier:</label>
+              <input type="number" name="penalty" value="0" style="max-width: 50px;">
+            </div>
+          </form>
+        `,
+        buttons: [
+          {
+            label: "Confirm",
+            callback: (event, button, dialog) => button.form.elements.penalty.value
+          }
+        ],
+        rejectClose: false
+      });
+    }
+    
+    if (situationalModifier === null) {
+      ui.notifications.warn("Roll Cancelled");
+      return;
+    }
+
+    let roll = await new Roll('1d20').evaluate();
+    
+    // Roll Dice if DSN Present
+    if (game.modules.get('dice-so-nice')?.active) {
+      await game.dice3d.showForRoll(roll, game.user, true);
+    }
+
+    const success = +roll.result <= targetNumber + +situationalModifier ? true : false;
+    const comparator = success ? '≤' : '>'
+
+    // Extract results and create message content
+    let messageContent = `<div class="flexrow roll-container">
+                            <div class="flexcol">
+                              <label class="skill-roll-label">Roll</label>
+                              <div class="die-container skill-output">
+                                <img src="./systems/crown-and-skull/assets/icons/Black/d20.svg" class="die-img">
+                                <span class="die-result">
+                                  ${roll.result}
+                                </span>
+                              </div>
+                            </div>
+                            <div class="skill-roll-between">${comparator}</div>
+                            <div class="flexcol">
+                              <label class="skill-roll-label">Target</label>
+                              <div class="skill-constant skill-output">
+                                ${targetNumber}
+                              </div>
+                            </div>`
+
+    if (situationalModifier > 0) {
+      messageContent += `<div class="skill-roll-between">+</div>
+                          <div class="flexcol">
+                            <label class="skill-roll-label">Bonus</label>
+                            <div class="skill-constant skill-output" style="background-color: rgba(0,100,0,0.2)">
+                              ${situationalModifier}
+                            </div>
+                          </div>`
+    } else if (situationalModifier < 0) {
+      messageContent += `<div class="skill-roll-between">+</div>
+                          <div class="flexcol">
+                            <label class="skill-roll-label">Penalty</label>
+                            <div class="skill-constant skill-output" style="background-color: rgba(100,0,0,0.2)">
+                              ${situationalModifier}
+                            </div>
+                          </div>`
+    }
+    
+    messageContent += `</div>`;
+
+    // Flavor text
+    let flavorText = '';
+    if (rollType === "Defense") {
+      flavorText = 'Defense Check ❖ ';
+    } else {
+      flavorText = item.name + ' ❖ ' + rollType + ' Check<br>';
+    }
+
+    if (roll.result == 1) {
+      flavorText += '<span style="color: green">CRITICAL SUCCESS</span>'
+    } else if (roll.result == 20) {
+      flavorText += '<span style="color: red">CRITICAL FAILURE</span>'
+    } else if (success) {
+      flavorText += '<span style="color: green">CHECK SUCCESSFUL</span>'
+    } else {
+      flavorText += '<span style="color: red">CHECK FAILED</span>'
+    }
+    
+    // Send the message to the chat
+    if (messageContent) {
+        ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({actor: this.actor}),
+            flavor: flavorText,
+            content: messageContent,
+            type: CONST.CHAT_MESSAGE_STYLES.OTHER
+        });
+    }
+  }
 
   /**
    * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined in the HTML dataset
@@ -620,6 +944,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     await item.update(updateData);
+    updateAttrition(this.actor);
   }
 
   /**
@@ -675,7 +1000,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     await item.update({'system.uses.current': currentUses});
   }
 
-    /**
+  /**
    * Handle Toggle between Equipped and Unequipped
    * 
    * @this CraskActorSheet
@@ -715,7 +1040,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       }
     }
 
-   /**
+  /**
    * Use Hero Coin
    * 
    * @this CraskActorSheet
@@ -727,15 +1052,19 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       event.preventDefault();
       const element = event.currentTarget;
       const actor = this.actor;
+      let messageContent = "◆ Reroll any roll entirely. ◆<br>-- or -- <br>◆ Maximize damage or effect roll. ◆"
 
       if (actor.system.heroCoinAvailable) {
 
-        let r = await new Roll("dc").evaluate();
-        game.dice3d.showForRoll(r, game.user, true);
+        if (game.modules.get('dice-so-nice')?.active) {
+          let r = await new Roll("dc").evaluate();
+          game.dice3d.showForRoll(r, game.user, true);
+        }
 
         await ChatMessage.create({
           speaker: ChatMessage.getSpeaker({ actor }),
-          content: `${actor.name} uses their Hero Coin!`,
+          flavor: `Hero coin used!`,
+          content: messageContent,
           type: CONST.CHAT_MESSAGE_STYLES.OTHER
         });
 
@@ -745,13 +1074,123 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
 
         await ChatMessage.create({
           speaker: ChatMessage.getSpeaker({ actor }),
-          content: `${actor.name} gains a Hero Coin!`,
+          flavor: `Hero coin gained!`,
+          content: messageContent,
           type: CONST.CHAT_MESSAGE_STYLES.OTHER
         });
 
         await actor.update({ 'system.heroCoinAvailable': true });
       }
     }
+
+  /**
+   * Roll Equipment Attrition
+   * 
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static async _rollEquipmentAttrition(event, target) {
+    const items = this.actor.items;
+    let undamagedEquipment = [];
+    let flavorText = '';
+    let messageContent = '';
+
+    for (const i of items) {
+      if (i.type === "equipment" && i.system.damaged === false) {
+        undamagedEquipment.push(i);
+      }
+    }
+
+    if (undamagedEquipment.length) {
+      const selectedItem = undamagedEquipment[Math.floor(Math.random()*undamagedEquipment.length)];
+      selectedItem.update({"system.damaged": true});
+
+      flavorText = 'Equipment Attrition!';
+      messageContent = '<b style="color:red"><<</b> ' + selectedItem.name + ' <b style="color:red">>></b> damaged!<br><br>' + this.actor.name + ' has ';
+
+      if (this.actor.system.attrition.equipment.current < 2) {
+        messageContent += 'no Equipment remaining. The next hit will be lethal!';
+      } else {
+        messageContent += this.actor.system.attrition.equipment.current-1 + ' equipment remaining.';
+      }
+
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: flavorText,
+        content: messageContent,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER
+      });
+
+    } else {
+      flavorText = 'Hit to the heart!';
+      messageContent = this.actor.name + ' will die at the end of Phase 5 without intervention!';
+
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: flavorText,
+        content: messageContent,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER
+      });
+    }
+  }
+
+  /**
+   * Roll Flesh Attrition
+   * 
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static async _rollFleshAttrition(event, target) {
+    const items = this.actor.items;
+    let undamagedSkills = [];
+    let flavorText = '';
+    let messageContent = '';
+
+    for (const i of items) {
+      if (i.type === "skill" && i.system.damaged === false) {
+        undamagedSkills.push(i);
+      }
+    }
+    
+    if (undamagedSkills.length) {
+      const selectedItem = undamagedSkills[Math.floor(Math.random()*undamagedSkills.length)];
+      selectedItem.update({"system.damaged": true});
+
+      flavorText = 'Flesh Attrition!'
+      messageContent = '<b style="color:red"><<</b> ' + selectedItem.name + ' <b style="color:red">>></b> damaged!<br><br>' + this.actor.name + ' has ';
+
+      if (this.actor.system.attrition.flesh.current < 2) {
+        messageContent += 'no Skills remaining. The next hit will be lethal!';
+      } else if (this.actor.system.attrition.flesh.current < 3) {
+        messageContent += this.actor.system.attrition.flesh.current-1 + ' skill remaining.';
+      } else {
+        messageContent += this.actor.system.attrition.flesh.current-1 + ' skills remaining.';
+      }
+
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: flavorText,
+        content: messageContent,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER
+      });
+
+    } else {
+      flavorText = 'Hit to the heart!'
+      messageContent = this.actor.name + ' will die at the end of Phase 5 without intervention!'
+
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: flavorText,
+        content: messageContent,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER
+      });
+    }
+    
+  }
 
   /** Helper Functions */
 

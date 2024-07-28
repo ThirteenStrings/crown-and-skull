@@ -2,7 +2,7 @@
 <section data-tab='enemy'>
 
     {{! Header First Row}}
-    <div class='grid grid-2col flexrow' style="margin-top: -25px; padding: 0px">
+    <div class='grid grid-2col flexrow enemy-header'>
 
         {{! First Column Character Image}}
         <img
@@ -16,7 +16,7 @@
         />
 
         {{! Second Column Information}}
-        <div class='flexcol'>
+        <div class='flexcol' style="margin-top: -24px;">
             <h1 class='charname'>
                 <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
             </h1>
@@ -29,7 +29,8 @@
             />
         </div>
     </div>
-    <div class="grid grid-2col flexrow" style="padding: 10px; border: 2px solid black;">
+
+    <div class="grid grid-2col flexrow enemy-body">
         <div class='flexcol enemy-stats'>
 
             {{! HP Row }}
@@ -130,13 +131,13 @@
         </div>
         <div class="flexcol" style="align-self: flex-start;">
 
-            <h2>{{localize 'CRASK.Actor.base.FIELDS.tactic1.label'}}</h2>
-            <textarea id="tactic1" name="system.tactic1" rows="3" cols="10">{{{system.tactic1}}}</textarea>
+            <h3>{{localize 'CRASK.Actor.base.FIELDS.tactic1.label'}}</h3>
+            <textarea id="tactic1" name="system.tactic1" rows="4" cols="10">{{{system.tactic1}}}</textarea>
 
-            <h2>{{localize 'CRASK.Actor.base.FIELDS.tactic25.label'}}</h2>
-            <textarea id="tactic25" name="system.tactic25" rows="3" cols="10">{{{system.tactic25}}}</textarea>
+            <h3>{{localize 'CRASK.Actor.base.FIELDS.tactic25.label'}}</h3>
+            <textarea id="tactic25" name="system.tactic25" rows="4" cols="10">{{{system.tactic25}}}</textarea>
 
-            <h2>{{localize 'CRASK.Actor.base.FIELDS.tactic6.label'}}</h2>
+            <h3>{{localize 'CRASK.Actor.base.FIELDS.tactic6.label'}}</h3>
             <textarea id="tactic6" name="system.tactic6" rows="4" cols="10">{{{system.tactic6}}}</textarea>
 
         </div>

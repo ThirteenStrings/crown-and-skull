@@ -9,37 +9,35 @@
       <div class="flexrow" style="height: 57px;">
         <div class="item-image" style="margin-right: 5px;">
           <a data-action='viewDoc'>
-            <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+            <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
           </a>
         </div>
         <div class="flexcol">
-          <div class='item-name'>{{item.name}}</div>
+          <div class='item-name'>{{item.name}}{{#unless item.system.equipped}}{{#ifGreaterThan item.system.def 0}}<b style="color: red; font-size: 12px;"> [Unequipped]</b>{{/ifGreaterThan}}{{/unless}}</div>
           <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
         </div>
       </div>
       {{!-- Control Row --}}
       <div class="flexrow">
-        {{#if @root.editable}}
-          <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
-            <i class='fas fa-trash'></i>
-          </a>
-        {{/if}}
-        <div class="small-control" title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}"><i class="fas fa-coins"></i></div>
-        <div class="toggle-state small-control clickable" title="{{#if item.system.damaged}}Damaged: Click to Repair{{else}}Intact: Click to Break{{/if}}" data-action="dmgToggle">
+        <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Equipment'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+          <i class='fas fa-trash'></i>
+        </a>
+        <div class="toggle-state small-control clickable" title="{{#if item.system.damaged}}Item Damaged ◇ Click: Repair{{else}}Item Intact ◇ Click: Break{{/if}}" data-action="dmgToggle">
             <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
         </div>
+        <div title="Hero Point Cost" style="max-width: 45px;"><i class="fas fa-coins"></i> {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}</div>
         {{#if item.system.def}}
-          <div title="Defense{{#if item.system.equipped}}: Currently Equipped, Click to Doff{{else}}: Not Currently Equipped, Click to Don{{/if}}" class="clickable" data-action="equipToggle"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
+          <div title="Defense{{#if item.system.equipped}} ◇ Currently Equipped ◇ Click to Doff{{else}} ◇ Not Currently Equipped ◇ Click to Don{{/if}}" class="clickable" data-action="equipToggle"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
             {{#if item.system.equipped}}{{item.system.def}}{{else}}-{{/if}}
           </div>
         {{/if}}
         {{#if item.system.uses.max}}
-          <div title="Uses Remaining, Click to Decrease, Ctr+Click to Increase" class="uses-remaining clickable" data-action="updateUses">
+          <div title="Uses Remaining ◇ Click: Decrease ◇ Ctrl: Increase" class="uses-remaining clickable" data-action="updateUses">
             <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
           </div>
         {{/if}}
         {{#if item.system.dmg}}
-          <div title="Damage" class="rollable" data-roll-type="item" data-action="roll"><i class="fas fa-swords"></i> {{item.system.dmg}}</div>
+          <div title="Damage" class="clickable" data-roll-type="Damage" data-action="damageRoll"><i class="fas fa-swords"></i> {{item.system.dmg}}</div>
         {{/if}}
       </div>
     </li>
@@ -57,12 +55,12 @@
             <div class="left-simple flexcol">
               <div class='item-image'>
                   <a data-action='viewDoc'>
-                  <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+                  <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
                   </a>
               </div>
               <div class='item-controls flexrow'>
                   {{#if @root.editable}}
-                  <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Flora'}}' data-action='deleteDoc'>
+                  <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Flora'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
                       <i class='fas fa-trash'></i>
                   </a>
                   {{/if}}
@@ -89,12 +87,12 @@
           <div class="left-simple flexcol" style="max-width: 35px;">
             <div class='item-image'>
                 <a data-action='viewDoc'>
-                <img src='{{item.img}}' title='{{item.name}}' width='30' height='30'/>
+                <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='30' height='30'/>
                 </a>
             </div>
             <div class='item-controls flexrow'>
                 {{#if @root.editable}}
-                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Small Item'}}' data-action='deleteDoc'>
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Small Item'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
                     <i class='fas fa-trash'></i>
                 </a>
                 {{/if}}
@@ -140,7 +138,7 @@
         <div class="flexrow" style="height: 57px;">
           <div class="item-image" stlye="margin-right: 5px;">
             <a data-action='viewDoc'>
-              <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+              <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
             </a>
           </div>
           <div class="flexcol">
@@ -151,7 +149,7 @@
         {{!-- Control Row --}}
         <div class="flexrow">
           {{#if @root.editable}}
-            <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+            <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Large Item'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
               <i class='fas fa-trash'></i>
             </a>
           {{/if}}

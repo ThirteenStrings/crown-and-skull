@@ -52,12 +52,12 @@
         <div class="flexcol left-simple">
             <div class='item-image'>
             <a data-action='viewDoc'>
-                <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+                <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
             </a>
             </div>
             <div class='item-controls flexrow'>
             {{#if @root.editable}}
-                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Skill'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
                 <i class='fas fa-trash'></i>
                 </a>
             {{/if}}

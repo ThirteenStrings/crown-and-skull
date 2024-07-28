@@ -6,6 +6,11 @@ import { CraskActorSheet } from './sheets/actor-sheet.mjs';
 import { CraskItemSheet } from './sheets/item-sheet.mjs';
 // Import combat classes.
 import { CraskCombat } from './documents/combat.mjs';
+// Import chat classes.
+import { CraskRollMessage } from './chat/chat-message.mjs';
+// Import roll classes.
+//import { CraskRoll } from './documents/roll.mjs';
+
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -42,6 +47,7 @@ Hooks.once('init', function () {
   CONFIG.Actor.documentClass = CraskActor;
   CONFIG.Item.documentClass = CraskItem;
   CONFIG.Combat.documentClass = CraskCombat;
+  CONFIG.ChatMessage.documentClass = CraskRollMessage;
 
   // Active Effects are never copied to the Actor,
   // but will still apply to the Actor from within the Item
@@ -70,20 +76,6 @@ Handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
 });
 
-// Helper to split tab sections into dual columns
-Handlebars.registerHelper('splitColumns', function (items, options) {
-  let leftColumn = [];
-  let rightColumn = [];
-  items.forEach((item, index) => {
-    if (index % 2 === 0) {
-      leftColumn.push(item);
-    } else {
-      rightColumn.push(item);
-    }
-  });
-  return options.fn({ leftColumn, rightColumn });
-});
-
 // Helper to check if values are equal
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -97,6 +89,11 @@ Handlebars.registerHelper('ifGreaterThan', function(arg1, arg2, options) {
 // Add an `includes` helper
 Handlebars.registerHelper('includes', function(check, inList) {
   return inList.includes(check);
+});
+
+// Add a roll string validation helper
+Handlebars.registerHelper('isValidRoll', function(str, options) {
+  return Roll.validate(str) ? options.fn(this) : options.inverse(this);
 });
 
 /* -------------------------------------------- */

@@ -3,6 +3,8 @@
  * @extends {Actor}
  */
 
+import { postRollMessage } from '../chat/chat-roll.mjs';
+
 export class CraskActor extends Actor {
   /** @override */
   prepareData() {
@@ -129,5 +131,27 @@ export class CraskActor extends Actor {
       
       return super.getDefaultArtwork(itemData);
     };
+
+/*
+  ROLLS
+   */
+
+  async roll(name, group, options = { mod: 0, targetOffset: 0 }) {
+    
+    // Get the attribute, either in attributes or efforts
+    const attribute = this.system[group][name];
+    if (attribute == null) throw `Attribute ${group}.${name} not found in actor`;
+    let dice = diceMap[name];
+
+    // Determine the modifier, depending on if actor or monster
+    let mod = parseInt(options.mod);
+    if (this.type === 'character') mod += attribute.total;
+    else if (this.type === 'monster') mod += attribute + this.system[group].all + this.system.allRollsMod;
+
+    // Do the roll
+    let formula = `@dice`;
+    const roll = new Roll(formula, { dice: dice, mod: mod, name: name });
+    postRollMessage(this, roll, undefined, { isHardSuitRoll });
+  }
 
 }

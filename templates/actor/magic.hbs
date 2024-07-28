@@ -6,10 +6,10 @@
     {{#each spells as |item id|}}
     <li class='item spell flexcol {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
       <!-- First Row -->
-      <div class="flexrow" style="height: 55px;">
+      <div class="flexrow" style="height: 57px;">
         <div class='item-image' style="margin-right: 5px;">
           <a data-action='viewDoc'>
-            <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+            <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
           </a>
         </div>
         <div class="flexcol">
@@ -20,13 +20,29 @@
       {{! Control Row }}
       <div class='flexrow'>
         {{#if @root.editable}}
-          <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+          <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Spell'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
             <i class='fas fa-trash'></i>
           </a>
         {{/if}}
-        <div class="small-control" title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}"><i class="fas fa-coins"></i></div>
+        <div title="Hero Point Cost" style="max-width: 45px;"><i class="fas fa-coins"></i> {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}</div>
+        {{#if item.system.uses.max}}
+          <div title="Uses Remaining ◇ Click: Decrease ◇ Ctrl: Increase" class="uses-remaining clickable" data-action="updateUses">
+            <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
+          </div>
+        {{/if}}
+        {{#if item.system.dmg}}
+          <div title="Effect" class="clickable" data-roll-type="Effect" data-action="damageRoll"><i class="fas fa-wand-sparkles"></i> {{item.system.dmg}}</div>
+        {{/if}}
+        {{#if item.system.duration}}
+          <div title="Duration" class="{{#isValidRoll item.system.duration}}clickable" data-roll-type="Duration" data-action="damageRoll{{/isValidRoll}}"><i class="fas fa-hourglass-half"></i> {{item.system.duration}}</div>
+        {{/if}}
+        {{#if item.system.def}}
+          <div title="{{#if item.system.equipped}}Currently Active, Click to Deactivate{{else}}Not Currently Active, Click to Activate{{/if}}" class="clickable" data-action="equipToggle" style="max-width:30px;"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
+            {{#if item.system.equipped}}{{item.system.def}}{{else}}-{{/if}}
+          </div>
+        {{/if}}
         {{#ifEquals item.system.range "NA"}}{{else}}
-          <div title="Range: {{item.system.range}}" class="small-control" data-action="rangeToggle">
+          <div title="Range: {{item.system.range}}" data-action="rangeToggle">
             <i class="fas 
               {{#ifEquals item.system.range "Touch"}}fa-hand-sparkles{{/ifEquals}}
               {{#ifEquals item.system.range "Ranged"}}fa-share{{/ifEquals}}
@@ -34,22 +50,6 @@
             </i>
           </div>
         {{/ifEquals}}
-        {{#if item.system.uses.max}}
-          <div title="Uses Remaining, Click to Decrease, Ctr+Click to Increase" class="uses-remaining clickable" data-action="updateUses">
-            <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
-          </div>
-        {{/if}}
-        {{#if item.system.dmg}}
-          <div title="Effect" class="rollable" data-roll-type="item" data-action="roll"><i class="fas fa-wand-sparkles"></i> {{item.system.dmg}}</div>
-        {{/if}}
-        {{#if item.system.duration}}
-          <div title="Duration" class="rollable" data-roll-type="item" data-action="roll"><i class="fas fa-hourglass-half"></i> {{item.system.duration}}</div>
-        {{/if}}
-        {{#if item.system.def}}
-          <div title="{{#if item.system.equipped}}Currently Active, Click to Deactivate{{else}}Not Currently Active, Click to Activate{{/if}}" class="clickable" data-action="equipToggle" style="max-width:30px;"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
-            {{#if item.system.equipped}}{{item.system.def}}{{else}}-{{/if}}
-          </div>
-        {{/if}}
       </div>
     </li>
     {{/each}}
@@ -65,12 +65,12 @@
         <div class="flexcol left-simple">
           <div class='item-image'>
             <a data-action='viewDoc'>
-              <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+              <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
             </a>
           </div>
           <div class='item-controls flexrow'>
             {{#if @root.editable}}
-              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Advancement'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
                 <i class='fas fa-trash'></i>
               </a>
             {{/if}}
@@ -85,6 +85,7 @@
       </li>
       {{/each}}
     </ul>
+  {{else}}<div class="align-center">No magic advancements taken.</div>
   {{/ifGreaterThan}}
 
 </section>

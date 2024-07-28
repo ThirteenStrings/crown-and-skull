@@ -1,19 +1,19 @@
 {{! Sheet Header }}
 <header class='sheet-header'>
     
-    {{! Main Header Row}}
-    <div class="grid grid-4col flexrow">
+  {{! Main Header Row}}
+  <div class="grid grid-3col flexrow">
 
-      {{! Hero Points Section}}
-      <div class='grid grid-5col flexrow' style="align-items: flex-end;">
-        <div class='resource-label'>
-          {{localize 'CRASK.Actor.base.FIELDS.heropoints.label'}}
-        </div>
-        <div class="flexcol input-wrapper">
-          <label class="hero-points-label">{{localize 'CRASK.Actor.base.FIELDS.current.label'}}</label>
+    {{! Hero Points Section}}
+    <div class='hero-points-wrapper'>
+      <div class='resource-label hero-points-label-container'>
+        {{localize 'CRASK.Actor.base.FIELDS.heropoints.label'}}
+      </div>
+      <div class="grid grid-4col hero-points-input-container" title="Current Hero Points (Accounted for on sheet)">
+        <div class="input-wrapper flexcol">
+          <label class="hero-points-label">Curr</label>
           <input
             id="current-hero-points"
-            title="Current Hero Points"
             type='text'
             name='system.heropoints.used'
             value={{actor.system.heropoints.used}}
@@ -21,11 +21,10 @@
             readonly
           />
         </div>
-        <div class="flexcol input-wrapper">
+        <div class="input-wrapper flexcol" title="Max Hero Points Available (50 + Rewards)">
           <label class="hero-points-label">Max</label>
           <input
             id="max-hero-points"
-            title="Max Hero Points"
             type='text'
             name='system.heropoints.max'
             value={{actor.system.heropoints.max}}
@@ -33,11 +32,10 @@
             readonly
           />
         </div>
-        <div class="flexcol input-wrapper">
-          <label class="hero-points-label">Remaining</label>
+        <div class="input-wrapper flexcol" title="Remaining Hero Points">
+          <label class="hero-points-label">Rem</label>
           <input
-            id="max-hero-points"
-            title="Max Hero Points"
+            id="remaining-hero-points"
             type='text'
             name='system.heropoints.remaining'
             value={{actor.system.heropoints.remaining}}
@@ -45,11 +43,10 @@
             readonly
           />
         </div>
-        <div class="flexcol input-wrapper">
+        <div class="input-wrapper flexcol" title="Hero Points Lost to Consumables and Destroyed Equipment">
           <label class="hero-points-label">{{localize 'CRASK.Actor.base.FIELDS.lost.label'}}</label>
           <input
             id="lost-hero-points"
-            title="Hero Points Lost to Consumables and Destroyed Equipment"
             type='text'
             name='system.heropoints.lost'
             value={{actor.system.heropoints.lost}}
@@ -57,28 +54,81 @@
           />
         </div>
       </div>
+    </div>
 
+    {{! Attrition Points Section}}
+    <div class='attrition-points-wrapper'>
+      <div class='resource-label hero-points-label-container'>
+          Attrition
+      </div>
+      <div class="grid grid-4col hero-points-input-container">
+        
+        <div class="input-wrapper flexcol" title="Roll Equipment Attrition">
+          <img
+            class="clickable"
+            src="systems/crown-and-skull/assets/icons/Black/d10E.svg"
+            data-action="rollEquipmentAttrition"
+            style="max-height:50px; margin: 0px;"
+          />
+        </div>
+        <div class="input-wrapper flexcol" title="Remaining Equipment Attrition">
+          <label class="hero-points-label flexrow">Equip</label>
+          <input
+            id="max-hero-points"
+            type='text'
+            name='system.attrition.equipment.current'
+            value={{actor.system.attrition.equipment.current}}
+            data-dtype='Number'
+            readonly
+          />
+        </div>
+        <div class="input-wrapper flexcol" title="Remaining Flesh Attrition">
+          <label class="hero-points-label flexrow">Flesh</label>
+          <input
+            id="current-hero-points"
+            type='text'
+            name='system.attrition.flesh.current'
+            value={{actor.system.attrition.flesh.current}}
+            data-dtype='Number'
+            readonly
+          />
+        </div>
+        <div class="input-wrapper flexcol" title="Roll Flesh Attrition">
+          <img
+            class="clickable"
+            src="systems/crown-and-skull/assets/icons/Black/d10F.svg"
+            data-action="rollFleshAttrition"
+            style="max-height:50px; margin: 0px;"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="flexrow">
       {{! Defense Value}}
-      <div class="flexrow defense-value"title="{{localize 'CRASK.Actor.base.FIELDS.defense.label'}}">
+      <div class="flexrow defense-value clickable" title="Roll Defense ◇ Ctrl: Quick Roll" data-roll-type="Defense" data-action="skillRoll">
         {{actor.system.defense.value}}
       </div>
 
       {{! Phase Selector }}
       <img
-        class="phase-selector clickable"
+        class="clickable"
         src="systems/crown-and-skull/assets/icons/Black/Initiative.svg"
         title="Select Combat Phase"
         data-action="initiativeSelect"
+        style="margin: 0px;"
       />
       
       {{! Hero Coin }}
       <img
-        class='hero-coin clickable'
+        class='clickable'
         src="systems/crown-and-skull/assets/HeroCoin{{#if actor.system.heroCoinAvailable}}{{else}}Grey{{/if}}.svg"
-        title='{{#if actor.system.heroCoinAvailable}}Click to Use Hero Coin!{{else}}Click to Gain Hero Coin{{/if}}'
+        title='{{#if actor.system.heroCoinAvailable}}Reroll any roll entirely. ◇ or ◇ Maximize damage or effect roll.{{else}}Click to Gain Hero Coin{{/if}}'
         data-action="useHeroCoin"
+        style="margin: 0px;"
       />
-
     </div>
+
+  </div>
 
 </header>

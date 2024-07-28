@@ -19,6 +19,16 @@
         "min": 0,
         "max": 18
       },
+      "attrition": {
+        "flesh": {
+          "current": 0,
+          "max": 0
+        },
+        "equipment": {
+          "current": 0,
+          "max": 0
+        }
+      },
       "heroCoinAvailable": false,
       "lineage": "Human",
       "hometown": "Gardenburrow"

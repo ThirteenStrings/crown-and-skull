@@ -1,22 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 :root {
-  --crask-c-dark: #191813;
-  --crask-c-faint: #c9c7b8;
-  --crask-c-beige: #b5b3a4;
-  --crask-c-tan: #444444;
-  --crask-c-white: #ffffff;
-  --crask-c-black: #000000;
-  --crask-c-groove: #eeede0;
-}
-
-.theme-dark {
-  --crask-c-dark: #191813;
-  --crask-c-faint: #c9c7b8;
-  --crask-c-beige: #b5b3a4;
-  --crask-c-tan: #444444;
-  --crask-c-white: #ffffff;
-  --crask-c-black: #000000;
-  --crask-c-groove: #eeede0;
+  --crask-primary-color: #b5b3a4; /* Beige */
+  --crask-accent-color: #444444; /* Dark gray */
+  --crask-bg-color: #191813; /* Dark */
+  --crask-text-color: #ffffff; /* White */
+  --crask-font-main: 'Roboto', sans-serif;
+  --crask-font-special: 'GoudyMediaeval', serif;
 }
 
 @font-face {
@@ -39,8 +28,8 @@
 
 .clickable:hover, .clickable:focus {
   color: black;
-  text-shadow: 0 0 10px red;
   cursor: pointer;
+  filter: sepia(100%) drop-shadow(0px 0px 10px red);
 }
 
 .grid,
@@ -240,30 +229,30 @@
 .crask .item-form {
   font-family: "Roboto", sans-serif;
 }
+
 .crask {
   background-image: url(../assets/Cardstock.jpeg);
   background-size: 100%;
   font-size: 16px;
   color: black;
 }
+
 .crask img {
   border: 0px;
 }
+
 .crask textarea {
   font-family: 'Signika';
   font-size: 16px;
   border: black 0px;
   padding: 5px;
 }
+
 .crask .profile-img {
-  height: 120px;
-  max-width: 120px;
+  height: 100px;
+  max-width: 100px;
 }
-.crask .hero-coin {
-  height: 64px;
-  margin-right: 0px;
-  max-width:64px;
-}
+
 .crask h1 {
   margin-top: -10px;
 }
@@ -278,8 +267,8 @@
   background-image: url(../assets/TitleUnderline.svg);
   background-color: transparent;
   background-repeat: no-repeat;
-  background-position-y: 40px;
-  height: 60px !important;
+  background-position-y: 30px;
+  height: 50px !important;
   border: none;
   color: black;
 }
@@ -324,13 +313,11 @@
   background: transparent !important;
   --checkbox-size: 30px !important;
 }
+
 .dialog .phase-checkbox::before {
   color: transparent !important;
 }
-.crask .phase-selector {
-  font-size: 32px;
-  max-width: 64px;
-}
+
 .crask .sheet-phase-selector {
   background-image: url(../assets/PhaseTrackerOverlay.png);
   background-size: 140px;
@@ -375,16 +362,34 @@
 .crask .origin-select select {
   cursor: pointer;
 }
+
 .crask h2 {
-  font-size: 35px;
+  font-size: 30px;
   font-family: GoudyMediaeval;
   text-align: center;
-  margin: 0px;
-  margin-top: 10px !important;
+  padding-top: 11px;
+  padding-bottom: 6px;
   text-shadow: 1px 1px 4px darkgrey;
   color: black;
-  border-bottom: 1px solid var(--crask-c-black)
+  border-top: 4px double black;
+  border-bottom: 4px double black;
+  background-color: rgba(100, 100, 100, 0.1);
+  margin: 0px;
+  border-radius: 7px;
 }
+
+.crask h3 {
+  font-size: 28px;
+  font-family: GoudyMediaeval;
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 3px;
+  text-shadow: 1px 1px 4px darkgrey;
+  color: black;
+  border-bottom: 2px outset black;
+  margin: 0px;
+}
+
 .crask.actor .sheet-tabs.tabs {
   gap: 0px;
   border: 0px;
@@ -429,26 +434,70 @@
 .crask .tab.description .editor {
   height: 100%;
 }
+
 .crask .hero-points-label {
-  width: 70px;
+  margin-bottom: 5px;
 }
-.crask .resource-label {
+
+.crask .attrition-points-wrapper, .hero-points-wrapper {
+  position: relative;
+  padding-top: 10px;
+  border: 2px solid black;
+  border-top: 0px;
+}
+.crask .input-wrapper label {
+  font-size: 12px;
+  margin-bottom: -2px;
+}
+.crask .hero-points-label-container {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.crask .hero-points-input-container {
+  padding: 5px;
+  margin: 0px;
+}
+.crask .attrition-points-wrapper .resource-label, .hero-points-wrapper .resource-label {
   font-family: 'GoudyMediaeval';
   font-size: 22px;
   text-align: center;
 }
-.crask .resource {
-  text-align: center;
+.crask .attrition-points-wrapper .resource-label:before, .hero-points-wrapper .resource-label:before{
+  right: 105%;
+  border-top: 2px solid black;
+  content: '';
+  position: absolute;
+  top: 43%;
+}
+.crask .attrition-points-wrapper .resource-label:after, .hero-points-wrapper .resource-label:after{
+  left: 105%;
+  border-top: 2px solid black;
+  content: '';
+  position: absolute;
+  top: 43%;
+}
+.crask .hero-points-wrapper .resource-label:before, .hero-points-wrapper .resource-label:after {
+  width: 50%;
+}
+.crask .attrition-points-wrapper .resource-label:before, .attrition-points-wrapper .resource-label:after {
+  width: 95%
 }
 .crask .input-wrapper {
-  display: flex;
   align-items: center;
   justify-content: flex-end;
   width: 100%;
   text-align: center;
-  margin-right: 10px;
   height: 40px;
 }
+
+/*END HERE*/
+
+.crask .resource {
+  text-align: center;
+}
+
 .crask .input-wrapper input:last-of-type {
   margin-right: 0;
 }
@@ -569,6 +618,7 @@
 }
 .crask .reward-value {
   font-size: 50px;
+  text-align: center;
 }
 .crask .item-details {
   display: flex;
@@ -607,6 +657,9 @@
 .crask .tab-list .line3 {
   height: 57px;
 }
+.crask .tab-list .line4 {
+  height: 73px;
+}
 .crask .tab-list .small-control {
   max-width: 15px;
   margin-right: 5px;
@@ -638,19 +691,37 @@
 .crask .item.spell {
   background-image: url("../assets/borders/Black/SpellBorder.svg");
   background-size: 300px 100px;
+  padding: 12px;
 }
 .crask .item.reward {
   background-image: url("../assets/borders/Black/RewardBorder.svg");
   background-size: 300px 100px;
-  padding: 0px 20px;
 }
 .crask .fixoverflow {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */  
 }
+
 .crask .fixoverflow::-webkit-scrollbar {
   display: none;
 }
+
+.crask .enemy-header {
+  margin-top: -10px;
+  padding: 5px;
+  background-color: rgba(100,100,100,0.1);
+  border-top: 4px double black;
+  border-bottom: 4px double black;
+  border-radius: 7px;
+}
+
+.crask .enemy-body {
+  padding: 10px; 
+  border-top: 4px double black;
+  border-bottom: 4px double black;
+  border-radius: 7px;
+}
+
 .crask .enemy-stats {
   max-width: 154px;
   text-align: center;
@@ -658,12 +729,127 @@
   padding-right: 20px;
   border-right: 2px solid black;
 }
+
 .crask .enemy-stats input {
   margin-bottom: 10px;
 }
+
+.crask .enemy-stats .resource-label {
+  font-family: GoudyMediaeval;
+  font-size: 20px;
+}
+
+/* Chat Modifications */
+
+.chat-message {
+  background-image: url(../assets/Cardstock.jpeg);
+  background-size: 100%;
+}
+
+.chat-message .message-header {
+  border-top: 4px double black;
+  border-bottom: 4px double black;
+  background-color: rgba(100, 100, 100, 0.1);
+  padding: 5px;
+  border-radius: 6px;
+}
+
+.chat-message .message-header .flavor-text {
+  font-size: var(--font-size-14);
+  text-align: center;
+  color: black;
+  border-top: 1px solid black;
+  padding-top: 5px;
+  font-weight: bold;
+}
+
+.chat-message .message-content {
+  text-align: center;
+  border-top: 4px double black;
+  border-bottom: 4px double black;
+  border-radius: 7px;
+  margin-top: 5px;
+  padding: 5px;
+}
+
 .message-sender {
-  font-size: 30px;
+  font-size: 24px;
   color: black;
   font-family: GoudyMediaeval;
-  padding: 6px 0px;
+  padding: 10px 0px;
+}
+
+.die-container {
+  position: relative; 
+  display: inline-block; 
+  width: 100%; 
+  height: 60px;
+}
+
+.die-img {
+  border: none; 
+  width: 100%; 
+  height: 100%;
+}
+
+.die-result {
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  color: white; 
+  font-size: 35px; 
+  font-weight: bold; 
+  text-shadow: 0px 0px 10px black; 
+  width: 100%;
+}
+
+.constant-result {
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  color: black; 
+  font-size: 35px; 
+  font-weight: bold; 
+  text-shadow: 0px 0px 10px white; 
+  width: 60px; 
+  border-top: 4px double; 
+  border-bottom: 4px double; 
+  border-radius: 10px; 
+  background-color: rgba(100,100,100,0.2);
+}
+
+.skill-constant {
+  font-size: 35px;
+  font-weight: bold;
+  text-shadow: 0px 0px 10px white;
+  width: 60px;
+  border-top: 4px double;
+  border-bottom: 4px double;
+  border-radius: 10px;
+  background-color: rgba(100, 100, 100, 0.2);
+  align-self: center;
+  margin-bottom: 4px;
+}
+
+.skill-output {
+  max-height: 60px;
+}
+
+.skill-roll-between {
+  font-size: 35px;
+  padding-top: 34px;
+  max-width: 25px;
+}
+
+.roll-container {
+  padding: 0px; 
+  margin: 0px;
+}
+
+.roll-container label {
+  max-height: 30px;
+  font-weight: bold;
+  line-height: 25px;
 }

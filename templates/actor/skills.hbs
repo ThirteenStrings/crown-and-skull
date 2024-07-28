@@ -8,16 +8,18 @@
       <div class="flexcol left-simple">
         <div class='item-image'>
           <a data-action='viewDoc'>
-            <img src='{{item.img}}' title='{{item.name}}' width='40' height='40'/>
+            <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
           </a>
         </div>
         <div class='item-controls flexrow'>
           {{#if @root.editable}}
-            <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Equipment'}}' data-action='deleteDoc'>
+            <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Skill'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
               <i class='fas fa-trash'></i>
             </a>
           {{/if}}
-          <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+          <div class="toggle-state clickable small-control" title="{{#if item.system.damaged}}Damaged: Click to Restore{{else}}Intact: Click to Damage{{/if}}" data-action="dmgToggle">
+            <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
+          </div>
         </div>
       </div>
       <!-- Center column for item details -->
@@ -27,11 +29,8 @@
       </div>
       <!-- Right column for target number and controls -->
       <div class="flexcol left-simple">
-        <div class='skill-target'>{{item.system.cost}}</div>
+        <div class='skill-target clickable' title="Roll Skill ◇ Ctrl: Quick Roll" data-roll-type="Skill" data-action="skillRoll">{{item.system.cost}}</div>
         <div class='item-controls flexrow' style="margin-top: -5px;">
-          <div class="toggle-state clickable" title="{{#if item.system.damaged}}Damaged: Click to Restore{{else}}Intact: Click to Damage{{/if}}" data-action="dmgToggle">
-            <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
-          </div>
           <div title="External Modifiers">{{#ifGreaterThan item.system.modifier -1}}+{{item.system.modifier}}{{else}}{{item.system.modifier}}{{/ifGreaterThan}}</div>
         </div>
       </div>
