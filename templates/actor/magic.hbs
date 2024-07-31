@@ -30,8 +30,8 @@
             <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
           </div>
         {{/if}}
-        {{#if item.system.dmg}}
-          <div title="Effect" class="clickable" data-roll-type="Effect" data-action="damageRoll"><i class="fas fa-wand-sparkles"></i> {{item.system.dmg}}</div>
+        {{#if item.system.effect}}
+          <div title="Effect" class="clickable" data-roll-type="Effect" data-action="damageRoll"><i class="fas fa-wand-sparkles"></i> {{item.system.effect}}</div>
         {{/if}}
         {{#if item.system.duration}}
           <div title="Duration" class="{{#isValidRoll item.system.duration}}clickable" data-roll-type="Duration" data-action="damageRoll{{/isValidRoll}}"><i class="fas fa-hourglass-half"></i> {{item.system.duration}}</div>
@@ -85,7 +85,6 @@
       </li>
       {{/each}}
     </ul>
-  {{else}}<div class="align-center">No magic advancements taken.</div>
   {{/ifGreaterThan}}
 
 </section>

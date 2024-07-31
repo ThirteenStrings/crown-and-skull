@@ -20,8 +20,7 @@ export function updateHeroPoints(actor) {
   
     actor.system.heropoints.spent = spentHeroPoints;
     actor.system.heropoints.max = maxHeroPoints;
-    actor.system.heropoints.used = spentHeroPoints + actor.system.heropoints.lost;
-    actor.system.heropoints.remaining = maxHeroPoints - actor.system.heropoints.used;
+    actor.system.heropoints.remaining = maxHeroPoints - spentHeroPoints - actor.system.heropoints.lost;
   }
 }
 

@@ -256,22 +256,28 @@
 .crask h1 {
   margin-top: -10px;
 }
+
 .crask h1.charname {
   border: none;
   margin: 0px;
+  display: flex;
 }
+
 .crask h1.charname input {
-  font-size: 25px;
+  font-size: 30px;
   font-family: GoudyMediaeval;
   text-align: center;
-  background-image: url(../assets/TitleUnderline.svg);
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position-y: 30px;
-  height: 50px !important;
-  border: none;
+  border-top: 4px double black;
+  border-bottom: 4px double black;
+  border-left: none;
+  border-right: none;
+  border-radius: 7px;
+  height: 45px;
+  padding-top: 6px;
+  background: transparent;
   color: black;
 }
+
 .dialog .phase-checkbox:checked::before {
   content: "✘" !important;
   color: red !important;
@@ -282,12 +288,14 @@
   font-size: 42px !important;
   line-height: 16px !important;
 }
+
 .dialog .resource-label {
   font-family: 'GoudyMediaeval';
   font-size: 20px;
   text-align: center;
   margin-bottom: -10px;
 }
+
 .dialog .sheet-phase-selector{
   background-image: url(../assets/PhaseTrackerOverlay.png);
   background-size: 250px;
@@ -296,6 +304,7 @@
   width: 230px;
   height: 45px;
 }
+
 .dialog .phase-label {
   display: flex;
   justify-content: center;
@@ -303,6 +312,7 @@
   height: 38px;
   margin-top: -20px;
 }
+
 .dialog .phase-checkbox {
   appearance: none !important;
   width: 16px !important;
@@ -346,14 +356,15 @@
 }
 .crask .defense-value {
   background-image: url(../assets/Shield.svg);
-  background-size: 46px;
+  background-size: 31px;
   background-repeat: no-repeat;
   background-position: 50% 0px;
-  height: 60px;
+  height: 39px;
   font-size: 25px;
   display: flex;
   justify-content: center;
-  max-width: 64px;
+  min-width: 40px;
+  color: beige;
 }
 .crask .origin-select {
   font-family: GoudyMediaeval;
@@ -439,51 +450,64 @@
   margin-bottom: 5px;
 }
 
-.crask .attrition-points-wrapper, .hero-points-wrapper {
+.crask .attrition-points-wrapper, .hero-points-wrapper, .combat-wrapper {
   position: relative;
   padding-top: 10px;
   border: 2px solid black;
   border-top: 0px;
 }
+
 .crask .input-wrapper label {
   font-size: 12px;
   margin-bottom: -2px;
 }
+
 .crask .hero-points-label-container {
   position: absolute;
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
 }
+
 .crask .hero-points-input-container {
   padding: 5px;
   margin: 0px;
 }
-.crask .attrition-points-wrapper .resource-label, .hero-points-wrapper .resource-label {
+
+.crask .attrition-points-wrapper .resource-label, .hero-points-wrapper .resource-label, .combat-wrapper .resource-label {
   font-family: 'GoudyMediaeval';
   font-size: 22px;
   text-align: center;
 }
-.crask .attrition-points-wrapper .resource-label:before, .hero-points-wrapper .resource-label:before{
+
+.crask .attrition-points-wrapper .resource-label:before, .hero-points-wrapper .resource-label:before, .combat-wrapper .resource-label:before {
   right: 105%;
   border-top: 2px solid black;
   content: '';
   position: absolute;
   top: 43%;
 }
-.crask .attrition-points-wrapper .resource-label:after, .hero-points-wrapper .resource-label:after{
+
+.crask .attrition-points-wrapper .resource-label:after, .hero-points-wrapper .resource-label:after, .combat-wrapper .resource-label:after {
   left: 105%;
   border-top: 2px solid black;
   content: '';
   position: absolute;
   top: 43%;
 }
+
 .crask .hero-points-wrapper .resource-label:before, .hero-points-wrapper .resource-label:after {
-  width: 50%;
+  width: 49%;
 }
+
 .crask .attrition-points-wrapper .resource-label:before, .attrition-points-wrapper .resource-label:after {
-  width: 95%
+  width: 94%
 }
+
+.crask .combat-wrapper .resource-label:before, .combat-wrapper .resource-label:after {
+  width: 110%
+}
+
 .crask .input-wrapper {
   align-items: center;
   justify-content: flex-end;
@@ -631,6 +655,7 @@
 }
 .crask .damaged {
   color: red;
+  opacity: 40%
 }
 .crask .tab-list {
   padding: 0px;
@@ -678,7 +703,7 @@
   background-size: 300px 100px;
 }
 .crask .item.smallitem {
-  background-image: url(../assets/borders/Black/SmallItemBorder.svg);
+  background-image: url("../assets/borders/Black/SmallItemBorder.svg");
   background-size: 150px 100px;
   padding: 10px;
   width: 150px;
@@ -709,10 +734,6 @@
 .crask .enemy-header {
   margin-top: -10px;
   padding: 5px;
-  background-color: rgba(100,100,100,0.1);
-  border-top: 4px double black;
-  border-bottom: 4px double black;
-  border-radius: 7px;
 }
 
 .crask .enemy-body {

@@ -33,6 +33,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       dmgToggle: this._dmgToggle,
       updateUses: this._updateUses,
       equipToggle: this._equipToggle,
+      pouchToggle: this._pouchToggle,
       editImage: this._editImage,
       useHeroCoin: this._useHeroCoin,
       initiativeSelect: this._initiativeSelect,
@@ -283,14 +284,17 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    */
   _prepareItems(context) {
     // Initialize containers.
+    
+    let updateData = {}
+    updateData['system.hasPouch'] = false;
+    updateData['system.hasBackpack'] = false;
+    updateData['system.hasHerbalistsPouch'] = false;
+
     const equipment = [];
-    const undamagedEquipment = [];
-    const damagedEquipment = [];
-    const smallitems = [];
     const largeitems = [];
     const skills = [];
+    const undamagedEquipment = [];
     const undamagedSkills = [];
-    const damagedSkills = [];
     const spells = [];
     const alchemical = [];
     const rewards = [];
@@ -299,22 +303,30 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     const flaws = [];
     const abilities = [];
     const companions = [];
+    const pouchItems = [];
 
     // Iterate through items, allocating to containers
     for (let i of this.document.items) {
 
       // Append to equipment.
       if (i.type === 'equipment') {
-        equipment.push(i);
-        if (i.damaged) {
-          damagedEquipment.push(i);
-        } else {
-          undamagedEquipment.push(i);
+        if (!i.system.isDamaged) {
+          undamagedEquipment.push(i)
         }
-      }
-      // Append to small items.
-      else if (i.type === 'smallitem') {
-        smallitems.push(i);
+
+        if (i.system.isInPouch && this.document.system.hasPouch) {
+          pouchItems.push(i);
+        } else {
+          equipment.push(i);
+          if (i.name === 'Pouch') {
+            updateData['system.hasPouch'] = true;
+          } else if (i.name === "Herbalist's Pouch") {
+            updateData['system.hasHerbalistsPouch'] = true; 
+          } else if (i.name === "Backpack") {
+            updateData['system.hasBackpack'] = true;
+          }
+        }
+        
       }
       // Append to large items.
       else if (i.type ==='largeitem') {
@@ -323,9 +335,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       // Append to skills.
       else if (i.type === 'skill') {
         skills.push(i);
-        if (i.damaged) {
-          damagedSkills.push(i);
-        } else {
+        if (!i.system.isDamaged) {
           undamagedSkills.push(i);
         }
       }
@@ -365,7 +375,6 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
 
     // Sort then assign
     context.equipment = equipment.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-    context.smallitems = smallitems.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.largeitems = largeitems.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.skills = skills.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.spells = spells.sort((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -378,11 +387,15 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     context.companions = companions.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.undamagedEquipment = undamagedEquipment.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.undamagedSkills = undamagedSkills.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.pouchItems = pouchItems.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
     // Integrate hero points preparation
     updateHeroPoints(this.actor);
     updateDefense(this.actor);
     updateAttrition(this.actor);
+
+    this.document.update(updateData)
+        
   }
 
   /**
@@ -420,7 +433,6 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       const item = this._getEmbeddedDocument(target);
       const whisperTarget = event.altKey ? [game.user.id] : null;
       // Send the item to the chat
-      console.log(this.actor.user);
       let flavorText = "❖ " + item.type.charAt(0).toUpperCase() + item.type.slice(1) + " ❖ " + item.name + " ❖";
       ChatMessage.create({
         speaker: ChatMessage.getSpeaker({actor: this.actor.id}),
@@ -447,15 +459,15 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    */
   static async _deleteDoc(event, target) {
 
-    if(event.ctrlKey) {
-      const doc = this._getEmbeddedDocument(target);
+    const doc = this._getEmbeddedDocument(target);
+
+    if (event.ctrlKey) {
       await doc.delete();
     } else {
       Dialog.confirm({
         title: "Delete Confirmation",
         content: "Are you sure you want to delete this item? \n",
         yes: (Yes) => { 
-          const doc = this._getEmbeddedDocument(target);
           doc.delete();
          },
         no: (No) => { 
@@ -577,11 +589,11 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       let messageContent = '';
 
       if (result === 1) {
-          messageContent = `<p>${this.actor.system.tactic1}</p>`;
+          messageContent = `<p>${this.actor.system.tactics.move}</p>`;
       } else if (result >= 2 && result <= 5) {
-          messageContent = `<p>${this.actor.system.tactic25}</p>`;
+          messageContent = `<p>${this.actor.system.tactics.melee}</p>`;
       } else if (result === 6) {
-          messageContent = `<p>${this.actor.system.tactic6}</p>`;
+          messageContent = `<p>${this.actor.system.tactics.area}</p>`;
       }
 
       // Send the message to the chat
@@ -613,10 +625,12 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       let rollType = event.target.dataset.rollType;
       let rollString = '';
 
-      if (rollType == "Damage" || rollType == "Effect") {
-        rollString = item.system.dmg;
+      if (rollType == "Damage") {
+        rollString = item.system.damage;
       } else if (rollType == "Duration") {
         rollString = item.system.duration;
+      } else if (rollType == "Effect") {
+        rollString = item.system.effect;
       }
 
       // Validate roll string
@@ -722,7 +736,8 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     let targetNumber;
 
     if (rollType === "Defense") {
-      targetNumber = this.actor.system.defense.value;
+      targetNumber = this.actor.system.defense + this.actor.system.defenseModifier;
+      targetNumber = Math.clamp(targetNumber,6,18);
     } else{
       item = this._getEmbeddedDocument(target);
       targetNumber = item.system.cost + item.system.modifier;
@@ -936,11 +951,11 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     let updateData = {};
 
     // Cycle through the states: Equipped -> Not Equipped -> Damaged
-    if (item.system.damaged) {
-      updateData['system.damaged'] = false;
+    if (item.system.isDamaged) {
+      updateData['system.isDamaged'] = false;
     } else {
-      updateData['system.damaged'] = true;
-      updateData['system.equipped'] = false;
+      updateData['system.isDamaged'] = true;
+      updateData['system.isEquipped'] = false;
     }
 
     await item.update(updateData);
@@ -1011,34 +1026,46 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     static async _equipToggle(event, target) {
       event.preventDefault();
       const itemId = target.closest('.item').dataset.itemId;
-  
       const item = this.actor.items.get(itemId);
       if (!item) return;
       let updateData = {};
   
-      // Cycle through the states: Equipped -> Not Equipped -> Damaged
-      if (item.system.equipped) {
-        updateData['system.equipped'] = false;
+      // Cycle through the states: Equipped -> Not Equipped
+      if (item.system.isEquipped) {
+        updateData['system.isEquipped'] = false;
       } else {
-        updateData['system.equipped'] = true;
+        updateData['system.isEquipped'] = true;
       }
   
       await item.update(updateData);
-  
-      // Update the icon and item appearance
-      const icon = target.querySelector('i');
-      const itemElement = target.closest('.item');
-      if (updateData['system.damaged']) {
-        icon.className = 'fas fa-times-circle';
-        itemElement.style.color = 'red';
-      } else if (updateData['system.equipped']) {
-        icon.className = 'fas fa-check-circle';
-        itemElement.style.color = '';
-      } else {
-        icon.className = 'fas fa-box';
-        itemElement.style.color = '';
-      }
     }
+
+  /**
+   * Handle Equipment Pouch Toggle
+   * 
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static async _pouchToggle(event, target) {
+    event.preventDefault();
+    const itemId = target.closest('.item').dataset.itemId;
+
+    const item = this.actor.items.get(itemId);
+    if (!item) return;
+    let updateData = {};
+
+    // Cycle through the states: In Pouch -> Not In Pouch
+    if (item.system.isInPouch) {
+      updateData['system.isInPouch'] = false;
+    } else {
+      updateData['system.isInPouch'] = true;
+      updateData['system.isEquipped'] = false;
+    }
+
+    await item.update(updateData);
+  }
 
   /**
    * Use Hero Coin
@@ -1096,26 +1123,47 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     let undamagedEquipment = [];
     let flavorText = '';
     let messageContent = '';
+    let currentUses;
+    let selectedItem;
 
     for (const i of items) {
-      if (i.type === "equipment" && i.system.damaged === false) {
+      if (i.type === "equipment" && i.system.isDamaged === false && !i.system.isInPouch) {
         undamagedEquipment.push(i);
       }
     }
 
     if (undamagedEquipment.length) {
-      const selectedItem = undamagedEquipment[Math.floor(Math.random()*undamagedEquipment.length)];
-      selectedItem.update({"system.damaged": true});
+      selectedItem = undamagedEquipment[Math.floor(Math.random()*undamagedEquipment.length)];
 
-      flavorText = 'Equipment Attrition!';
-      messageContent = '<b style="color:red"><<</b> ' + selectedItem.name + ' <b style="color:red">>></b> damaged!<br><br>' + this.actor.name + ' has ';
-
-      if (this.actor.system.attrition.equipment.current < 2) {
-        messageContent += 'no Equipment remaining. The next hit will be lethal!';
-      } else {
-        messageContent += this.actor.system.attrition.equipment.current-1 + ' equipment remaining.';
+      if (selectedItem.system.uses.current) {
+        currentUses = selectedItem.system.uses.current
       }
+      
+      messageContent = '<b style="color:red"><<</b> ' + selectedItem.name + ' <b style="color:red">>></b> ';
 
+      if (selectedItem.system.hasMultiAttrition && currentUses > 1) {
+        currentUses --;
+        messageContent += 'lost a use. ' + this.actor.name + ' has ';
+        if (this.actor.system.attrition.equipment < 1) {
+          messageContent += 'no Equipment remaining. The next hit will be lethal!';
+        } else {
+          messageContent += this.actor.system.attrition.equipment + ' equipment remaining.';
+        }
+      } else {
+        if (selectedItem.system.hasMultiAttrition) {
+          currentUses --;
+        }
+        selectedItem.update({"system.isDamaged": true});
+        messageContent += 'damaged!<br><br>' + this.actor.name + ' has ';
+        if (this.actor.system.attrition.equipment < 2) {
+          messageContent += 'no Equipment remaining. The next hit will be lethal!';
+        } else {
+          messageContent += this.actor.system.attrition.equipment -1 + ' equipment remaining.';
+        }
+      }
+      
+      flavorText = 'Equipment Attrition!';
+      
       await ChatMessage.create({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
         flavor: flavorText,
@@ -1134,6 +1182,11 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
         type: CONST.CHAT_MESSAGE_STYLES.OTHER
       });
     }
+
+    if (currentUses !== null && currentUses >= 0) {
+      await selectedItem.update({'system.uses.current': currentUses});
+    }
+    
   }
 
   /**
@@ -1151,24 +1204,24 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     let messageContent = '';
 
     for (const i of items) {
-      if (i.type === "skill" && i.system.damaged === false) {
+      if (i.type === "skill" && i.system.isDamaged === false) {
         undamagedSkills.push(i);
       }
     }
     
     if (undamagedSkills.length) {
       const selectedItem = undamagedSkills[Math.floor(Math.random()*undamagedSkills.length)];
-      selectedItem.update({"system.damaged": true});
+      selectedItem.update({"system.isDamaged": true});
 
       flavorText = 'Flesh Attrition!'
       messageContent = '<b style="color:red"><<</b> ' + selectedItem.name + ' <b style="color:red">>></b> damaged!<br><br>' + this.actor.name + ' has ';
 
-      if (this.actor.system.attrition.flesh.current < 2) {
+      if (this.actor.system.attrition.flesh < 2) {
         messageContent += 'no Skills remaining. The next hit will be lethal!';
-      } else if (this.actor.system.attrition.flesh.current < 3) {
-        messageContent += this.actor.system.attrition.flesh.current-1 + ' skill remaining.';
+      } else if (this.actor.system.attrition.flesh < 3) {
+        messageContent += this.actor.system.attrition.flesh -1 + ' skill remaining.';
       } else {
-        messageContent += this.actor.system.attrition.flesh.current-1 + ' skills remaining.';
+        messageContent += this.actor.system.attrition.flesh -1 + ' skills remaining.';
       }
 
       await ChatMessage.create({

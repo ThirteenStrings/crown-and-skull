@@ -11,21 +11,21 @@
       </div>
       <div class="grid grid-4col hero-points-input-container" title="Current Hero Points (Accounted for on sheet)">
         <div class="input-wrapper flexcol">
-          <label class="hero-points-label">Curr</label>
+          <label for="current-hero-points" class="hero-points-label">Curr</label>
           <input
             id="current-hero-points"
-            type='text'
+            type='number'
             name='system.heropoints.used'
-            value={{actor.system.heropoints.used}}
+            value={{actor.system.heropoints.spent}}
             data-dtype='Number'
             readonly
           />
         </div>
         <div class="input-wrapper flexcol" title="Max Hero Points Available (50 + Rewards)">
-          <label class="hero-points-label">Max</label>
+          <label for="max-hero-points" class="hero-points-label">Max</label>
           <input
             id="max-hero-points"
-            type='text'
+            type='number'
             name='system.heropoints.max'
             value={{actor.system.heropoints.max}}
             data-dtype='Number'
@@ -33,10 +33,10 @@
           />
         </div>
         <div class="input-wrapper flexcol" title="Remaining Hero Points">
-          <label class="hero-points-label">Rem</label>
+          <label for="remaining-hero-points" class="hero-points-label">Rem</label>
           <input
             id="remaining-hero-points"
-            type='text'
+            type='number'
             name='system.heropoints.remaining'
             value={{actor.system.heropoints.remaining}}
             data-dtype='Number'
@@ -44,10 +44,10 @@
           />
         </div>
         <div class="input-wrapper flexcol" title="Hero Points Lost to Consumables and Destroyed Equipment">
-          <label class="hero-points-label">{{localize 'CRASK.Actor.base.FIELDS.lost.label'}}</label>
+          <label for="lost-hero-points" class="hero-points-label">{{localize 'CRASK.Actor.base.FIELDS.lost.label'}}</label>
           <input
             id="lost-hero-points"
-            type='text'
+            type='number'
             name='system.heropoints.lost'
             value={{actor.system.heropoints.lost}}
             data-dtype='Number'
@@ -72,23 +72,23 @@
           />
         </div>
         <div class="input-wrapper flexcol" title="Remaining Equipment Attrition">
-          <label class="hero-points-label flexrow">Equip</label>
+          <label for="max-hero-points" class="hero-points-label flexrow">Equip</label>
           <input
             id="max-hero-points"
-            type='text'
-            name='system.attrition.equipment.current'
-            value={{actor.system.attrition.equipment.current}}
+            type='number'
+            name='system.attrition.equipment'
+            value={{actor.system.attrition.equipment}}
             data-dtype='Number'
             readonly
           />
         </div>
         <div class="input-wrapper flexcol" title="Remaining Flesh Attrition">
-          <label class="hero-points-label flexrow">Flesh</label>
+          <label for="current-hero-points" class="hero-points-label flexrow">Flesh</label>
           <input
             id="current-hero-points"
-            type='text'
-            name='system.attrition.flesh.current'
-            value={{actor.system.attrition.flesh.current}}
+            type='number'
+            name='system.attrition.flesh'
+            value={{actor.system.attrition.flesh}}
             data-dtype='Number'
             readonly
           />
@@ -104,29 +104,61 @@
       </div>
     </div>
 
-    <div class="flexrow">
-      {{! Defense Value}}
-      <div class="flexrow defense-value clickable" title="Roll Defense ◇ Ctrl: Quick Roll" data-roll-type="Defense" data-action="skillRoll">
-        {{actor.system.defense.value}}
+    {{! Combat Controls Section}}
+    <div class="combat-wrapper">
+      <div class='resource-label hero-points-label-container'>
+          Combat
       </div>
 
-      {{! Phase Selector }}
-      <img
-        class="clickable"
-        src="systems/crown-and-skull/assets/icons/Black/Initiative.svg"
-        title="Select Combat Phase"
-        data-action="initiativeSelect"
-        style="margin: 0px;"
-      />
-      
-      {{! Hero Coin }}
-      <img
-        class='clickable'
-        src="systems/crown-and-skull/assets/HeroCoin{{#if actor.system.heroCoinAvailable}}{{else}}Grey{{/if}}.svg"
-        title='{{#if actor.system.heroCoinAvailable}}Reroll any roll entirely. ◇ or ◇ Maximize damage or effect roll.{{else}}Click to Gain Hero Coin{{/if}}'
-        data-action="useHeroCoin"
-        style="margin: 0px;"
-      />
+      <div class="grid grid-4col hero-points-input-container">
+
+        {{! Defense Value}}
+        <div class="input-wrapper flexcol" title="Defense from Equipment.">
+          <label for="max-hero-points" class="hero-points-label flexrow">Defense</label>
+          <div class="flexrow defense-value clickable" title="Roll Defense ◇ Ctrl: Quick Roll" data-roll-type="Defense" data-action="skillRoll" style="padding-bottom: 4px;">
+            {{actor.system.defense}}
+          </div>
+        </div>
+        
+        {{! Defense Temp Modifier}}
+        <div class="input-wrapper flexcol" title="Temporary Defense Modifiers">
+          <label for="temporary-defense" class="hero-points-label flexrow">Temp</label>
+          <input
+            id="temporary-defense"
+            type='number'
+            name='system.defenseModifier'
+            value={{actor.system.defenseModifier}}
+            data-dtype='Number'
+          />
+        </div>
+
+        {{! Hero Coin }}
+        <div class="input-wrapper flexcol" title="{{#if actor.system.heroCoinAvailable}}Reroll any roll entirely. ◇ or ◇ Maximize damage or effect roll.{{else}}Click to Gain Hero Coin{{/if}}">
+          <label class="hero-points-label flexrow">Hero</label>
+          <img
+            class='clickable'
+            src="systems/crown-and-skull/assets/HeroCoin{{#if actor.system.heroCoinAvailable}}{{else}}Grey{{/if}}.svg"
+            data-action="useHeroCoin"
+            style="margin: 0px; max-height: 32px;"
+          />
+        </div>
+
+        {{! Phase Selector }}
+        <div class="input-wrapper flexcol" title="Select Combat Phase">
+          <label class="hero-points-label flexrow">Phase</label>
+          <img
+            class="clickable"
+            src="systems/crown-and-skull/assets/icons/Black/Initiative.svg"
+            data-action="initiativeSelect"
+            style="margin: 0px; max-height: 40px;"
+          />
+        </div>
+        
+        
+        
+        
+
+      </div>
     </div>
 
   </div>

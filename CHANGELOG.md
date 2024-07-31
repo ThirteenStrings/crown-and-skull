@@ -1,5 +1,41 @@
 # CHANGELOG
 
+## 1.4.0
+
+<b>Please be aware that this version can break characters and items from past versions. The switch to Data Model changed some of the underlying item structures and they may no longer be compatible. Backup your world. It may be bricked by this update.</b>
+
+- Changed to Data Model architecture instead of template.json, this will hopefully future-proof the system
+- Cleaned up header, more consistent layout
+- Added temporary defense modifiers to the header for spell bonuses and other ongoing effects
+- Small Item type removed
+- Pouch and Herbalist Pouch inventory only available if actor owns Pouch or Herbalist Pouch
+- If a Pouch is owned, items will now have a button to transfer them to the Pouch
+- Items in the Pouch will have a button to remove them from the Pouch
+- If a Pouch is deleted, all contained items will be ejected into the main inventory
+- Equipment items now have a "Multi Attrition" checkbox in the item sheet. If Equipment attrition selects these items, it will lower the uses by one instead of damaging the item.
+- Items in Pouch now have a cleaned up design
+
+### Known Issues
+
+- Localization has suffered during this update
+- Roll All & Roll NPCs combat buttons are inoperable for GMs
+- Selecting a phase will push a combatant whether or not one already exists
+
+### Future Plans
+
+- Change the default images and backgrounds
+- Default scene
+- Clean up phase selection process to check for existing combatants
+- Tactics roll option for GM only roll
+- Brutal attrition macro
+- Destroy attrition macro
+- Inline rolls from items say item name instead of "Generic Roll"
+- Reset button for uses if uses are more than 2
+- Rest & Recovery rolls
+- Phases labeled in combat tracker
+- Creating an item macro by drag-dropping will have a white icon svg in the macro bar
+- Companion actors can sync with a player and automatically add an item entry to their owner
+
 ## 1.3.0
 
 - Roll templates have been added

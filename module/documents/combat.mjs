@@ -6,7 +6,6 @@
 export class CraskCombat extends Combat {
     
   _sortCombatants(a, b) {
-    console.log("SORTING!");
     let phase = a.combat.phase;
     return super._sortCombatants(b, a);
   }

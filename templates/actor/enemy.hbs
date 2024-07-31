@@ -16,15 +16,15 @@
         />
 
         {{! Second Column Information}}
-        <div class='flexcol' style="margin-top: -24px;">
+        <div class='flexcol'>
             <h1 class='charname'>
                 <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
             </h1>
             <input style="margin-left: 10px; width: 96%; text-align: center; margin-top: 10px;"
                 id="enemy-description"
                 type='text'
-                name='system.description'
-                value='{{system.description}}'
+                name='system.shortdescription'
+                value='{{system.shortdescription}}'
                 data-dtype='String'
             />
         </div>
@@ -39,16 +39,16 @@
               <input
                 id="current-hp"
                 type='number'
-                name='system.hp.current'
-                value={{system.hp.current}}
+                name='system.hitpoints.current'
+                value={{system.hitpoints.current}}
                 data-dtype='Number'
               />
               <span style="padding-bottom: 10px;"> / </span>
               <input
                 id="max-hp"
                 type='number'
-                name='system.hp.max'
-                value={{system.hp.max}}
+                name='system.hitpoints.max'
+                value={{system.hitpoints.max}}
                 data-dtype='Number'
               />
             </div>
@@ -59,8 +59,8 @@
                     <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.atk.label'}}</label>
                     <input
                     type='number'
-                    name='system.atk'
-                    value={{system.atk}}
+                    name='system.attack'
+                    value={{system.attack}}
                     data-dtype='Number'
                     />
                 </div>
@@ -69,8 +69,8 @@
                     <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.def.label'}}</label>
                     <input
                     type='number'
-                    name='system.def'
-                    value='{{system.def}}'
+                    name='system.defense'
+                    value='{{system.defense}}'
                     data-dtype='Number'
                     />
                 </div>
@@ -80,8 +80,8 @@
             <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.tactics.label'}}</label>
             <input
               type='number'
-              name='system.tactics'
-              value='{{system.tactics}}'
+              name='system.tactics.number'
+              value='{{system.tactics.number}}'
               data-dtype='Number'
             />
 
@@ -90,19 +90,19 @@
 
             <div class="resource-content sheet-phase-selector flexrow">
                 <label class="phase-label">
-                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="1" {{checked (includes '1' actor.system.phases)}}>
+                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="1" {{checked (includes 1 system.phases)}}>
                 </label>
                 <label class="phase-label"> 
-                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="2" {{checked (includes '2' actor.system.phases)}}>
+                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="2" {{checked (includes 2 system.phases)}}>
                 </label>
                 <label class="phase-label">
-                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="3" {{checked (includes '3' actor.system.phases)}}>
+                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="3" {{checked (includes 3 system.phases)}}>
                 </label>
                 <label class="phase-label">
-                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="4" {{checked (includes '4' actor.system.phases)}}>
+                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="4" {{checked (includes 4 system.phases)}}>
                 </label>
                 <label class="phase-label">
-                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="5" {{checked (includes '5' actor.system.phases)}}>
+                    <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="5" {{checked (includes 5 system.phases)}}>
                 </label>
             </div>
 
@@ -132,13 +132,13 @@
         <div class="flexcol" style="align-self: flex-start;">
 
             <h3>{{localize 'CRASK.Actor.base.FIELDS.tactic1.label'}}</h3>
-            <textarea id="tactic1" name="system.tactic1" rows="4" cols="10">{{{system.tactic1}}}</textarea>
+            <textarea id="tactic1" name="system.tactics.move" rows="4" cols="10">{{{system.tactics.move}}}</textarea>
 
             <h3>{{localize 'CRASK.Actor.base.FIELDS.tactic25.label'}}</h3>
-            <textarea id="tactic25" name="system.tactic25" rows="4" cols="10">{{{system.tactic25}}}</textarea>
+            <textarea id="tactic25" name="system.tactics.melee" rows="4" cols="10">{{{system.tactics.melee}}}</textarea>
 
             <h3>{{localize 'CRASK.Actor.base.FIELDS.tactic6.label'}}</h3>
-            <textarea id="tactic6" name="system.tactic6" rows="4" cols="10">{{{system.tactic6}}}</textarea>
+            <textarea id="tactic6" name="system.tactics.area" rows="4" cols="10">{{{system.tactics.area}}}</textarea>
 
         </div>
 
@@ -147,9 +147,9 @@
     {{! Editable Enemy Description Section }}
     <h2>{{localize 'CRASK.Actor.base.FIELDS.enemydescription.label'}}</h2>
     {{#if editable}} 
-        <prose-mirror name="system.biography" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.biography}}" collaborate="true" toggled="true">
-        {{{enrichedBiography}}}
-        </prose-mirror>
+    <prose-mirror name="system.biography" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.biography}}" collaborate="true" toggled="true">
+      {{{enrichedBiography}}}
+    </prose-mirror>
     {{else}} {{{enrichedBiography}}}
     {{/if}}
 

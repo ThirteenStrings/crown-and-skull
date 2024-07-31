@@ -20,6 +20,8 @@ Artwork, rules, and materials presented in this system are mostly available in t
 
 Created by ThirteenStrings (Discord). Feel free to message with any suggestions or requests. Collaborators with more coding experience are welcome.
 
+Special thanks to Asacolips (Discord: asacolips), Lee Talman (Discord: .pizzaWizard), Joseph M. (Discord: chaosos) for the Boilerplate this system is build upon.
+
 ### Compendium Packs
 Be sure to import the items and actors from the included compendiums!
 

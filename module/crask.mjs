@@ -8,8 +8,9 @@ import { CraskItemSheet } from './sheets/item-sheet.mjs';
 import { CraskCombat } from './documents/combat.mjs';
 // Import chat classes.
 import { CraskRollMessage } from './chat/chat-message.mjs';
-// Import roll classes.
-//import { CraskRoll } from './documents/roll.mjs';
+// Import Data Models
+import { CharacterData, EnemyData, CompanionActorData, NPCData, 
+         EquipmentData, SkillData, SpellData, LargeItemData, RewardData, AdvancementData, FloraData, FlawData, AbilityData, CompanionItemData } from './data.mjs'
 
 
 /* -------------------------------------------- */
@@ -43,7 +44,29 @@ Hooks.once('init', function () {
     decimals: 0,
   };
 
-  // Define custom Document classes
+  // Actor Data Model Registration
+  CONFIG.Actor.dataModels = {
+    character: CharacterData,
+    enemy: EnemyData,
+    companion: CompanionActorData,
+    npc: NPCData
+  };
+
+  //tem Data Model Registration
+  CONFIG.Item.dataModels = {
+    equipment: EquipmentData,
+    skill: SkillData,
+    spell: SpellData,
+    advancement: AdvancementData,
+    largeItem: LargeItemData,
+    rewards: RewardData,
+    flora: FloraData,
+    flaw: FlawData,
+    companion: CompanionItemData,
+    ability: AbilityData
+  };
+
+  // Register Combat and Chat Message Overrides
   CONFIG.Actor.documentClass = CraskActor;
   CONFIG.Item.documentClass = CraskItem;
   CONFIG.Combat.documentClass = CraskCombat;
@@ -65,6 +88,15 @@ Hooks.once('init', function () {
     makeDefault: true,
     label: 'CRASK.SheetLabels.Item',
   });
+
+  CONFIG.Actor.trackableAttributes = {
+    character: {
+      bar: ["attrition.flesh","attrition.equipment","heropoints"]
+    },
+    enemy: {
+      bar: ["hitpoints"]
+    }
+  }
 });
 
 /* -------------------------------------------- */

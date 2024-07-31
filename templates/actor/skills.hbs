@@ -3,7 +3,7 @@
 
   <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
     {{#each skills as |item id|}}
-    <li class='item skill flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+    <li class='item skill flexrow {{#if item.system.isDamaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
       <!-- Left column for item image and controls -->
       <div class="flexcol left-simple">
         <div class='item-image'>
@@ -17,8 +17,8 @@
               <i class='fas fa-trash'></i>
             </a>
           {{/if}}
-          <div class="toggle-state clickable small-control" title="{{#if item.system.damaged}}Damaged: Click to Restore{{else}}Intact: Click to Damage{{/if}}" data-action="dmgToggle">
-            <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
+          <div class="toggle-state clickable small-control" title="{{#if item.system.isDamaged}}Damaged: Click to Restore{{else}}Intact: Click to Damage{{/if}}" data-action="dmgToggle">
+            <i class="fas {{#if item.system.isDamaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
           </div>
         </div>
       </div>

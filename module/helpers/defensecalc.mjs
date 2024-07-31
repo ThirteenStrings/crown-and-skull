@@ -6,15 +6,15 @@ export function updateDefense(actor) {
     let defenseScore = 6;
 
     items.forEach(item => {
-      if (item.system.equipped) {
-        defenseScore += item.system.def;
+      if (item.system.isEquipped) {
+        defenseScore += item.system.defense;
       }
     });
   
     defenseScore = Math.min(18,defenseScore);
     defenseScore = Math.max (0,defenseScore);
 
-    actor.system.defense.value = defenseScore;
+    actor.system.defense = defenseScore;
   }
 }
 

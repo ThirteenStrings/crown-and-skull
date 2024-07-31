@@ -6,19 +6,6 @@
     {
       "name": "Jacob W. (System)",
       "discord": "ThirteenStrings"
-    },
-    {
-      "name": "Asacolips (Boilerplate)",
-      "discord": "asacolips"
-    },
-    {
-      "name": "Lee Talman (Boilerplate)",
-      "discord": ".pizzaWizard"
-    },
-    {
-      "name": "Joseph M. (Boilerplate)",
-      "url": "https://joseph-meehan.carrd.co/",
-      "discord": "chaosos"
     }
   ],
   "flags": {
@@ -39,7 +26,7 @@
       "thumbnail": "systems/crown-and-skull/assets/anvil-impact.png"
     }
   ],
-  "version": "1.3.0",
+  "version": "1.4.0",
   "compatibility": {
     "minimum": 12,
     "verified": "12.330"
@@ -53,6 +40,26 @@
       "path": "lang/en.json"
     }
   ],
+  "documentTypes": {
+    "Actor": {
+      "character": {},
+      "enemy": {},
+      "companion": {},
+      "npc": {}
+    },
+    "Item": {
+      "ability": {},
+      "advancement": {},
+      "companion": {},
+      "equipment": {},
+      "flaw": {},
+      "flora": {},
+      "largeItem": {},
+      "reward": {},
+      "skill": {},
+      "spell": {}
+    }
+  },
   "packs": [
     {
       "name": "pgItems",
@@ -72,7 +79,7 @@
   "packFolders": [],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/ThirteenStrings/crown-and-skull/main/system.json",
-  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.3.zip",
+  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.4.zip",
   "background": "systems/crown-and-skull/assets/anvil-impact.png",
   "grid": {
     "type": 1,
@@ -80,6 +87,6 @@
     "units": "ft",
     "diagonals": 0
   },
-  "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "power"
+  "primaryTokenAttribute": "attrition.flesh.current",
+  "secondaryTokenAttribute": "attrition.equipment.current"
 }

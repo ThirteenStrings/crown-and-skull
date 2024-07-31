@@ -4,7 +4,7 @@
   {{!-- Regular Items --}}
   <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
     {{#each equipment as |item id|}}
-    <li class='item equipment flexcol {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}} {{#if item.system.damaged}}damaged{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+    <li class='item equipment flexcol {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}} {{#if item.system.isDamaged}}damaged{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
       <!-- First Row -->
       <div class="flexrow" style="height: 57px;">
         <div class="item-image" style="margin-right: 5px;">
@@ -13,7 +13,7 @@
           </a>
         </div>
         <div class="flexcol">
-          <div class='item-name'>{{item.name}}{{#unless item.system.equipped}}{{#ifGreaterThan item.system.def 0}}<b style="color: red; font-size: 12px;"> [Unequipped]</b>{{/ifGreaterThan}}{{/unless}}</div>
+          <div class='item-name'>{{item.name}}{{#unless item.system.isEquipped}}{{#ifGreaterThan item.system.defense 0}}<b style="color: red; font-size: 12px;"> [Unequipped]</b>{{/ifGreaterThan}}{{/unless}}</div>
           <div class='item-description'>{{{item.system.enrichedDescription}}}</div>
         </div>
       </div>
@@ -22,13 +22,20 @@
         <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Equipment'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
           <i class='fas fa-trash'></i>
         </a>
-        <div class="toggle-state small-control clickable" title="{{#if item.system.damaged}}Item Damaged ◇ Click: Repair{{else}}Item Intact ◇ Click: Break{{/if}}" data-action="dmgToggle">
-            <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
+        <div class="toggle-state small-control clickable" title="{{#if item.system.isDamaged}}Item Damaged ◇ Click: Repair{{else}}Item Intact ◇ Click: Break{{/if}}" data-action="dmgToggle">
+            <i class="fas {{#if item.system.isDamaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
         </div>
+        {{#if actor.system.hasPouch}}
+          {{#ifEquals item.name "Pouch"}}{{else}}
+            <div class="toggle-state small-control clickable" title="Send to Pouch" data-action="pouchToggle">
+              <i class="fas fa-turn-down"></i>
+            </div>
+          {{/ifEquals}}
+        {{/if}}
         <div title="Hero Point Cost" style="max-width: 45px;"><i class="fas fa-coins"></i> {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}</div>
-        {{#if item.system.def}}
-          <div title="Defense{{#if item.system.equipped}} ◇ Currently Equipped ◇ Click to Doff{{else}} ◇ Not Currently Equipped ◇ Click to Don{{/if}}" class="clickable" data-action="equipToggle"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
-            {{#if item.system.equipped}}{{item.system.def}}{{else}}-{{/if}}
+        {{#if item.system.defense}}
+          <div title="Defense{{#if item.system.isEquipped}} ◇ Currently Equipped ◇ Click to Doff{{else}} ◇ Not Currently Equipped ◇ Click to Don{{/if}}" class="clickable" data-action="equipToggle"><i class="fas {{#if item.system.isEquipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
+            {{#if item.system.isEquipped}}{{item.system.defense}}{{else}}-{{/if}}
           </div>
         {{/if}}
         {{#if item.system.uses.max}}
@@ -36,8 +43,8 @@
             <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
           </div>
         {{/if}}
-        {{#if item.system.dmg}}
-          <div title="Damage" class="clickable" data-roll-type="Damage" data-action="damageRoll"><i class="fas fa-swords"></i> {{item.system.dmg}}</div>
+        {{#if item.system.damage}}
+          <div title="Damage" name="item.system.damage" class="clickable" data-roll-type="Damage" data-action="damageRoll"><i class="fas fa-swords"></i>{{item.system.damage}}</div>
         {{/if}}
       </div>
     </li>
@@ -45,11 +52,12 @@
   </ul>
 
   {{!-- Herbalist Pouch --}}
-  {{#ifGreaterThan flora.length 0}}
+  {{#if actor.system.hasHerbalistsPouch}}
     <h2 title="Requires Herbalist Pouch in Equipment">{{localize 'CRASK.Actor.base.FIELDS.herbalistpouch.label'}}</h2>
+    {{#unless flora.length}}<div style="margin: 10px 0px;">No herbs in the pouch. Drag and drop flora to populate.</div>{{/unless}}
     <div class="tab-list grid grid-4col" style="margin-top: 5px;">
       {{#each flora as |item id|}}
-          <li class='item smallitem flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' 
+          <li class='item smallitem flexrow {{#if item.system.isDamaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' 
               data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
             <!-- Item image and controls -->
             <div class="left-simple flexcol">
@@ -74,66 +82,54 @@
           </li>
       {{/each}}
     </div>
-  {{/ifGreaterThan}}
+  {{/if}}
 
   {{!-- Item Pouch --}}
-  {{#ifGreaterThan smallitems.length 0}}
+  {{#if actor.system.hasPouch}}
     <h2 title="Requires Pouch in Inventory">{{localize 'CRASK.Actor.base.FIELDS.itempouch.label'}}</h2>
+    {{#unless pouchItems.length}}<div style="margin: 10px 0px;">No items in pouch. Move items from main equipment to pouch using the button.</div>{{/unless}}
     <div class="tab-list grid grid-4col" style="margin-top: 5px;">
-      {{#each smallitems as |item id|}}
-        <li class='item smallitem flexrow {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' 
+      {{#each pouchItems as |item id|}}
+        <li class='item smallitem flexcol {{#if item.system.isDamaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' 
             data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+
           <!-- Item image and controls -->
-          <div class="left-simple flexcol" style="max-width: 35px;">
-            <div class='item-image'>
+          <div class="flexrow" style="min-height: 55px;">
+            <div class='item-image' style="margin-right: 5px;">
                 <a data-action='viewDoc'>
-                <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='30' height='30'/>
+                <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
                 </a>
             </div>
-            <div class='item-controls flexrow'>
-                {{#if @root.editable}}
-                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Small Item'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
-                    <i class='fas fa-trash'></i>
-                </a>
-                {{/if}}
-                <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
-            </div>
+            <div class='item-name' title="{{item.system.description}}">{{item.name}}</div>
           </div>
-          <!-- Item details -->
-          <div class="flexcol">
-            <div class='item-name' title="{{item.system.enrichedDescription}}">{{item.name}}</div>
-            <div class='item-details'>
-                <div class="toggle-state clickable" title="{{#if item.system.damaged}}Damaged: Click to Repair{{else}}Intact: Click to Break{{/if}}" data-action="dmgToggle" style="max-width: 35px">
-                    <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
-                </div>
-                {{#if item.system.dmg}}
-                    <div title="Damage" class="rollable" data-roll-type="item" data-action="roll"><i class="fas fa-swords"></i> {{item.system.dmg}}</div>
-                {{/if}}
+
+          <!-- Item Controls -->
+          <div class='item-controls flexrow'>
+            {{#if @root.editable}}
+              <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Small Item'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+                  <i class='fas fa-trash'></i>
+              </a>
+            {{/if}}
+            <div class="toggle-state clickable small-control" title="{{#if item.system.isDamaged}}Damaged: Click to Repair{{else}}Intact: Click to Break{{/if}}" data-action="dmgToggle">
+                <i class="fas {{#if item.system.isDamaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
             </div>
-            <div class="item-details">
-                {{#if item.system.def}}
-                    <div title="Defense{{#if item.system.equipped}}: Currently Equipped, Click to Doff{{else}}: Not Currently Equipped, Click to Don{{/if}}" class="clickable" data-action="equipToggle"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"  style="max-width: 35px"></i> 
-                        {{#if item.system.equipped}}{{item.system.def}}{{else}}-{{/if}}
-                    </div>
-                {{/if}}
-                {{#if item.system.uses.max}}
-                    <div title="Uses Remaining, Click to Decrease, Ctr+Click to Increase" class="uses-remaining clickable" data-action="updateUses">
-                        <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
-                    </div>
-                {{/if}}
+            <div class="toggle-state clickable small-control" title="Remove from Pouch" data-action="pouchToggle">
+              <i class="fas fa-turn-up"></i>
             </div>
+            <div title="Hero Point Cost" style="max-width: 45px;"><i class="fas fa-coins"></i> {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}</div>
           </div>
+
         </li>
       {{/each}}
     </div>
-  {{/ifGreaterThan}}
+  {{/if}}
 
   {{! Large Items }}
   {{#ifGreaterThan largeitems.length 0}}
     <h2 style="margin-top:10px;">{{localize 'CRASK.Actor.base.FIELDS.largeitems.label'}}</h2>
     <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
       {{#each largeitems as |item id|}}
-      <li class='item equipment flexcol {{#if item.system.damaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
+      <li class='item equipment flexcol {{#if item.system.isDamaged}}damaged{{/if}} {{#if item.system.uses.max}}{{#ifEquals item.system.uses.current 0}}zero-uses{{/ifEquals}}{{/if}}' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
         <!-- First Row -->
         <div class="flexrow" style="height: 57px;">
           <div class="item-image" stlye="margin-right: 5px;">
@@ -154,12 +150,12 @@
             </a>
           {{/if}}
           <div class="small-control" title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}"><i class="fas fa-coins"></i></div>
-          <div class="toggle-state small-control clickable" title="{{#if item.system.damaged}}Damaged: Click to Repair{{else}}Intact: Click to Break{{/if}}" data-action="dmgToggle">
-              <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
+          <div class="toggle-state small-control clickable" title="{{#if item.system.isDamaged}}Damaged: Click to Repair{{else}}Intact: Click to Break{{/if}}" data-action="dmgToggle">
+              <i class="fas {{#if item.system.isDamaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
             </div>
-            {{#if item.system.def}}
-              <div title="Defense{{#if item.system.equipped}}: Currently Equipped, Click to Doff{{else}}: Not Currently Equipped, Click to Don{{/if}}" class="clickable" data-action="equipToggle"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
-                {{#if item.system.equipped}}{{item.system.def}}{{else}}-{{/if}}
+            {{#if item.system.defense}}
+              <div title="Defense{{#if item.system.isEquipped}}: Currently Equipped, Click to Doff{{else}}: Not Currently Equipped, Click to Don{{/if}}" class="clickable" data-action="equipToggle"><i class="fas {{#if item.system.isEquipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
+                {{#if item.system.isEquipped}}{{item.system.defense}}{{else}}-{{/if}}
               </div>
             {{/if}}
             {{#if item.system.uses.max}}
@@ -167,8 +163,8 @@
                 <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
               </div>
             {{/if}}
-            {{#if item.system.dmg}}
-              <div title="Damage" class="rollable" data-roll-type="item" data-action="roll"><i class="fas fa-swords"></i> {{item.system.dmg}}</div>
+            {{#if item.system.damage}}
+              <div title="Damage" class="rollable" data-roll-type="item" data-action="roll"><i class="fas fa-swords"></i> {{item.system.damage}}</div>
             {{/if}}
         </div>
       </li>

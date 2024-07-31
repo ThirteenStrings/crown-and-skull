@@ -1,12 +1,20 @@
 <header class='sheet-header'>
-  <div class="grid grid-2col flexrow" style="margin-top: -15px;">
-    <img
-      class='profile-img'
-      src='{{item.img}}'
-      data-edit='img'
-      data-action='editImage'
-      title='{{item.name}}'
-    />
+  <div class="grid grid-2col flexrow" style="margin-top: -10px;">
+    <div class="flexcol" style="max-width: 70px">
+      <img
+        class='profile-img'
+        src='{{item.img}}'
+        data-edit='img'
+        data-action='editImage'
+        title='{{item.name}}'
+      />
+      {{#if (eq item.type 'equipment')}}
+        <div title="If the item can take multiple hits before being damaged." style="text-align: center;">
+          <label for="multiAttrition" class="resource-label" style="font-size: 11px;">Multi-Attrition</label>
+          <input type="checkbox" name="system.hasMultiAttrition" {{checked item.system.hasMultiAttrition}}>
+        </div>
+      {{/if}}
+    </div>
     <div class='item-header'>
       <h1 class='charname'>
         <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
@@ -16,34 +24,37 @@
       {{#if (eq item.type 'equipment')}}
         <div class='grid grid-4col flexrow'>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.dmg.label'}}</label>
+            <label for='item-damage' class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.dmg.label'}}</label>
             <input
+              id='item-damage'
               type='text'
-              name='system.dmg'
-              value='{{system.dmg}}'
+              name='system.damage'
+              value='{{item.system.damage}}'
               data-dtype='String'
             />
           </div>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
+            <label for='item-defense' class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
             <input
+              id='item-defense'
               type='text'
-              name='system.def'
-              value='{{system.def}}'
+              name='system.defense'
+              value='{{item.system.defense}}'
               data-dtype='Number'
             />
           </div>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.cost.label'}}</label>
+            <label for='item-cost' class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.cost.label'}}</label>
             <input
+              id='item-cost'
               type='text'
               name='system.cost'
-              value='{{system.cost}}'
+              value='{{item.system.cost}}'
               data-dtype='Number'
             />
           </div>       
           <div class="resource flexcol" style="min-width: 90px;">
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.uses.label'}}</label>
+            <label for="current-item-uses" class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.uses.label'}}</label>
             <div class='flexrow'>
               <input
                 id="current-item-uses"
@@ -71,8 +82,8 @@
             <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.dmg.label'}}</label>
             <input
               type='text'
-              name='system.dmg'
-              value='{{system.dmg}}'
+              name='system.damage'
+              value='{{system.damage}}'
               data-dtype='String'
             />
           </div>
@@ -80,8 +91,8 @@
             <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
             <input
               type='text'
-              name='system.def'
-              value='{{system.def}}'
+              name='system.defense'
+              value='{{system.defense}}'
               data-dtype='Number'
             />
           </div>
@@ -149,8 +160,8 @@
             <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.effect.label'}}</label>
             <input
               type='text'
-              name='system.dmg'
-              value='{{system.dmg}}'
+              name='system.damage'
+              value='{{system.damage}}'
               data-dtype='String'
             />
           </div>
@@ -158,8 +169,8 @@
             <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
             <input
               type='text'
-              name='system.def'
-              value='{{system.def}}'
+              name='system.defense'
+              value='{{system.defense}}'
               data-dtype='Number'
             />
           </div>
