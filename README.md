@@ -49,3 +49,14 @@ Magic Tab:
 
 ### Combat Phase Selection
 When beginning a new combat, players will press the "Phase Selection" button on their character sheet to choose their phase. GMs can push enemy combatants into the turn tracker via the button on enemy character sheets.
+
+### Tracking Hero Points
+The top left of the sheet has four boxes to aid in tracking hero points.
+
+**Curr** The number of hero points currently tracked on the sheet. This is a combination of the cost of all equipment, skills, abilities, advancements, spells, and companions. It is automatically tracked through the items that are dragged and dropped onto the sheet.
+
+**Max** The total number of hero points the character has had available. This starts at 50. It is increased by rewards and flaws. GMs should create Reward Items for players to drag and drop to represent hero points awarded for deeds and treasure hoards.
+
+**Remaining** How many hero points the player has remaining to spend on advancements and equipment.
+
+**Lost** This is the only editable box. Whenever a player deletes an item from their sheet, due to the item being destroyed or a consumable being used up, the cost of that item should be added (manually) to the box. This amount is subtracted the remaining hero points to account for those permanently lost hero points.

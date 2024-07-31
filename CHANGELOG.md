@@ -35,6 +35,7 @@
 - Phases labeled in combat tracker
 - Creating an item macro by drag-dropping will have a white icon svg in the macro bar
 - Companion actors can sync with a player and automatically add an item entry to their owner
+- Create a prompt to automatically add the cost of deleted items to the "Lost Hero Points" tracker
 
 ## 1.3.0
 
