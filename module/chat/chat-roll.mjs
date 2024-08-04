@@ -14,7 +14,6 @@ export async function postRollMessage(actor, roll, context = { temporary: false 
   if (typeof roll === 'string' || roll instanceof String) {
     roll = JSON.parse(roll);
     let _roll = Roll.create('', roll);
-    console.log(_roll);
   }
   if (!roll._evaluated && roll.roll != null) await roll.roll({ async: true });
 

@@ -9,10 +9,7 @@
         "Character": "Character",
         "Equipment": "Equipment",
         "Skills": "Skills",
-        "Pouches": "Pouches",
-        "Magic": "Magic",
-        "Rewards": "Rewards",
-        "Tactics": "Tactics"
+        "Magic": "Magic"
       },
       "base": {
         "FIELDS": {
@@ -37,9 +34,9 @@
           "atk": {"label": "ATK"},
           "def": {"label": "DEF"},
           "tactics": {"label": "Tactics"},
-          "tactic1": {"label": "Tactic 1"},
-          "tactic25": {"label": "Tactic 2-5"},
-          "tactic6": {"label": "Tactic 6"},
+          "tactic1": {"label": "Movement Tactic - Roll Result: 1"},
+          "tactic25": {"label": "Melee Tactic - Roll Result: 2-5"},
+          "tactic6": {"label": "Area Tactic - Roll Result: 6"},
           "location": {"label": "Location"},
           "known": {"label": "Widely Known"},
           "quest": {"label": "Quest"},
@@ -108,13 +105,11 @@
     },
     "Item": {
       "equipment": "Equipment",
-      "smallitem": "Small Item",
       "largeitem": "Large Item",
       "skill": "Skill",
       "spell": "Spell",
       "reward": "Reward",
       "advancement": "Advancement",
-      "alchemical": "Alchemical",
       "flaw": "Flaw",
       "flora": "Flora",
       "companion": "Companion",

@@ -1,6 +1,6 @@
 {{! Sheet Header }}
 <header class='sheet-header'>
-    
+
   {{! Main Header Row}}
   <div class="grid grid-3col flexrow">
 
@@ -18,7 +18,7 @@
             name='system.heropoints.used'
             value={{actor.system.heropoints.spent}}
             data-dtype='Number'
-            readonly
+            {{#if autoCalc}}readonly{{/if}}
           />
         </div>
         <div class="input-wrapper flexcol" title="Max Hero Points Available (50 + Rewards)">
@@ -29,7 +29,7 @@
             name='system.heropoints.max'
             value={{actor.system.heropoints.max}}
             data-dtype='Number'
-            readonly
+            {{#if autoCalc}}readonly{{/if}}
           />
         </div>
         <div class="input-wrapper flexcol" title="Remaining Hero Points">
@@ -40,7 +40,7 @@
             name='system.heropoints.remaining'
             value={{actor.system.heropoints.remaining}}
             data-dtype='Number'
-            readonly
+            {{#if autoCalc}}readonly{{/if}}
           />
         </div>
         <div class="input-wrapper flexcol" title="Hero Points Lost to Consumables and Destroyed Equipment">

@@ -330,11 +330,12 @@
 
 .crask .sheet-phase-selector {
   background-image: url(../assets/PhaseTrackerOverlay.png);
-  background-size: 140px;
+  background-size: 200px;
   background-repeat: no-repeat;
   background-position: center;
-  width: 100%;
-  height: 25px;
+  min-width: 200px;
+  height: 32px;
+  padding: 1px 3px 0px 14px;
 }
 .crask .phase-checkbox {
   appearance: none !important;
@@ -391,7 +392,6 @@
 
 .crask h3 {
   font-size: 28px;
-  font-family: GoudyMediaeval;
   text-align: left;
   padding-top: 5px;
   padding-bottom: 3px;
@@ -743,21 +743,17 @@
   border-radius: 7px;
 }
 
-.crask .enemy-stats {
-  max-width: 154px;
-  text-align: center;
-  margin-right: 15px;
-  padding-right: 20px;
-  border-right: 2px solid black;
-}
-
-.crask .enemy-stats input {
-  margin-bottom: 10px;
-}
-
-.crask .enemy-stats .resource-label {
+.crask .enemy-body label {
   font-family: GoudyMediaeval;
   font-size: 20px;
+}
+
+.crask .enemy-body .input-wrapper {
+  height: 100%;
+}
+
+.crask .enemy-body .input-wrapper input {
+  max-width: 50px;
 }
 
 /* Chat Modifications */

@@ -32,6 +32,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       roll: this._onRoll,
       dmgToggle: this._dmgToggle,
       updateUses: this._updateUses,
+      resetUses: this._resetUses,
       equipToggle: this._equipToggle,
       pouchToggle: this._pouchToggle,
       editImage: this._editImage,
@@ -394,7 +395,11 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     updateDefense(this.actor);
     updateAttrition(this.actor);
 
-    this.document.update(updateData)
+    this.document.update(updateData);
+
+    // Game Settings variables for sheet handlebars
+    context.autoCalc = game.settings.get('crown-and-skull','autoCalc');
+    context.hideEmptyCategories = game.settings.get('crown-and-skull','hideEmptyCategories')
         
   }
 
@@ -460,24 +465,53 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
   static async _deleteDoc(event, target) {
 
     const doc = this._getEmbeddedDocument(target);
+    const actor = this.actor;
+    let decision;
 
-    if (event.ctrlKey) {
-      await doc.delete();
-    } else {
-      Dialog.confirm({
-        title: "Delete Confirmation",
-        content: "Are you sure you want to delete this item? \n",
-        yes: (Yes) => { 
-          doc.delete();
-         },
-        no: (No) => { 
-          
-         },
+    if (doc.type === "equipment" || doc.type === "equipment") {
+    decision = await foundry.applications.api.DialogV2.wait({
+        window: {title: "Delete Confirmation"},
+        content: `<p>Add the cost of this item to Lost hero points?</p>`,
+        buttons: [
+          {
+            label: "Yes",
+            action: "Yes"
+          },
+          {
+            label: "No, Just Delete",
+            action: "No"
+          },
+          {
+            label: "Cancel",
+            action: () => {return;}
+          }
+        ]
       })
     }
     
-      
-
+    if (!decision) {
+      if (event.ctrlKey) {
+        await doc.delete();
+      } else {
+        Dialog.confirm({
+          title: "Delete Confirmation",
+          content: `<p>Are you sure you want to delete this item?</p><br>`,
+          yes: (Yes) => { 
+            doc.delete();
+           },
+          no: (No) => { 
+           },
+        })
+      }
+    } else if (decision === "Yes") {
+      let currentLost = actor.system.heropoints.lost;
+      currentLost += doc.system.cost;
+      await actor.update({"system.heropoints.lost": currentLost});
+      await doc.delete();
+    } else if (decision === "No") {
+      await doc.delete();
+    }
+    
   }
 
   /**
@@ -489,38 +523,77 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    * @protected
    */
   static async _initiativeSelect(event, target) {
+
+    const activeTokens = this.actor.getActiveTokens();
+    let flavorText;
+    let messageContent;
+    let pushExtra;
+    let selectedInitiative;
     
+    // Check for Combat and Initiative Selection Dialog
     if ( !game.combat ) {
 			ui.notifications.warn("COMBAT.NoneActive", {localize: true});
 			return null;
 		} else {
-      // Initiative Selection Dialog
       const initiativeDialogContent = await renderTemplate('./systems/crown-and-skull/templates/dialog/playerInitiativeDialog.hbs')
-      const selectedInitiative = await foundry.applications.api.DialogV2.prompt({
+      selectedInitiative = await foundry.applications.api.DialogV2.prompt({
         window: { title: "Combat Phase Selection" },
         content: initiativeDialogContent,
         ok: {
           label: "Confirm",
           callback: (event,button) => {
-            let to_create = [{actorId: this.actor.id, initiative: button.form.elements.phase.value}];
-            game.combat.createEmbeddedDocuments('Combatant', to_create);
-            //this.actor.rollInitiative({createCombatants: true, rerollInitiative: true, initiativeOptions: {formula: button.form.elements.phase.value}});
-
-            let flavorText = "Pushed to phase " + button.form.elements.phase.value + "!";
-            let messageContent = this.actor.name + " has selected phase " + button.form.elements.phase.value + " for this combat."
-
-            // Send the message to the chat
-            ChatMessage.create({
-              speaker: ChatMessage.getSpeaker({actor: this.actor}),
-              flavor: flavorText,
-              content: messageContent,
-              type: CONST.CHAT_MESSAGE_STYLES.OTHER
-            });
+            return button.form.elements.phase.value;
           }
         },
         rejectClose: false
       });
     }
+
+    // Dialog for extra combatants
+    if (this.actor.inCombat && selectedInitiative) {
+      pushExtra = await foundry.applications.api.DialogV2.wait({
+        window: { title: "Existing Combatant Dialog"},
+        content: `<p>An existing combatant for this actor already exists. How would you like to proceed?</p>`,
+        buttons: [
+          {
+            label: "Update Initiative",
+            action: "update",
+          },
+          {
+            label: "Add Combatant",
+            action: "push",
+          },
+          {
+            label: "Cancel",
+            action: "cancel",
+          }
+        ],
+        rejectClose: true
+      })
+    }
+
+    if (pushExtra === "push" || !pushExtra && selectedInitiative) {
+      let to_create = [{actorId: this.actor.id, initiative: selectedInitiative, tokenId: activeTokens[0].id}];
+      game.combat.createEmbeddedDocuments('Combatant', to_create);
+      flavorText = "Pushed to phase " + selectedInitiative + "!";
+      messageContent = this.actor.name + " has selected phase " + selectedInitiative + " for this combat.";
+    } else if (pushExtra === "update") {
+      let combatants = game.combat.getCombatantsByActor(this.actor);
+      game.combat.setInitiative(combatants[0].id,selectedInitiative);
+      flavorText = "Updated to phase " + selectedInitiative + "!";
+      messageContent = this.actor.name + " has changed to phase " + selectedInitiative + " for this combat.";
+    }
+
+    // Send the message to the chat
+    if (selectedInitiative && pushExtra !== "cancel" && pushExtra) {
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({actor: this.actor}),
+        flavor: flavorText,
+        content: messageContent,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER
+      });
+    }
+    
   }
 
   /**
@@ -585,17 +658,26 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       }
 
       // Determine the output message based on the roll result
-      let result = roll.total;
-      let messageContent = '';
+      let tactic;
+      let moveType;
 
-      if (result === 1) {
-          messageContent = `<p>${this.actor.system.tactics.move}</p>`;
-      } else if (result >= 2 && result <= 5) {
-          messageContent = `<p>${this.actor.system.tactics.melee}</p>`;
-      } else if (result === 6) {
-          messageContent = `<p>${this.actor.system.tactics.area}</p>`;
+      if (roll.total === 1) {
+        tactic = this.actor.system.tactics.move;
+        moveType = 'move';
+      } else if (roll.total === 6) {
+        tactic = this.actor.system.tactics.area;
+        moveType = 'area';
+      } else {
+        tactic = this.actor.system.tactics.melee;
+        moveType = 'melee';
       }
 
+      const messageContent = await renderTemplate('./systems/crown-and-skull/templates/chat/tacticOutput.hbs', {
+        tactic: tactic,
+        moveType: moveType,
+        roll: roll,
+      });
+      
       // Send the message to the chat
       if (messageContent) {
           ChatMessage.create({
@@ -847,12 +929,12 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     
     // Send the message to the chat
     if (messageContent) {
-        ChatMessage.create({
-            speaker: ChatMessage.getSpeaker({actor: this.actor}),
-            flavor: flavorText,
-            content: messageContent,
-            type: CONST.CHAT_MESSAGE_STYLES.OTHER
-        });
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({actor: this.actor}),
+        flavor: flavorText,
+        content: messageContent,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER
+      });
     }
   }
 
@@ -945,6 +1027,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
   static async _dmgToggle(event, target) {
     event.preventDefault();
     const itemId = target.closest('.item').dataset.itemId;
+    const actor = this.actor;
 
     const item = this.actor.items.get(itemId);
     if (!item) return;
@@ -956,6 +1039,15 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     } else {
       updateData['system.isDamaged'] = true;
       updateData['system.isEquipped'] = false;
+
+      let itemType = item.type.charAt(0).toUpperCase() + item.type.slice(1).toLowerCase();
+
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor }),
+        flavor: `${itemType} Damage!`,
+        content: `<b>${item.name}</b> has been damaged.`,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER
+      });
     }
 
     await item.update(updateData);
@@ -972,20 +1064,20 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    */
   static async _editImage(event, target) {
     const attr = target.dataset.edit;
-            const documentData = this.document.toObject();
-            const current = foundry.utils.getProperty(documentData, attr);
-            const { img } = this.document.constructor.getDefaultArtwork?.(documentData) ?? {};
-            const fp = new FilePicker({
-                current,
-                type: "image",
-                redirectToRoot: img ? [img] : [],
-                callback: (path) => {
-                    this.document.update({ [attr]: path });
-                },
-                top: this.position.top + 40,
-                left: this.position.left + 10,
-            });
-            return fp.browse();
+    const documentData = this.document.toObject();
+    const current = foundry.utils.getProperty(documentData, attr);
+    const { img } = this.document.constructor.getDefaultArtwork?.(documentData) ?? {};
+    const fp = new FilePicker({
+      current,
+      type: "image",
+      redirectToRoot: img ? [img] : [],
+      callback: (path) => {
+        this.document.update({ [attr]: path });
+      },
+      top: this.position.top + 40,
+      left: this.position.left + 10,
+    });
+    return fp.browse();
   }  
 
   /**
@@ -1013,6 +1105,23 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     await item.update({'system.uses.current': currentUses});
+  }
+
+  /**
+   * Handle Reset of Item Uses
+   * 
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static async _resetUses(event, target) {
+    event.preventDefault();
+    const itemId = target.closest('.item').dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    if (!item) return;
+    let maxUses = item.system.uses.max;
+    await item.update({'system.uses.current': maxUses});
   }
 
   /**
@@ -1048,24 +1157,24 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @private
    */
-  static async _pouchToggle(event, target) {
-    event.preventDefault();
-    const itemId = target.closest('.item').dataset.itemId;
+    static async _pouchToggle(event, target) {
+      event.preventDefault();
+      const itemId = target.closest('.item').dataset.itemId;
 
-    const item = this.actor.items.get(itemId);
-    if (!item) return;
-    let updateData = {};
+      const item = this.actor.items.get(itemId);
+      if (!item) return;
+      let updateData = {};
 
-    // Cycle through the states: In Pouch -> Not In Pouch
-    if (item.system.isInPouch) {
-      updateData['system.isInPouch'] = false;
-    } else {
-      updateData['system.isInPouch'] = true;
-      updateData['system.isEquipped'] = false;
+      // Cycle through the states: In Pouch -> Not In Pouch
+      if (item.system.isInPouch) {
+        updateData['system.isInPouch'] = false;
+      } else {
+        updateData['system.isInPouch'] = true;
+        updateData['system.isEquipped'] = false;
+      }
+
+      await item.update(updateData);
     }
-
-    await item.update(updateData);
-  }
 
   /**
    * Use Hero Coin
@@ -1119,74 +1228,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    * @private
    */
   static async _rollEquipmentAttrition(event, target) {
-    const items = this.actor.items;
-    let undamagedEquipment = [];
-    let flavorText = '';
-    let messageContent = '';
-    let currentUses;
-    let selectedItem;
-
-    for (const i of items) {
-      if (i.type === "equipment" && i.system.isDamaged === false && !i.system.isInPouch) {
-        undamagedEquipment.push(i);
-      }
-    }
-
-    if (undamagedEquipment.length) {
-      selectedItem = undamagedEquipment[Math.floor(Math.random()*undamagedEquipment.length)];
-
-      if (selectedItem.system.uses.current) {
-        currentUses = selectedItem.system.uses.current
-      }
-      
-      messageContent = '<b style="color:red"><<</b> ' + selectedItem.name + ' <b style="color:red">>></b> ';
-
-      if (selectedItem.system.hasMultiAttrition && currentUses > 1) {
-        currentUses --;
-        messageContent += 'lost a use. ' + this.actor.name + ' has ';
-        if (this.actor.system.attrition.equipment < 1) {
-          messageContent += 'no Equipment remaining. The next hit will be lethal!';
-        } else {
-          messageContent += this.actor.system.attrition.equipment + ' equipment remaining.';
-        }
-      } else {
-        if (selectedItem.system.hasMultiAttrition) {
-          currentUses --;
-        }
-        selectedItem.update({"system.isDamaged": true});
-        messageContent += 'damaged!<br><br>' + this.actor.name + ' has ';
-        if (this.actor.system.attrition.equipment < 2) {
-          messageContent += 'no Equipment remaining. The next hit will be lethal!';
-        } else {
-          messageContent += this.actor.system.attrition.equipment -1 + ' equipment remaining.';
-        }
-      }
-      
-      flavorText = 'Equipment Attrition!';
-      
-      await ChatMessage.create({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: flavorText,
-        content: messageContent,
-        type: CONST.CHAT_MESSAGE_STYLES.OTHER
-      });
-
-    } else {
-      flavorText = 'Hit to the heart!';
-      messageContent = this.actor.name + ' will die at the end of Phase 5 without intervention!';
-
-      await ChatMessage.create({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: flavorText,
-        content: messageContent,
-        type: CONST.CHAT_MESSAGE_STYLES.OTHER
-      });
-    }
-
-    if (currentUses !== null && currentUses >= 0) {
-      await selectedItem.update({'system.uses.current': currentUses});
-    }
-    
+    this.actor.equipmentAttrition();
   }
 
   /**
@@ -1198,54 +1240,20 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    * @private
    */
   static async _rollFleshAttrition(event, target) {
-    const items = this.actor.items;
-    let undamagedSkills = [];
-    let flavorText = '';
-    let messageContent = '';
-
-    for (const i of items) {
-      if (i.type === "skill" && i.system.isDamaged === false) {
-        undamagedSkills.push(i);
-      }
-    }
-    
-    if (undamagedSkills.length) {
-      const selectedItem = undamagedSkills[Math.floor(Math.random()*undamagedSkills.length)];
-      selectedItem.update({"system.isDamaged": true});
-
-      flavorText = 'Flesh Attrition!'
-      messageContent = '<b style="color:red"><<</b> ' + selectedItem.name + ' <b style="color:red">>></b> damaged!<br><br>' + this.actor.name + ' has ';
-
-      if (this.actor.system.attrition.flesh < 2) {
-        messageContent += 'no Skills remaining. The next hit will be lethal!';
-      } else if (this.actor.system.attrition.flesh < 3) {
-        messageContent += this.actor.system.attrition.flesh -1 + ' skill remaining.';
-      } else {
-        messageContent += this.actor.system.attrition.flesh -1 + ' skills remaining.';
-      }
-
-      await ChatMessage.create({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: flavorText,
-        content: messageContent,
-        type: CONST.CHAT_MESSAGE_STYLES.OTHER
-      });
-
-    } else {
-      flavorText = 'Hit to the heart!'
-      messageContent = this.actor.name + ' will die at the end of Phase 5 without intervention!'
-
-      await ChatMessage.create({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: flavorText,
-        content: messageContent,
-        type: CONST.CHAT_MESSAGE_STYLES.OTHER
-      });
-    }
-    
+    this.actor.fleshAttrition();
   }
 
-  /** Helper Functions */
+  /**
+   * Roll Basic Attrition
+   * 
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static async _rollFleshAttrition(event, target) {
+    this.actor.basicAttrition();
+  }
 
   /**
    * Fetches the embedded document representing the containing HTML element

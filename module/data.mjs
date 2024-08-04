@@ -194,22 +194,22 @@ export class SpellData extends CommonItemData {
 }
 
 // Large Item Data
-export class LargeItemData extends CommonItemData { static defineScema() { const commonData = super.defineSchema(); return { ...commonData } } }
+export class LargeItemData extends CommonItemData { static defineSchema() { const commonData = super.defineSchema(); return { ...commonData } } }
 
 // Reward Data
-export class RewardData extends CommonItemData { static defineScema() { const commonData = super.defineSchema(); return { ...commonData } } }
+export class RewardData extends CommonItemData { static defineSchema() { const commonData = super.defineSchema(); return { ...commonData } } }
 
 // Advancement Data
-export class AdvancementData extends CommonItemData { static defineScema() { const commonData = super.defineSchema(); return { ...commonData } } }
+export class AdvancementData extends CommonItemData { static defineSchema() { const commonData = super.defineSchema(); return { ...commonData } } }
 
 // Flora Data
-export class FloraData extends CommonItemData { static defineScema() { const commonData = super.defineSchema(); return { ...commonData } } }
+export class FloraData extends CommonItemData { static defineSchema() { const commonData = super.defineSchema(); return { ...commonData } } }
 
 // Flaw Data
-export class FlawData extends CommonItemData { static defineScema() { const commonData = super.defineSchema(); return { ...commonData } } }
+export class FlawData extends CommonItemData { static defineSchema() { const commonData = super.defineSchema(); return { ...commonData } } }
 
 // Ability Data
-export class AbilityData extends CommonItemData { static defineScema() { const commonData = super.defineSchema(); return { ...commonData } } }
+export class AbilityData extends CommonItemData { static defineSchema() { const commonData = super.defineSchema(); return { ...commonData } } }
 
 // Companion Data
-export class CompanionItemData extends CommonItemData { static defineScema() { const commonData = super.defineSchema(); return { ...commonData } } }
+export class CompanionItemData extends CommonItemData { static defineSchema() { const commonData = super.defineSchema(); return { ...commonData } } }

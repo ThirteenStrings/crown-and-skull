@@ -25,6 +25,11 @@
           </a>
         {{/if}}
         <div title="Hero Point Cost" style="max-width: 45px;"><i class="fas fa-coins"></i> {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}</div>
+        {{#ifGreaterThan item.system.uses.max 0}}
+          <div title="Refresh All Uses" class="small-control clickable" data-action="resetUses">
+            <i class="fas fa-arrows-rotate"></i>
+          </div>
+        {{/ifGreaterThan}}
         {{#if item.system.uses.max}}
           <div title="Uses Remaining ◇ Click: Decrease ◇ Ctrl: Increase" class="uses-remaining clickable" data-action="updateUses">
             <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
@@ -85,6 +90,11 @@
       </li>
       {{/each}}
     </ul>
+  {{else}}{{#unless hideEmptyCategories}}
+  <div class="flexcol">
+    <h2>{{localize 'CRASK.Actor.base.FIELDS.advancements.label'}}</h2>
+    <div style="margin-top: 10px; margin-bottom: 30px;">Add Advancement items to the sheet to populate this area.</div>
+  </div>{{/unless}}
   {{/ifGreaterThan}}
 
 </section>

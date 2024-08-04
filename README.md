@@ -37,7 +37,6 @@ Character Tab:
 Equipment Tab:
 - Equipment
 - Flora
-- Small Items
 - Large Items
 
 Skills Tab:

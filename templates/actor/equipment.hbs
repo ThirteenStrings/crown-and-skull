@@ -38,6 +38,11 @@
             {{#if item.system.isEquipped}}{{item.system.defense}}{{else}}-{{/if}}
           </div>
         {{/if}}
+        {{#ifGreaterThan item.system.uses.max 0}}
+          <div title="Refresh All Uses" class="small-control clickable" data-action="resetUses">
+            <i class="fas fa-arrows-rotate"></i>
+          </div>
+        {{/ifGreaterThan}}
         {{#if item.system.uses.max}}
           <div title="Uses Remaining ◇ Click: Decrease ◇ Ctrl: Increase" class="uses-remaining clickable" data-action="updateUses">
             <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
@@ -82,6 +87,11 @@
           </li>
       {{/each}}
     </div>
+  {{else}}{{#unless hideEmptyCategories}}
+    <div class="flexcol">
+      <h2>{{localize 'CRASK.Actor.base.FIELDS.herbalistpouch.label'}}</h2>
+      <div style="margin-top: 10px; margin-bottom: 30px;">Add Flora items to the sheet to populate this area. Requires Herbalist's Pouch.</div>
+    </div>{{/unless}}
   {{/if}}
 
   {{!-- Item Pouch --}}
@@ -122,6 +132,11 @@
         </li>
       {{/each}}
     </div>
+  {{else}}{{#unless hideEmptyCategories}}
+    <div class="flexcol">
+      <h2>{{localize 'CRASK.Actor.base.FIELDS.itempouch.label'}}</h2>
+      <div style="margin-top: 10px; margin-bottom: 30px;">Accessible only if a "Pouch" item is owned.</div>
+    </div>{{/unless}}
   {{/if}}
 
   {{! Large Items }}
@@ -170,6 +185,11 @@
       </li>
       {{/each}}
     </ul>
+  {{else}}{{#unless hideEmptyCategories}}
+  <div class="flexcol">
+    <h2>{{localize 'CRASK.Actor.base.FIELDS.largeitems.label'}}</h2>
+    <div style="margin-top: 10px; margin-bottom: 30px;">Add Large Items to the sheet to populate this area.</div>
+  </div>{{/unless}}
   {{/ifGreaterThan}}
 
 </section>

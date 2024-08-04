@@ -26,7 +26,7 @@
       "thumbnail": "systems/crown-and-skull/assets/anvil-impact.png"
     }
   ],
-  "version": "1.4.0",
+  "version": "1.5.0",
   "compatibility": {
     "minimum": 12,
     "verified": "12.330"
@@ -54,7 +54,7 @@
       "equipment": {},
       "flaw": {},
       "flora": {},
-      "largeItem": {},
+      "largeitem": {},
       "reward": {},
       "skill": {},
       "spell": {}
@@ -74,12 +74,19 @@
       "path": "/packs/pgActors.db",
       "entity": "Actor",
       "system": "crown-and-skull"
+    },
+    {
+      "name": "csMacros",
+      "label": "Crown and Skull Macros",
+      "path": "/packs/csMacros.db",
+      "entity": "Macro",
+      "system": "crown-and-skull"
     }
   ],
   "packFolders": [],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/ThirteenStrings/crown-and-skull/main/system.json",
-  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.4.zip",
+  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.5.zip",
   "background": "systems/crown-and-skull/assets/anvil-impact.png",
   "grid": {
     "type": 1,

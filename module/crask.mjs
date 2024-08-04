@@ -35,6 +35,40 @@ globalThis.crask = {
 };
 
 Hooks.once('init', function () {
+
+  /**
+  * Crown and Skull System Settings
+  */
+  game.settings.register('crown-and-skull', 'autoCalc', {
+    name: 'Auto Calculate Hero Points',
+    hint: 'Automatically calculate hero points based on sheet contents. Turning this setting off will cause players to have to manually track hero points.',
+    scope: 'world',     // "world" = sync to db, "client" = local storage
+    requiresReload: true,
+    config: true,       // false if you dont want it to show in module config0
+    type: Boolean,       // You want the primitive class, e.g. Number, not the name of the class as a string
+    default: true
+  });
+
+  game.settings.register('crown-and-skull', 'autoDestroy', {
+    name: 'Destroy Attrition Destroys Equipment',
+    hint: 'Activating the "Destroy Attrition" function or macro on an actor will automatically destroy the selected item, removing it from the character sheet. When turned off, the player will have to manually delete the item indicated in the chat log.',
+    scope: 'world',     // "world" = sync to db, "client" = local storage
+    requiresReload: true,
+    config: true,       // false if you dont want it to show in module config0
+    type: Boolean,       // You want the primitive class, e.g. Number, not the name of the class as a string
+    default: true
+  });
+
+  game.settings.register('crown-and-skull', 'hideEmptyCategories', {
+    name: 'Hide Headers for Empty Categories',
+    hint: 'By default the sheet does not show headers like "Flaws", "Rewards", "Item Pouch" unless an item of the appropriate type is added to the sheet. Turn off this setting to always display these item headers.',
+    scope: 'world',     // "world" = sync to db, "client" = local storage
+    requiresReload: true,
+    config: true,       // false if you dont want it to show in module config0
+    type: Boolean,       // You want the primitive class, e.g. Number, not the name of the class as a string
+    default: true
+  });
+
   /**
    * Set an initiative formula for the system
    * @type {String}
@@ -58,7 +92,7 @@ Hooks.once('init', function () {
     skill: SkillData,
     spell: SpellData,
     advancement: AdvancementData,
-    largeItem: LargeItemData,
+    largeitem: LargeItemData,
     rewards: RewardData,
     flora: FloraData,
     flaw: FlawData,
@@ -137,6 +171,14 @@ Hooks.once('ready', function () {
   Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
 });
 
+Hooks.on('renderChatMessage', (msg, [html], context) => {
+  if (!game.user.isGM) {
+    let gmSection = html.querySelector('.gm-section');
+    if (gmSection) {
+      gmSection.remove()
+    }
+  }
+})
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
@@ -162,7 +204,6 @@ async function _createDocMacro(data, slot) {
   let macro = game.macros.find(
     (m) => m.name === item.name && m.command === command
   );
-  console.log(macro);
   if (!macro) {
     macro = await Macro.create({
       name: item.name,

@@ -1,5 +1,36 @@
 # CHANGELOG
 
+## 1.5.0
+
+- Added option to disable automatic hero point calculations in game settings
+- Added option to display all item section headers in game settings (item section headers are hidden unless at least one of that item type is present on the sheet)
+- Tactic roll details are obfuscated from players
+- Added a reset uses button next to item use controls on equipment and spells
+- Added "Rest & Recovery" and "Take a Breather" macros in the macro compendium
+- Prompt to automatically add the cost of deleted equipment and companion items to lost hero points
+- Equipment, Flesh, Destroy, and Brutal Attrition functions now available as a macro in the macro compendium (Brutal and Destroy are only available as a macro, these macros will only operate on a selected character actor token)
+- Destroyed items from destroy attrition will automatically add the cost of the item to lost hero points
+- Added option to disable Destroy Attrition from automatically deleting items in game settings
+- When players select initiative when they are already in the initiative tracker, a dialog box pops up to ask if they want to update existing initiative, push an additional combatant, or cancel
+- Redesigned enemy sheet
+
+### Known Issues
+- Localization continues to suffer
+- Roll All & Roll NPCs combat buttons are inoperable for GMs
+
+### Future Plans
+
+- Localization overhaul
+- Find a way to remove Roll All & Roll NPCs combat buttons as they have no use
+- Inline rolls from items say item name instead of "Generic Roll"
+- Phases labeled in combat tracker
+- Companion actors can sync with a player and automatically add an item entry to their owner
+
+### Dropped Plans
+
+- No longer planning for default scene / background
+- Item Macros not useful for system, no longer worried about color changing icons
+
 ## 1.4.0
 
 <b>Please be aware that this version can break characters and items from past versions. The switch to Data Model changed some of the underlying item structures and they may no longer be compatible. Backup your world. It may be bricked by this update.</b>

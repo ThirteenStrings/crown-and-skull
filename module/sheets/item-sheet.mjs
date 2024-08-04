@@ -61,9 +61,6 @@ export class CraskItemSheet extends api.HandlebarsApplicationMixin(
       case 'equipment':
         options.parts.push('effects');
         break;
-      case 'alchemical':
-        options.parts.push('effects');
-        break;
       case 'spell':
         options.parts.push('effects');
         break;
