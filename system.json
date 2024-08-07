@@ -26,7 +26,7 @@
       "thumbnail": "systems/crown-and-skull/assets/anvil-impact.png"
     }
   ],
-  "version": "1.5.0",
+  "version": "1.5.1",
   "compatibility": {
     "minimum": 12,
     "verified": "12.330"
@@ -86,7 +86,7 @@
   "packFolders": [],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/ThirteenStrings/crown-and-skull/main/system.json",
-  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.5.zip",
+  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.5.1.zip",
   "background": "systems/crown-and-skull/assets/anvil-impact.png",
   "grid": {
     "type": 1,
@@ -94,6 +94,6 @@
     "units": "ft",
     "diagonals": 0
   },
-  "primaryTokenAttribute": "attrition.flesh.current",
-  "secondaryTokenAttribute": "attrition.equipment.current"
+  "primaryTokenAttribute": "attrition.flesh",
+  "secondaryTokenAttribute": "attrition.equipment"
 }

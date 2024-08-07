@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 1.5.1
+
+- Fixed flesh attrition button not working
+- Fixed issue with not being able to access token editing
+- Modified Skill item appearance and item sheet to be more intuitive
+
+Thanks to Feroand for the bug reports and suggestions.
+
 ## 1.5.0
 
 - Added option to disable automatic hero point calculations in game settings

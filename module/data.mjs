@@ -160,11 +160,13 @@ export class SkillData extends CommonItemData {
       modifier: new fields.NumberField({ initial: 0, integer: true })
     }
   }
-
   static migrateData(source) {
     // Migrate target number
     if ( source.dc ) { source.targetNumber = +source.dc; source.dc = null };
     return super.migrateData(source);
+  }
+  prepareDerivedData() {
+    this.totalTarget = this.targetNumber + this.modifier;
   }
 }
 

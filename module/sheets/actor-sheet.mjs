@@ -1251,7 +1251,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @private
    */
-  static async _rollFleshAttrition(event, target) {
+  static async _rollBasicAttrition(event, target) {
     this.actor.basicAttrition();
   }
 

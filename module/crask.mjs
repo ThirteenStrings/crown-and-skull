@@ -123,14 +123,6 @@ Hooks.once('init', function () {
     label: 'CRASK.SheetLabels.Item',
   });
 
-  CONFIG.Actor.trackableAttributes = {
-    character: {
-      bar: ["attrition.flesh","attrition.equipment","heropoints"]
-    },
-    enemy: {
-      bar: ["hitpoints"]
-    }
-  }
 });
 
 /* -------------------------------------------- */
