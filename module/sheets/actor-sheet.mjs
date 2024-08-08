@@ -745,7 +745,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       
       // For each die rolled, create a die picture with the number on top of it.
       for (const dieRoll of roll.dice) {
-        let dieType = 'D' + dieRoll.faces;
+        let dieType = 'd' + dieRoll.faces;
         for (const dieResult of dieRoll.results) {
           dieCount ++;
           gridCount = Math.min(dieCount, 4);

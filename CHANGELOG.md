@@ -1,8 +1,14 @@
 # CHANGELOG
 
+## 1.5.3
+
+- Fixed an issue where rolls would not display correctly on ForgeVTT
+
 ## 1.5.2
 
 - Fixed an issue where actor sheets were not displaying the correct skill target number
+
+Thanks to Ryan for the bug report.
 
 ## 1.5.1
 
