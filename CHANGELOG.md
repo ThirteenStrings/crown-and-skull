@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.5.2
+
+- Fixed an issue where actor sheets were not displaying the correct skill target number
+
 ## 1.5.1
 
 - Fixed flesh attrition button not working

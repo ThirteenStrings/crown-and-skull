@@ -155,7 +155,6 @@ export class SkillData extends CommonItemData {
     const commonData = super.defineSchema();
     return {
       ...commonData,
-      targetNumber: new fields.NumberField({ initial: 3, min: 3, max: 18 }),
       isDamaged: new fields.BooleanField({ initial: false }),
       modifier: new fields.NumberField({ initial: 0, integer: true })
     }
@@ -166,7 +165,7 @@ export class SkillData extends CommonItemData {
     return super.migrateData(source);
   }
   prepareDerivedData() {
-    this.totalTarget = this.targetNumber + this.modifier;
+    this.targetNumber = this.cost + this.modifier;
   }
 }
 

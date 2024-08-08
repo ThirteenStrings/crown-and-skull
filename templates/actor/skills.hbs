@@ -29,7 +29,7 @@
       </div>
       <!-- Right column for target number and controls -->
       <div class="flexcol left-simple">
-        <div class='skill-target clickable' title="Roll Skill ◇ Ctrl: Quick Roll" data-roll-type="Skill" data-action="skillRoll">{{item.system.totalTarget}}</div>
+        <div class='skill-target clickable' title="Roll Skill ◇ Ctrl: Quick Roll" data-roll-type="Skill" data-action="skillRoll">{{item.system.targetNumber}}</div>
         <div class='item-controls flexrow' style="margin-top: -5px;">
           <div title="External Modifiers">({{#ifGreaterThan item.system.modifier -1}}+{{item.system.modifier}}{{else}}{{item.system.modifier}}{{/ifGreaterThan}})</div>
         </div>
