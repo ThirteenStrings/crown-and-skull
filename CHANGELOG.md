@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## 1.5.4
+
+- Added "Yes/No" and "Direction Roll" macros to the macro compendium
+- Added "Hex Rolls" macro to the macro compendium
+- Added "Hex Events" and "Hex Locations" to a rollable table compendium
+- Generic, Copper Peaks, and Frog Marshes tables have been added as examples
+- See page 179 in the core rulebook to manually add additional areas
+- Added "Forage Check" macro to the macro compendium
+- Flora findings for each biome added in tables in the compendium. Details for each can be found in the core rulebook (p 293)
+- Added "Treasure Roll" macro to the macro compendium
+- Sample treasure tables included in compendium (Coins and Cash & Heirlooms). More treasure tables can be found in the core rulebook (p 299)
+
+### Using the Hex Events Macro
+- Hex Events tables must be named "Hex Events <Area Name>"
+- Hex Locations tables must be named "Hex Locations <Area Name>"
+- If the Area Name doesn't match for Hex Event and Hex Locations, the macro will not work
+- It will also fail if you don't have both types for the Area
+- If you don't want this to whisper GM delete the "whisper: game.user.id" at the very end of the macro
+- Ensure table entries have the format "<Event Title>: <Event Description>" as the colon-space is the delimiter
+
 ## 1.5.3
 
 - Fixed an issue where rolls would not display correctly on ForgeVTT
