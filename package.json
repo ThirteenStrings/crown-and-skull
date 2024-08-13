@@ -1,6 +1,6 @@
 {
   "name": "crown-and-skull",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Unofficial CROWN and SKULL system from Runehammer Games. https://www.runehammer.online",
   "scripts": {
     "build": "sass src/scss/crask.scss css/crask.css --style=expanded --no-source-map",

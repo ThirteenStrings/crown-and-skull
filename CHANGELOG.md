@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.5.5
+
+- Fixed an error where default character artwork resulted in a broken image on Forge-hosted servers
+- Added an option in the game settings to unlock Lineage and Hometown on the character sheet
+
 ## 1.5.4
 
 - Added "Yes/No" and "Direction Roll" macros to the macro compendium

@@ -400,6 +400,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     // Game Settings variables for sheet handlebars
     context.autoCalc = game.settings.get('crown-and-skull','autoCalc');
     context.hideEmptyCategories = game.settings.get('crown-and-skull','hideEmptyCategories');
+    context.restrictBackground = game.settings.get('crown-and-skull','restrictBackground');
         
   }
 

@@ -25,20 +25,30 @@
       </h1>
       <div class="grid grid-2col flexrow origin-select">
         <div>
-          <select name='system.hometown' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important">
-            <option value="Gardenburrow" {{#ifEquals system.hometown "Gardenburrow"}}selected{{/ifEquals}}>Gardenburrow</option>
-            <option value="Rivergate" {{#ifEquals system.hometown "Rivergate"}}selected{{/ifEquals}}>Rivergate</option>
-            <option value="Slimshire" {{#ifEquals system.hometown "Slimshire"}}selected{{/ifEquals}}>Slimshire</option>
-          </select>
+          {{#if restrictBackground}}
+            <select name='system.hometown' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important">
+              <option value="Gardenburrow" {{#ifEquals system.hometown "Gardenburrow"}}selected{{/ifEquals}}>Gardenburrow</option>
+              <option value="Rivergate" {{#ifEquals system.hometown "Rivergate"}}selected{{/ifEquals}}>Rivergate</option>
+              <option value="Slimshire" {{#ifEquals system.hometown "Slimshire"}}selected{{/ifEquals}}>Slimshire</option>
+            </select>
+          {{else}}
+            <label for='hometown'>Hometown</label>
+            <input id='hometown' name='system.hometown' style="width: 230px; font-size: 20px; background: transparent; border-radius: 7px; text-align: center; border-left: none; border-right:" value="{{system.hometown}}">
+          {{/if}}
         </div>
         <div>
-          <select name='system.lineage' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important">
-            <option value="Human" {{#ifEquals system.lineage "Human"}}selected{{/ifEquals}}>Human</option>
-            <option value="Elf" {{#ifEquals system.lineage "Elf"}}selected{{/ifEquals}}>Elf</option>
-            <option value="Stout Folk" {{#ifEquals system.lineage "Stout Folk"}}selected{{/ifEquals}}>Stout Folk</option>
-            <option value="Proudfoot" {{#ifEquals system.lineage "Proudfoot"}}selected{{/ifEquals}}>Proudfoot</option>
-            <option value="Frog-kin" {{#ifEquals system.lineage "Frog-kin"}}selected{{/ifEquals}}>Frog-Kin</option>
-          </select>
+          {{#if restrictBackground}}
+            <select name='system.lineage' data-dtype='String' style="font-size: 20px; text-align: center; appearance: none !important; -webkit-appearance: none !important">
+              <option value="Human" {{#ifEquals system.lineage "Human"}}selected{{/ifEquals}}>Human</option>
+              <option value="Elf" {{#ifEquals system.lineage "Elf"}}selected{{/ifEquals}}>Elf</option>
+              <option value="Stout Folk" {{#ifEquals system.lineage "Stout Folk"}}selected{{/ifEquals}}>Stout Folk</option>
+              <option value="Proudfoot" {{#ifEquals system.lineage "Proudfoot"}}selected{{/ifEquals}}>Proudfoot</option>
+              <option value="Frog-kin" {{#ifEquals system.lineage "Frog-kin"}}selected{{/ifEquals}}>Frog-Kin</option>
+            </select>
+          {{else}}
+            <label for='lineage'>Lineage</label>
+            <input id='lineage' name='system.lineage' style="width: 230px; font-size: 20px; background: transparent; border-radius: 7px; text-align: center; border-left: none; border-right:" value="{{system.lineage}}">
+          {{/if}}
         </div>
       </div>
     </div>

@@ -69,6 +69,16 @@ Hooks.once('init', function () {
     default: true
   });
 
+  game.settings.register('crown-and-skull', 'restrictBackground', {
+    name: 'Restrict Lineage and Hometown Choices',
+    hint: 'By default, Lineage and Hometown Choices are limited. Turn off this setting to allow custom Lineage and Hometown Choices.',
+    scope: 'world',
+    requiresReload: true,
+    config: true,
+    type: Boolean,
+    default: true
+  });
+
   /**
    * Set an initiative formula for the system
    * @type {String}

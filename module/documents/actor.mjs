@@ -118,7 +118,7 @@ export class CraskActor extends Actor {
     static getDefaultArtwork(itemData) {
   
       const defaultImages = {
-        character: 'systems/crown-and-skull/assets/icons/Black/character.svg',
+        character: 'systems/crown-and-skull/assets/icons/Black/Character.svg',
         enemy: 'systems/crown-and-skull/assets/icons/Black/Enemy.svg',
         companion: 'systems/crown-and-skull/assets/icons/Black/Companion.svg',
         npc: 'systems/crown-and-skull/assets/icons/Black/NPC.svg'
