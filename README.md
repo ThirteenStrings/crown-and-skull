@@ -22,6 +22,9 @@ Created by ThirteenStrings (Discord). Feel free to message with any suggestions 
 
 Special thanks to Asacolips (Discord: asacolips), Lee Talman (Discord: .pizzaWizard), Joseph M. (Discord: chaosos) for the Boilerplate this system is build upon.
 
+### Game Settings
+Check the game settings for some more customization options for your game of Crown and Skull.
+
 ### Compendium Packs
 Be sure to import the items and actors from the included compendiums!
 

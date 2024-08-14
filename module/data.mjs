@@ -33,7 +33,8 @@ export class CharacterData extends CommonActorData {
           max: new fields.NumberField({ initial: 50, integer: true, min: 0 }),
           spent: new fields.NumberField({ initial: 0, integer: true, min: 0 }),
           lost: new fields.NumberField({ initial: 0, integer: true, min: 0 }),
-          remaining: new fields.NumberField({ initial: 50, integer: true})
+          remaining: new fields.NumberField({ initial: 50, integer: true}),
+          offset: new fields.NumberField({ initial: 0, integer: true })
       }),
       defense: new fields.NumberField({ initial: 6, integer: true, min: 6, max: 18 }),
       defenseModifier: new fields.NumberField({ initial: 0, integer: true }),

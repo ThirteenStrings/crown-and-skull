@@ -9,7 +9,7 @@
       <div class='resource-label hero-points-label-container'>
         {{localize 'CRASK.Actor.base.FIELDS.heropoints.label'}}
       </div>
-      <div class="grid grid-4col hero-points-input-container" title="Current Hero Points (Accounted for on sheet)">
+      <div class="grid grid-4col hero-points-input-container" title="Hero Points currently accounted for on the sheet">
         <div class="input-wrapper flexcol">
           <label for="current-hero-points" class="hero-points-label">Curr</label>
           <input
@@ -21,12 +21,13 @@
             {{#if autoCalc}}readonly{{/if}}
           />
         </div>
-        <div class="input-wrapper flexcol" title="Max Hero Points Available (50 + Rewards)">
+        <div class="input-wrapper flexcol {{#if autoCalc}}clickable{{/if}}" title="Max Hero Points Available ◇ Click: Offset Default Max {{#if actor.system.heropoints.offset}}({{actor.system.heropoints.offset}}){{/if}}"{{#if autoCalc}}data-action="heroPointOffset"{{/if}}>
           <label for="max-hero-points" class="hero-points-label">Max</label>
           <input
             id="max-hero-points"
             type='number'
             name='system.heropoints.max'
+            
             value={{actor.system.heropoints.max}}
             data-dtype='Number'
             {{#if autoCalc}}readonly{{/if}}

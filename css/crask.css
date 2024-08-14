@@ -668,6 +668,8 @@
 .crask .tab-list .item-name {
   margin-bottom: 2px;
   font-weight: bold;
+  max-height: 20px;
+  overflow: hidden;
 }
 .crask .tab-list .item-image {
   max-width: 40px;

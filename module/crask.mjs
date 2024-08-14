@@ -79,6 +79,16 @@ Hooks.once('init', function () {
     default: true
   });
 
+  game.settings.register('crown-and-skull', 'defaultMaxHeropoints', {
+    name: 'Default Maximum Hero Points',
+    hint: 'By default, characters start with 50 hero points to spend. Change this value to alter the default.',
+    scope: 'world',
+    requiresReload: true,
+    config: true,
+    type: Number,
+    default: 50,
+  });
+
   /**
    * Set an initiative formula for the system
    * @type {String}

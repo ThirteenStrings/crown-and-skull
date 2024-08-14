@@ -44,6 +44,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       rollFleshAttrition: this._rollFleshAttrition,
       damageRoll: this._damageRoll,
       skillRoll: this._skillRoll,
+      heroPointOffset: this._heroPointOffset,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -642,6 +643,49 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
     });
   }
 
+/**
+   * Handles pushing enemy combatants to combat tracker
+   *
+   * @this CraskActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+  static async _heroPointOffset(event, target) {
+        
+    // Dialog popup
+    let heroPointOffset;
+    let dialogTitle = "Hero Point Offset"
+    
+    heroPointOffset = await foundry.applications.api.DialogV2.wait({
+      window: {
+        title: dialogTitle,
+        modal: true
+      },
+      content: `
+        <form>
+          <div style="margin-bottom: 10px; display: inline;">
+            <label for="offset">Hero Point Offset:</label>
+            <input type="number" id="offset" name="offset" value="${this.actor.system.heropoints.offset}" style="max-width: 50px;">
+          </div>
+        </form>
+      `,
+      buttons: [
+        {
+          label: "Confirm",
+          callback: (event, button, dialog) => button.form.elements.offset.value
+        }
+      ],
+      rejectClose: false
+    });
+
+    let updateData = {}
+    updateData['system.heropoints.offset'] = heroPointOffset;
+    await this.actor.update(updateData);
+    updateHeroPoints(this);
+    
+  }
+
   /**
    * Handles enemy tactic roll
    *
@@ -1013,6 +1057,7 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
         flavor: label,
         rollMode: game.settings.get('core', 'rollMode'),
       });
+
       return roll;
     }
   }

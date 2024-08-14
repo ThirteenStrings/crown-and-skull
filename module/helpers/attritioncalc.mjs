@@ -17,7 +17,11 @@ export function updateAttrition(actor) {
         }
       });
   
-      actor.system.attrition.flesh = fleshAttrition;
-      actor.system.attrition.equipment = equipAttrition;
+      let updateData = {};
+      updateData['system.attrition.flesh'] = fleshAttrition;
+      updateData['system.attrition.equipment'] = equipAttrition;
+
+      actor.update(updateData)
+
     }
   }

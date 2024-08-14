@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.5.6
+
+- Flaws were incorrectly giving 3 hero points instead of 5, this is now fixed
+- Item name that are too long are cut off instead of breaking the design of the sheet
+- Added the ability to change the default Max Hero Points (50) globally in the game settings
+- Added ability to adjust default Max Hero Points (50) per character by clicking on Max Hero Points on the character sheet
+
 ## 1.5.5
 
 - Fixed an error where default character artwork resulted in a broken image on Forge-hosted servers

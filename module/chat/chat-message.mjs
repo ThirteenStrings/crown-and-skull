@@ -2,7 +2,7 @@ import { postRollMessage } from "./chat-roll.mjs"
 
 export class CraskRollMessage extends ChatMessage {
     static async create(messageData, messageOptions) {
-
+      
         if (messageData.rolls) {
           messageData.flavor = "Generic Roll";
         } else {

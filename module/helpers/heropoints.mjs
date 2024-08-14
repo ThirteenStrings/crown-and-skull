@@ -5,13 +5,13 @@ export function updateHeroPoints(actor) {
       const items = actor.items;
   
       let spentHeroPoints = 0;
-      let maxHeroPoints = 50;
+      let maxHeroPoints = game.settings.get('crown-and-skull','defaultMaxHeropoints') + actor.system.heropoints.offset;
     
       items.forEach(item => {
         if (item.type === 'reward') {
           maxHeroPoints += item.system.cost;
         } else if (item.type === 'flaw') {
-          maxHeroPoints += 3;
+          maxHeroPoints += 5;
         } else if (item.type === 'ability') {
           spentHeroPoints += 15;
         } else if (item.system.cost) {
