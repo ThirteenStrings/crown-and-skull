@@ -5,88 +5,170 @@
       "Item": "CROWN and SKULL Item Sheet"
     },
     "Actor": {
+      "advancements": {
+        "label": "Advancements",
+        "missing": "Add Advancement items to the sheet to populate this area."
+      },
+      "attack": {"label": "Attack"},
+      "attrition": {
+        "equipment": {
+          "label": "Equip",
+          "roll": "Roll Equipment Attrition",
+          "title": "Remaining Equipment Attrition"
+        },
+        "flesh": {
+          "label": "Flesh",
+          "roll": "Roll Flesh Attrition",
+          "title": "Remaining Flesh Attrition"
+        },
+        "label": "Attrition"
+      },
+      "atk": {"label": "ATK"},
+      "character": {"label": "Character"},
+      "charactersummary": {"label": "Character Summary"},
+      "combat": "Combat",
+      "companion": {
+        "description": "Companion Description",
+        "label": "Companion", 
+        "missing": "Add Comapnion items to the sheet to populate this area."
+      },
+      "companionSkills": {"missing": "No skills selected. Drag and drop Companion Skills from the item pane."},
+      "coreability": {
+        "label": "Core Ability", 
+        "missing": "Add Core Ability items to the sheet to populate this area.",
+        "title": "View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self"
+      },
+      "def": {"label": "DEF"},
+      "defense": {
+        "equipment": "Defense from Equipment",
+        "equipped": "◇ Currently Equipped ◇ Click to Doff",
+        "label": "Defense",
+        "modifiers": "Temporary Defense Modifiers",
+        "roll": "Roll Defense ◇ Ctrl: Quick Roll",
+        "temp": "Temp",
+        "unequipped": "◇ Not Currently Equipped ◇ Click to Don"
+      },
+      "enemydescription": {"label": "Enemy Description"},
+      "externalModifiers": "External Modifiers",
+      "flaws": {
+        "label": "Flaws", 
+        "missing": "Add Flaw items to the sheet to populate this area."
+      },
+      "health": {"label": "Health"},
+      "herbalistpouch": {
+        "empty": "Add Flora items to the sheet to populate this area. Requires Herbalist's Pouch.",
+        "label": "Herbalist's Pouch",
+        "missing": "No herbs in the pouch. Drag and drop flora to populate.",
+        "required": "Requires Herbalist Pouch in Equipment"
+      },
+      "herocoin": {
+        "available": "Reroll any roll entirely. ◇ or ◇ Maximize damage or effect roll.",
+        "gain": "Click to Gain Hero Coin",
+        "label": "Hero"
+      },
+      "heropoints": {
+        "cost": "Hero Point Cost",
+        "current": {
+          "abbreviation": "Curr",
+          "title": "Hero Points currently accounted for on the sheet"
+        },
+        "label": "Hero Points",
+        "lost": {
+          "label": "Lost",
+          "title": "Hero Points Lost to Consumables and Destroyed Equipment"
+        },
+        "max": {
+          "label": "Max",
+          "title": "Max Hero Points Available ◇ Click: Offset Default Max"
+        },
+        "remaining": {
+          "abbreviation": "Rem",
+          "title": "Remaining Hero Points"
+        }
+      },
+      "hometown": {"label": "Hometown"},
+      "hp": {"label": "Hit Points"},
+      "item": {
+        "damage": "Damage",
+        "damaged" : "Damaged: Click to Restore",
+        "duration": "Duration",
+        "effect": "Effect",
+        "intact": "Intact: Click to Damage",
+        "range": "Range",
+        "refresh": "Refresh All Uses",
+        "toPouch": "Send to Pouch",
+        "unequipped": "[Unequipped]",
+        "uses": "Uses Remaining ◇ Click: Decrease ◇ Ctrl: Increase",
+        "zeroUses": "zero-uses"
+      },
+      "itempouch": {
+        "empty": "No items in pouch. Move items from main equipment to pouch using the button.",
+        "label": "Item Pouch",
+        "missing": "Accessible only if a 'Pouch' item is owned.",
+        "remove": "Remove from Pouch",
+        "required": "Requires Pouch in Inventory"
+      },
+      "known": {"label": "Widely Known"},
+      "largeitems": {
+        "label": "Large Items",
+        "missing": "Add Large Items to the sheet to populate this area."
+      },
+      "lineage": {"label": "Lineage"},
+      "location": {"label": "Location"},
+      "name": {"label": "Character Name"},
+      "npcsummary": {"label": "NPC Summary"},
+      "phase": {
+        "label": "Phase",
+        "push": "Push to Combat Tracker",
+        "s": "Phases",
+        "select": "Select Combat Phase"
+      },
+      "power": {"label": "Power"},
+      "quest": {"label": "Quest"},
+      "remaining": {"label": "Remaining"},
+      "rewards": {
+        "label": "Rewards", 
+        "missing": "Add Reward items to the sheet to populate this area."
+      },
+      "skill": {
+        "modifiers": "External Modifiers",
+        "roll": "Roll Skill ◇ Ctrl: Quick Roll"
+      },
+      "skipDialog": "◇ Ctrl: Skip Dialog",
       "Tabs": {
         "Character": "Character",
         "Equipment": "Equipment",
-        "Skills": "Skills",
-        "Magic": "Magic"
+        "Magic": "Magic",
+        "Skills": "Skills"
       },
-      "base": {
-        "FIELDS": {
-          "name": {"label": "Character Name"},
-          "character": {"label": "Character"},
-          "health": {"label": "Health"},
-          "power": {"label": "Power"},
-          "heropoints": {"label": "Hero Points"},
-          "current": {"label": "Current"},
-          "remaining": {"label": "Remaining"},
-          "lost": {"label": "Lost"},
-          "phases": {"label": "Phases"},
-          "defense": {"label": "Defense"},
-          "itempouch": {"label": "Item Pouch"},
-          "herbalistpouch": {"label": "Herbalist's Pouch"},
-          "charactersummary": {"label": "Character Summary"},
-          "enemydescription": {"label": "Enemy Description"},
-          "npcsummary": {"label": "NPC Summary"},
-          "companiondescription": {"label": "Companion Description"},
-          "flaws": {"label": "Flaws"},
-          "hp": {"label": "Hit Points"},
-          "atk": {"label": "ATK"},
-          "def": {"label": "DEF"},
-          "tactics": {"label": "Tactics"},
-          "tactic1": {"label": "Movement Tactic - Roll Result: 1"},
-          "tactic25": {"label": "Melee Tactic - Roll Result: 2-5"},
-          "tactic6": {"label": "Area Tactic - Roll Result: 6"},
-          "location": {"label": "Location"},
-          "known": {"label": "Widely Known"},
-          "quest": {"label": "Quest"},
-          "attack": {"label": "Attack"},
-          "largeitems": {"label": "Large Items"},
-          "advancements": {"label": "Advancements"},
-          "coreability": {"label": "Core Ability"},
-          "companion": {"label": "Companion"},
-          "rewards": {"label": "Rewards"}
-        }
+      "tactic" : {
+        "area": "Area Tactic - Roll Result: 6",
+        "header": "Enemy Tactics",
+        "label": "Tactics",
+        "melee": "Melee Tactic - Roll Result: 2-5",
+        "move": "Movement Tactic - Roll Result: 1",
+        "roll": "Roll Tactic"
       },
-      "Character": {
-        "FIELDS": {
-          "level": {"label": "Level"}
-        }
-      },
-      "NPC": {
-        "FIELDS": {
-          "cr": {"label": "CR"},
-          "xp": {"label": "XP"}
-        }
-      }
+      "viewItem": "View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self"
     },
     "Item": {
+      "cost": {"label": "Cost"},
+      "description": "Description",
+      "def": {"label": "Defense"},
+      "dmg": {"label": "Damage"},
+      "duration": {"label": "Duration"},
+      "effect": {"label": "Effect"},
+      "modifiers": {"label": "Ongoing Modifiers"},
+      "multiAttrition": {"label": "Multi-Attrition", "title": "If the item can take multiple hits before being damaged."},
+      "range": {"label": "Range", "na": "N/A", "touch": "Touch", "ranged": "Ranged", "area": "Area"},
       "Tabs": {
-        "Attributes": "Attributes",
         "Description": "Description",
         "Effects": "Effects"
       },
-      "Gear": {
-        "FIELDS": {
-          "rollFormula": {"label": "Roll Formula"},
-          "numDice": {"label": "Number of Dice"},
-          "dieSize": {"label": "Die Size"},
-          "rollMod": {"label": "Roll Modifier"},
-          "quantity": {"label": "Quantity"},
-          "weight": {"label": "Weight"},
-          "dmg": {"label": "Damage"},
-          "def": {"label": "Defense"},
-          "cost": {"label": "Cost"},
-          "uses": {"label": "Uses"},
-          "target": {"label": "Hero Points Invested"},
-          "modifiers": {"label": "Ongoing Modifiers"},
-          "effect": {"label": "Effect"},
-          "range": {"label": "Range"},
-          "targets": {"label": "Targets"},
-          "duration": {"label": "Duration"},
-          "value": {"label": "Value"}
-        }
-      }
+      "target": {"label": "Hero Points Invested"},
+      "targets": {"label": "Targets"},
+      "uses": {"label": "Uses"},
+      "value": {"label": "Value"}
     },
     "Effect": {
       "Source": "Source",

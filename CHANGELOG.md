@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 1.5.7
+
+- Fixed an error where spell effect could not be changed
+- Sheet localization overhaul and improvements, roll templates still need localization
+- Added Unstable Magic and Infernal Magic tables to the tables compendium
+- Added Unstable Magic and Infernal Magic macros to the macros compendium, the macros are recommended for proper output
+- Verified compatibility with Foundry 12.331
+- Fixed warning: 'system "crown-and-skull" uses pack.entity which has been replaced with pack.type'
+
 ## 1.5.6
 
 - Flaws were incorrectly giving 3 hero points instead of 5, this is now fixed

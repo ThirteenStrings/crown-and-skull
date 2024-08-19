@@ -9,8 +9,8 @@
         title='{{item.name}}'
       />
       {{#if (eq item.type 'equipment')}}
-        <div title="If the item can take multiple hits before being damaged." style="text-align: center;">
-          <label for="multiAttrition" class="resource-label" style="font-size: 11px;">Multi-Attrition</label>
+        <div title="{{localize 'CRASK.Item.multiAttrition.title'}}" style="text-align: center;">
+          <label for="multiAttrition" class="resource-label" style="font-size: 11px;">{{localize 'CRASK.Item.multiAttrition.label'}}</label>
           <input type="checkbox" name="system.hasMultiAttrition" {{checked item.system.hasMultiAttrition}}>
         </div>
       {{/if}}
@@ -24,7 +24,7 @@
       {{#if (eq item.type 'equipment')}}
         <div class='grid grid-4col flexrow'>
           <div class='resource flexcol'>
-            <label for='item-damage' class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.dmg.label'}}</label>
+            <label for='item-damage' class='resource-label'>{{localize 'CRASK.Item.dmg.label'}}</label>
             <input
               id='item-damage'
               type='text'
@@ -34,7 +34,7 @@
             />
           </div>
           <div class='resource flexcol'>
-            <label for='item-defense' class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
+            <label for='item-defense' class='resource-label'>{{localize 'CRASK.Item.def.label'}}</label>
             <input
               id='item-defense'
               type='text'
@@ -44,7 +44,7 @@
             />
           </div>
           <div class='resource flexcol'>
-            <label for='item-cost' class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.cost.label'}}</label>
+            <label for='item-cost' class='resource-label'>{{localize 'CRASK.Item.cost.label'}}</label>
             <input
               id='item-cost'
               type='text'
@@ -54,7 +54,7 @@
             />
           </div>       
           <div class="resource flexcol" style="min-width: 90px;">
-            <label for="current-item-uses" class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.uses.label'}}</label>
+            <label for="current-item-uses" class='resource-label'>{{localize 'CRASK.Item.uses.label'}}</label>
             <div class='flexrow'>
               <input
                 id="current-item-uses"
@@ -79,7 +79,7 @@
       {{#if (eq item.type 'smallitem')}}
         <div class='grid grid-4col flexrow'>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.dmg.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.dmg.label'}}</label>
             <input
               type='text'
               name='system.damage'
@@ -88,7 +88,7 @@
             />
           </div>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.def.label'}}</label>
             <input
               type='text'
               name='system.defense'
@@ -97,7 +97,7 @@
             />
           </div>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.cost.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.cost.label'}}</label>
             <input
               type='text'
               name='system.cost'
@@ -106,7 +106,7 @@
             />
           </div>       
           <div class="resource flexcol"  style="min-width: 90px;">
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.uses.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.uses.label'}}</label>
             <div class='flexrow'>
               <input
                 id="current-item-uses"
@@ -133,7 +133,7 @@
       {{#if (eq item.type 'skill')}}
         <div class='grid grid-2col' style="margin: -10px 0px;">
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.target.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.target.label'}}</label>
             <input
               type='text'
               name='system.cost'
@@ -142,7 +142,7 @@
             />
           </div>       
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.modifiers.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.modifiers.label'}}</label>
             <input
               type='number'
               name='system.modifier'
@@ -157,16 +157,16 @@
       {{#if (eq item.type 'spell')}}
         <div class='grid grid-3col' style="margin: -10px 0px;">
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.effect.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.effect.label'}}</label>
             <input
               type='text'
-              name='system.damage'
-              value='{{system.damage}}'
+              name='system.effect'
+              value='{{system.effect}}'
               data-dtype='String'
             />
           </div>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.def.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.def.label'}}</label>
             <input
               type='text'
               name='system.defense'
@@ -175,7 +175,7 @@
             />
           </div>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.cost.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.cost.label'}}</label>
             <input
               type='text'
               name='system.cost'
@@ -186,7 +186,7 @@
         </div>
         <div class="grid grid-3col" style="margin: -10px 0px;"> 
           <div class="resource flexcol">
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.uses.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.uses.label'}}</label>
             <div class='flexrow'>
               <input
                 id="current-item-uses"
@@ -206,16 +206,16 @@
             </div>
           </div>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.range.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.range.label'}}</label>
             <select name='system.range' data-dtype='String'>
-              <option value="NA" {{#ifEquals system.range "NA"}}selected{{/ifEquals}}>NA</option>
-              <option value="Touch" {{#ifEquals system.range "Touch"}}selected{{/ifEquals}}>Touch</option>
-              <option value="Ranged" {{#ifEquals system.range "Ranged"}}selected{{/ifEquals}}>Ranged</option>
-              <option value="Area" {{#ifEquals system.range "Area"}}selected{{/ifEquals}}>Area</option>
+              <option value="NA" {{#ifEquals system.range "NA"}}selected{{/ifEquals}}>{{localize 'CRASK.Item.range.na'}}</option>
+              <option value="Touch" {{#ifEquals system.range "Touch"}}selected{{/ifEquals}}>{{localize 'CRASK.Item.range.touch'}}</option>
+              <option value="Ranged" {{#ifEquals system.range "Ranged"}}selected{{/ifEquals}}>{{localize 'CRASK.Item.range.ranged'}}</option>
+              <option value="Area" {{#ifEquals system.range "Area"}}selected{{/ifEquals}}>{{localize 'CRASK.Item.range.area'}}</option>
             </select>
           </div>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Item.Gear.FIELDS.duration.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Item.duration.label'}}</label>
             <input
               type='text'
               name='system.duration'
@@ -230,7 +230,7 @@
       {{! Reward Header}}
       {{#if (eq item.type 'reward')}}
         <div class='resource flexrow'>
-          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}: </label>
+          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.value.label'}}: </label>
           <input
             type='text'
             name='system.cost'
@@ -243,7 +243,7 @@
       {{! Large Item Header}}
       {{#if (eq item.type 'largeitem')}}
         <div class='resource flexrow'>
-          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}: </label>
+          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.value.label'}}: </label>
           <input
             type='text'
             name='system.cost'
@@ -256,7 +256,7 @@
       {{! Advancement Header}}
       {{#if (eq item.type 'advancement')}}
         <div class='resource flexrow'>
-          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}: </label>
+          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.value.label'}}: </label>
           <input
             type='text'
             name='system.cost'
@@ -269,7 +269,7 @@
       {{! Companion Header}}
       {{#if (eq item.type 'companion')}}
         <div class='resource flexrow'>
-          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.Gear.FIELDS.value.label'}}: </label>
+          <label class='resource-label' style="max-width: 100px;">{{localize 'CRASK.Item.value.label'}}: </label>
           <input
             type='text'
             name='system.cost'

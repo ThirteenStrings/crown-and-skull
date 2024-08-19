@@ -9,7 +9,7 @@
       <div class="flexrow" style="height: 57px;">
         <div class='item-image' style="margin-right: 5px;">
           <a data-action='viewDoc'>
-            <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
+            <img src='{{item.img}}' title='{{localize 'CRASK.Actor.viewItem'}}' width='40' height='40'/>
           </a>
         </div>
         <div class="flexcol">
@@ -20,34 +20,29 @@
       {{! Control Row }}
       <div class='flexrow'>
         {{#if @root.editable}}
-          <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Spell'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+          <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Spell'}} {{localize 'CRASK.Actor.skipDialog'}}' data-action='deleteDoc'>
             <i class='fas fa-trash'></i>
           </a>
         {{/if}}
-        <div title="Hero Point Cost" style="max-width: 45px;"><i class="fas fa-coins"></i> {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}</div>
+        <div title="{{localize 'CRASK.Actor.heropoints.cost'}}" style="max-width: 45px;"><i class="fas fa-coins"></i> {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}</div>
         {{#ifGreaterThan item.system.uses.max 0}}
-          <div title="Refresh All Uses" class="small-control clickable" data-action="resetUses">
+          <div title="{{localize 'CRASK.Actor.heropoints.refresh'}}" class="small-control clickable" data-action="resetUses">
             <i class="fas fa-arrows-rotate"></i>
           </div>
         {{/ifGreaterThan}}
         {{#if item.system.uses.max}}
-          <div title="Uses Remaining ◇ Click: Decrease ◇ Ctrl: Increase" class="uses-remaining clickable" data-action="updateUses">
+          <div title="{{localize 'CRASK.Actor.heropoints.uses'}}" class="uses-remaining clickable" data-action="updateUses">
             <i class="fas fa-bolt"></i> {{item.system.uses.current}}/{{item.system.uses.max}}
           </div>
         {{/if}}
         {{#if item.system.effect}}
-          <div title="Effect" class="clickable" data-roll-type="Effect" data-action="damageRoll"><i class="fas fa-wand-sparkles"></i> {{item.system.effect}}</div>
+          <div title="{{localize 'CRASK.Actor.item.effect'}}" class="clickable" data-roll-type="Effect" data-action="damageRoll"><i class="fas fa-wand-sparkles"></i> {{item.system.effect}}</div>
         {{/if}}
         {{#if item.system.duration}}
-          <div title="Duration" class="{{#isValidRoll item.system.duration}}clickable" data-roll-type="Duration" data-action="damageRoll{{/isValidRoll}}"><i class="fas fa-hourglass-half"></i> {{item.system.duration}}</div>
-        {{/if}}
-        {{#if item.system.def}}
-          <div title="{{#if item.system.equipped}}Currently Active, Click to Deactivate{{else}}Not Currently Active, Click to Activate{{/if}}" class="clickable" data-action="equipToggle" style="max-width:30px;"><i class="fas {{#if item.system.equipped}}fa-shield{{else}}fa-shield-halved{{/if}}"></i> 
-            {{#if item.system.equipped}}{{item.system.def}}{{else}}-{{/if}}
-          </div>
+          <div title="{{localize 'CRASK.Actor.item.duration'}}" class="{{#isValidRoll item.system.duration}}clickable" data-roll-type="Duration" data-action="damageRoll{{/isValidRoll}}"><i class="fas fa-hourglass-half"></i> {{item.system.duration}}</div>
         {{/if}}
         {{#ifEquals item.system.range "NA"}}{{else}}
-          <div title="Range: {{item.system.range}}" data-action="rangeToggle">
+          <div title="{{localize 'CRASK.Actor.item.range'}}: {{item.system.range}}" data-action="rangeToggle">
             <i class="fas 
               {{#ifEquals item.system.range "Touch"}}fa-hand-sparkles{{/ifEquals}}
               {{#ifEquals item.system.range "Ranged"}}fa-share{{/ifEquals}}
@@ -62,7 +57,7 @@
 
   {{! Advancements Section}}
   {{#ifGreaterThan advancements.length 0}}
-    <h2 style="margin-top:10px;">{{localize 'CRASK.Actor.base.FIELDS.advancements.label'}}</h2>
+    <h2 style="margin-top:10px;">{{localize 'CRASK.Actor.advancements.label'}}</h2>
     <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
       {{#each advancements as |item id|}}
       <li class='item spell flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
@@ -70,16 +65,16 @@
         <div class="flexcol left-simple">
           <div class='item-image'>
             <a data-action='viewDoc'>
-              <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
+              <img src='{{item.img}}' title='{{localize 'CRASK.Actor.viewItem'}}' width='40' height='40'/>
             </a>
           </div>
           <div class='item-controls flexrow'>
             {{#if @root.editable}}
-              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Advancement'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Advancement'}} {{localize 'CRASK.Actor.skipDialog'}}' data-action='deleteDoc'>
                 <i class='fas fa-trash'></i>
               </a>
             {{/if}}
-            <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+            <div title="{{localize 'CRASK.Actor.heropoints.cost'}}: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
           </div>
         </div>
         <!-- Right column for item details -->
@@ -92,8 +87,8 @@
     </ul>
   {{else}}{{#unless hideEmptyCategories}}
   <div class="flexcol">
-    <h2>{{localize 'CRASK.Actor.base.FIELDS.advancements.label'}}</h2>
-    <div style="margin-top: 10px; margin-bottom: 30px;">Add Advancement items to the sheet to populate this area.</div>
+    <h2>{{localize 'CRASK.Actor.advancements.label'}}</h2>
+    <div style="margin-top: 10px; margin-bottom: 30px;">{{localize 'CRASK.Actor.advancements.missing'}}</div>
   </div>{{/unless}}
   {{/ifGreaterThan}}
 

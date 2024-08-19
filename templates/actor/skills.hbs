@@ -8,16 +8,16 @@
       <div class="flexcol left-simple">
         <div class='item-image'>
           <a data-action='viewDoc'>
-            <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
+            <img src='{{item.img}}' title='{{localize 'CRASK.Actor.viewItem'}}' width='40' height='40'/>
           </a>
         </div>
         <div class='item-controls flexrow'>
           {{#if @root.editable}}
-            <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Skill'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+            <a class='item-control item-delete small-control' title='{{localize "DOCUMENT.Delete" type='Skill'}} {{localize 'CRASK.Actor.skipDialog'}}' data-action='deleteDoc'>
               <i class='fas fa-trash'></i>
             </a>
           {{/if}}
-          <div class="toggle-state clickable small-control" title="{{#if item.system.isDamaged}}Damaged: Click to Restore{{else}}Intact: Click to Damage{{/if}}" data-action="dmgToggle">
+          <div class="toggle-state clickable small-control" title="{{#if item.system.isDamaged}}{{localize 'CRASK.Actor.item.damaged'}}{{else}}{{localize 'CRASK.Actor.item.intact'}}{{/if}}" data-action="dmgToggle">
             <i class="fas {{#if item.system.isDamaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
           </div>
         </div>
@@ -29,9 +29,9 @@
       </div>
       <!-- Right column for target number and controls -->
       <div class="flexcol left-simple">
-        <div class='skill-target clickable' title="Roll Skill ◇ Ctrl: Quick Roll" data-roll-type="Skill" data-action="skillRoll">{{item.system.targetNumber}}</div>
+        <div class='skill-target clickable' title="{{localize 'CRASK.Actor.skill.roll'}}" data-roll-type="Skill" data-action="skillRoll">{{item.system.targetNumber}}</div>
         <div class='item-controls flexrow' style="margin-top: -5px;">
-          <div title="External Modifiers">({{#ifGreaterThan item.system.modifier -1}}+{{item.system.modifier}}{{else}}{{item.system.modifier}}{{/ifGreaterThan}})</div>
+          <div title="{{localize 'CRASK.Actor.skill.modifiers'}}">({{#ifGreaterThan item.system.modifier -1}}+{{item.system.modifier}}{{else}}{{item.system.modifier}}{{/ifGreaterThan}})</div>
         </div>
       </div>
     </li>

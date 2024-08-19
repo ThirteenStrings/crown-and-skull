@@ -34,7 +34,7 @@
 
         {{! HP }}
         <div class="input-wrapper flexcol" style="min-width: 105px;">
-            <label class='resource'>{{localize 'CRASK.Actor.base.FIELDS.hp.label'}}</label>
+            <label class='resource'>{{localize 'CRASK.Actor.hp.label'}}</label>
             <div class='flexrow'>
                 <input
                 id="current-hp"
@@ -56,7 +56,7 @@
 
         {{! ATK / DEF }}
         <div class="input-wrapper flexcol">
-            <label class='resource'>{{localize 'CRASK.Actor.base.FIELDS.atk.label'}}</label>
+            <label class='resource'>{{localize 'CRASK.Actor.atk.label'}}</label>
             <input
             type='number'
             name='system.attack'
@@ -66,7 +66,7 @@
         </div>
 
         <div class="input-wrapper flexcol">
-            <label class='resource'>{{localize 'CRASK.Actor.base.FIELDS.def.label'}}</label>
+            <label class='resource'>{{localize 'CRASK.Actor.def.label'}}</label>
             <input
             type='number'
             name='system.defense'
@@ -77,7 +77,7 @@
 
         {{! Tactics }}
         <div class="input-wrapper flexcol">
-            <label class='resource'>{{localize 'CRASK.Actor.base.FIELDS.tactics.label'}}</label>
+            <label class='resource'>{{localize 'CRASK.Actor.tactic.label'}}</label>
             <input
                 type='number'
                 name='system.tactics.number'
@@ -88,7 +88,7 @@
 
         {{! Phases Row }}
         <div class="flexcol">
-            <label class='resource'>{{localize 'CRASK.Actor.base.FIELDS.phases.label'}}</label>
+            <label class='resource'>{{localize 'CRASK.Actor.phase.s'}}</label>
             <div class="resource-content sheet-phase-selector flexrow">
                 <label class="phase-label">
                     <input type="checkbox" name="system.phases" class="phase-checkbox" data-action="checkboxChange" value="1" {{checked (includes 1 system.phases)}}>
@@ -112,7 +112,7 @@
         <img
             class="clickable"
             src="systems/crown-and-skull/assets/icons/Black/Initiative.svg"
-            title="Push to Combat Tracker"
+            title="{{localize 'CRASK.Actor.phase.push'}}"
             data-action="initiativePush"
             style="max-width: 40px; margin-right: 15px;"
         />
@@ -121,27 +121,26 @@
         <img
             class="clickable"
             src="systems/crown-and-skull/assets/icons/Black/TacticDie.svg"
-            title="Roll Tactic"
+            title="{{localize 'CRASK.Actor.tactic.roll'}}"
             data-action="rollTactic"
             style="max-width: 40px;"
         />
 
     </div>
 
-    <h2>Enemy Tactics</h2>
+    <h2>{{localize 'CRASK.Actor.tactic.header'}}</h2>
 
-    <h3>{{localize 'CRASK.Actor.base.FIELDS.tactic1.label'}}</h3>
+    <h3>{{localize 'CRASK.Actor.tactic.move'}}</h3>
     <textarea id="tactic1" name="system.tactics.move" rows="3" cols="10">{{{system.tactics.move}}}</textarea>
 
-    <h3>{{localize 'CRASK.Actor.base.FIELDS.tactic25.label'}}</h3>
+    <h3>{{localize 'CRASK.Actor.tactic.melee'}}</h3>
     <textarea id="tactic25" name="system.tactics.melee" rows="3" cols="10">{{{system.tactics.melee}}}</textarea>
 
-    <h3>{{localize 'CRASK.Actor.base.FIELDS.tactic6.label'}}</h3>
+    <h3>{{localize 'CRASK.Actor.tactic.area'}}</h3>
     <textarea id="tactic6" name="system.tactics.area" rows="4" cols="10">{{{system.tactics.area}}}</textarea>
 
-
     {{! Editable Enemy Description Section }}
-    <h2>{{localize 'CRASK.Actor.base.FIELDS.enemydescription.label'}}</h2>
+    <h2>{{localize 'CRASK.Actor.enemydescription.label'}}</h2>
     {{#if editable}} 
     <prose-mirror name="system.biography" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.biography}}" collaborate="true" toggled="true">
       {{{enrichedBiography}}}

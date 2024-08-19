@@ -26,10 +26,10 @@
       "thumbnail": "systems/crown-and-skull/assets/anvil-impact.png"
     }
   ],
-  "version": "1.5.6",
+  "version": "1.5.7",
   "compatibility": {
     "minimum": 12,
-    "verified": "12.330"
+    "verified": "12.331"
   },
   "esmodules": ["module/crask.mjs"],
   "styles": ["css/crask.css"],
@@ -65,35 +65,35 @@
       "name": "pgItems",
       "label": "Players' Guide Items",
       "path": "/packs/pgItems.db",
-      "entity": "Item",
+      "type": "Item",
       "system": "crown-and-skull"
     },
     {
       "name": "pgActors",
       "label": "Players' Guide Actors",
       "path": "/packs/pgActors.db",
-      "entity": "Actor",
+      "type": "Actor",
       "system": "crown-and-skull"
     },
     {
       "name": "csMacros",
       "label": "Crown and Skull Macros",
       "path": "/packs/csMacros.db",
-      "entity": "Macro",
+      "type": "Macro",
       "system": "crown-and-skull"
     },
     {
       "name": "csTables",
       "label": "Crown and Skull Tables",
       "path": "/packs/csTables.db",
-      "entity": "RollTable",
+      "type": "RollTable",
       "system": "crown-and-skull"
     }
   ],
   "packFolders": [],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/ThirteenStrings/crown-and-skull/main/system.json",
-  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.5.6.zip",
+  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.5.7.zip",
   "background": "systems/crown-and-skull/assets/anvil-impact.png",
   "grid": {
     "type": 1,

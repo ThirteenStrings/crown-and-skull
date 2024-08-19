@@ -20,7 +20,7 @@
                 <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
             </h1>
             <div class="flexrow" style="margin-top: 10px;">
-                <label class="resource-label" for="npc-location" style="max-width: 100px;">{{localize 'CRASK.Actor.base.FIELDS.location.label'}}: </label>
+                <label class="resource-label" for="npc-location" style="max-width: 100px;">{{localize 'CRASK.Actor.location.label'}}: </label>
                 <input style="padding: 10px;"
                     id="npc-location"
                     type='text'
@@ -35,17 +35,17 @@
     {{! How Known and Quests}}
     <div class="grid grid-2col flexrow">
         <div class="flexcol">
-            <h2>{{localize 'CRASK.Actor.base.FIELDS.known.label'}}</h2>
+            <h2>{{localize 'CRASK.Actor.known.label'}}</h2>
             <textarea id="tactic1" name="system.known" rows="10" cols="10">{{{system.known}}}</textarea>
         </div>
         <div class="flexcol">
-            <h2>{{localize 'CRASK.Actor.base.FIELDS.quest.label'}}</h2>
+            <h2>{{localize 'CRASK.Actor.quest.label'}}</h2>
             <textarea id="tactic25" name="system.quest" rows="10" cols="10">{{{system.quest}}}</textarea>
         </div>
     </div>
     
     {{! Editable Character Biography Section }}
-    <h2>{{localize 'CRASK.Actor.base.FIELDS.npcsummary.label'}}</h2>
+    <h2>{{localize 'CRASK.Actor.npcsummary.label'}}</h2>
     {{#if editable}} 
         <prose-mirror name="system.biography" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.biography}}" collaborate="true" toggled="true">
         {{{enrichedBiography}}}

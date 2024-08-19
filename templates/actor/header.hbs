@@ -7,11 +7,11 @@
     {{! Hero Points Section}}
     <div class='hero-points-wrapper'>
       <div class='resource-label hero-points-label-container'>
-        {{localize 'CRASK.Actor.base.FIELDS.heropoints.label'}}
+        {{localize 'CRASK.Actor.heropoints.label'}}
       </div>
-      <div class="grid grid-4col hero-points-input-container" title="Hero Points currently accounted for on the sheet">
+      <div class="grid grid-4col hero-points-input-container" title="{{localize 'CRASK.Actor.heropoints.current.title'}}">
         <div class="input-wrapper flexcol">
-          <label for="current-hero-points" class="hero-points-label">Curr</label>
+          <label for="current-hero-points" class="hero-points-label">{{localize 'CRASK.Actor.heropoints.current.abbreviation'}}</label>
           <input
             id="current-hero-points"
             type='number'
@@ -21,8 +21,8 @@
             {{#if autoCalc}}readonly{{/if}}
           />
         </div>
-        <div class="input-wrapper flexcol {{#if autoCalc}}clickable{{/if}}" title="Max Hero Points Available ◇ Click: Offset Default Max {{#if actor.system.heropoints.offset}}({{actor.system.heropoints.offset}}){{/if}}"{{#if autoCalc}}data-action="heroPointOffset"{{/if}}>
-          <label for="max-hero-points" class="hero-points-label">Max</label>
+        <div class="input-wrapper flexcol {{#if autoCalc}}clickable{{/if}}" title="{{localize 'CRASK.Actor.heropoints.max.title'}} {{#if actor.system.heropoints.offset}}({{actor.system.heropoints.offset}}){{/if}}"{{#if autoCalc}}data-action="heroPointOffset"{{/if}}>
+          <label for="max-hero-points" class="hero-points-label">{{localize 'CRASK.Actor.heropoints.max.label'}}</label>
           <input
             id="max-hero-points"
             type='number'
@@ -33,8 +33,8 @@
             {{#if autoCalc}}readonly{{/if}}
           />
         </div>
-        <div class="input-wrapper flexcol" title="Remaining Hero Points">
-          <label for="remaining-hero-points" class="hero-points-label">Rem</label>
+        <div class="input-wrapper flexcol" title="{{localize 'CRASK.Actor.heropoints.remaining.title'}}">
+          <label for="remaining-hero-points" class="hero-points-label">{{localize 'CRASK.Actor.heropoints.remaining.abbreviation'}}</label>
           <input
             id="remaining-hero-points"
             type='number'
@@ -44,8 +44,8 @@
             {{#if autoCalc}}readonly{{/if}}
           />
         </div>
-        <div class="input-wrapper flexcol" title="Hero Points Lost to Consumables and Destroyed Equipment">
-          <label for="lost-hero-points" class="hero-points-label">{{localize 'CRASK.Actor.base.FIELDS.lost.label'}}</label>
+        <div class="input-wrapper flexcol" title="{{localize 'CRASK.Actor.heropoints.lost.title'}}">
+          <label for="lost-hero-points" class="hero-points-label">{{localize 'CRASK.Actor.heropoints.lost.label'}}</label>
           <input
             id="lost-hero-points"
             type='number'
@@ -60,11 +60,11 @@
     {{! Attrition Points Section}}
     <div class='attrition-points-wrapper'>
       <div class='resource-label hero-points-label-container'>
-          Attrition
+          {{localize 'CRASK.Actor.attrition.label'}}
       </div>
       <div class="grid grid-4col hero-points-input-container">
         
-        <div class="input-wrapper flexcol" title="Roll Equipment Attrition">
+        <div class="input-wrapper flexcol" title="{{localize 'CRASK.Actor.attrition.equipment.roll'}}">
           <img
             class="clickable"
             src="systems/crown-and-skull/assets/icons/Black/d10E.svg"
@@ -72,8 +72,8 @@
             style="max-height:50px; margin: 0px;"
           />
         </div>
-        <div class="input-wrapper flexcol" title="Remaining Equipment Attrition">
-          <label for="max-hero-points" class="hero-points-label flexrow">Equip</label>
+        <div class="input-wrapper flexcol" title="{{localize 'CRASK.Actor.attrition.equipment.title'}}">
+          <label for="max-hero-points" class="hero-points-label flexrow">{{localize 'CRASK.Actor.attrition.equipment.label'}}</label>
           <input
             id="max-hero-points"
             type='number'
@@ -83,8 +83,8 @@
             readonly
           />
         </div>
-        <div class="input-wrapper flexcol" title="Remaining Flesh Attrition">
-          <label for="current-hero-points" class="hero-points-label flexrow">Flesh</label>
+        <div class="input-wrapper flexcol" title="{{localize 'CRASK.Actor.attrition.flesh.title'}}">
+          <label for="current-hero-points" class="hero-points-label flexrow">{{localize 'CRASK.Actor.attrition.flesh.label'}}</label>
           <input
             id="current-hero-points"
             type='number'
@@ -94,7 +94,7 @@
             readonly
           />
         </div>
-        <div class="input-wrapper flexcol" title="Roll Flesh Attrition">
+        <div class="input-wrapper flexcol" title="{{localize 'CRASK.Actor.attrition.flesh.roll'}}">
           <img
             class="clickable"
             src="systems/crown-and-skull/assets/icons/Black/d10F.svg"
@@ -108,22 +108,22 @@
     {{! Combat Controls Section}}
     <div class="combat-wrapper">
       <div class='resource-label hero-points-label-container'>
-          Combat
+          {{localize 'CRASK.Actor.combat'}}
       </div>
 
       <div class="grid grid-4col hero-points-input-container">
 
         {{! Defense Value}}
-        <div class="input-wrapper flexcol" title="Defense from Equipment.">
-          <label for="max-hero-points" class="hero-points-label flexrow">Defense</label>
-          <div class="flexrow defense-value clickable" title="Roll Defense ◇ Ctrl: Quick Roll" data-roll-type="Defense" data-action="skillRoll" style="padding-bottom: 4px;">
+        <div class="input-wrapper flexcol" title="{{localize 'CRASK.Actor.defense.equipment'}}">
+          <label for="max-hero-points" class="hero-points-label flexrow">{{localize 'CRASK.Actor.defense.label'}}</label>
+          <div class="flexrow defense-value clickable" title="{{localize 'CRASK.Actor.defense.roll'}}" data-roll-type="Defense" data-action="skillRoll" style="padding-bottom: 4px;">
             {{actor.system.defense}}
           </div>
         </div>
         
         {{! Defense Temp Modifier}}
-        <div class="input-wrapper flexcol" title="Temporary Defense Modifiers">
-          <label for="temporary-defense" class="hero-points-label flexrow">Temp</label>
+        <div class="input-wrapper flexcol" title="{{localize 'CRASK.Actor.defense.modifiers'}}">
+          <label for="temporary-defense" class="hero-points-label flexrow">{{localize 'CRASK.Actor.defense.temp'}}</label>
           <input
             id="temporary-defense"
             type='number'
@@ -134,8 +134,8 @@
         </div>
 
         {{! Hero Coin }}
-        <div class="input-wrapper flexcol" title="{{#if actor.system.heroCoinAvailable}}Reroll any roll entirely. ◇ or ◇ Maximize damage or effect roll.{{else}}Click to Gain Hero Coin{{/if}}">
-          <label class="hero-points-label flexrow">Hero</label>
+        <div class="input-wrapper flexcol" title="{{#if actor.system.heroCoinAvailable}}{{localize 'CRASK.Actor.herocoin.available'}}{{else}}{{localize 'CRASK.Actor.herocoin.gain'}}{{/if}}">
+          <label class="hero-points-label flexrow">{{localize 'CRASK.Actor.herocoin.label'}}</label>
           <img
             class='clickable'
             src="systems/crown-and-skull/assets/HeroCoin{{#if actor.system.heroCoinAvailable}}{{else}}Grey{{/if}}.svg"
@@ -145,8 +145,8 @@
         </div>
 
         {{! Phase Selector }}
-        <div class="input-wrapper flexcol" title="Select Combat Phase">
-          <label class="hero-points-label flexrow">Phase</label>
+        <div class="input-wrapper flexcol" title="{{localize 'CRASK.Actor.phase.select'}}">
+          <label class="hero-points-label flexrow">{{localize 'CRASK.Actor.phase.label'}}</label>
           <img
             class="clickable"
             src="systems/crown-and-skull/assets/icons/Black/Initiative.svg"
@@ -154,12 +154,9 @@
             style="margin: 0px; max-height: 40px;"
           />
         </div>
-        
-        
-        
-        
 
       </div>
+      
     </div>
 
   </div>

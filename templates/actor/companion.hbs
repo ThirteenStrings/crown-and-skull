@@ -22,7 +22,7 @@
         </h1>
         <div class='grid grid-2col' style="margin: 0px 0px -10px 0px;">
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.attack.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Actor.attack.label'}}</label>
             <input
               type='text'
               name='system.attack'
@@ -31,7 +31,7 @@
             />
           </div>
           <div class='resource flexcol'>
-            <label class='resource-label'>{{localize 'CRASK.Actor.base.FIELDS.def.label'}}</label>
+            <label class='resource-label'>{{localize 'CRASK.Actor.def.label'}}</label>
             <input
               type='number'
               name='system.defense'
@@ -53,16 +53,16 @@
           <div class="flexcol left-simple">
               <div class='item-image'>
               <a data-action='viewDoc'>
-                  <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
+                  <img src='{{item.img}}' title='{{localize 'CRASK.Actor.viewItem'}}' width='40' height='40'/>
               </a>
               </div>
               <div class='item-controls flexrow'>
               {{#if @root.editable}}
-                  <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Skill'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+                  <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Skill'}}  {{localize 'CRASK.Actor.skipDialog'}}' data-action='deleteDoc'>
                   <i class='fas fa-trash'></i>
                   </a>
               {{/if}}
-              <div title="Hero Point Cost: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
+              <div title="{{localize 'CRASK.Actor.heropoints.cost'}}: {{#if item.system.cost}}{{item.system.cost}}{{else}}-{{/if}}" style="margin-left: 5px;"><i class="fas fa-coins"></i></div>
               </div>
           </div>
           <!-- Center column for item details -->
@@ -74,21 +74,21 @@
           <div class="flexcol left-simple">
               <div class='skill-target'>{{item.system.cost}}</div>
               <div class='item-controls flexrow' style="margin-top: -5px;">
-              <div class="toggle-state clickable" title="{{#if item.system.damaged}}Damaged: Click to Restore{{else}}Intact: Click to Damage{{/if}}" data-action="dmgToggle">
+              <div class="toggle-state clickable" title="{{#if item.system.damaged}}{{localize 'CRASK.Actor.item.damaged'}}{{else}}{{localize 'CRASK.Actor.item.intact'}}{{/if}}" data-action="dmgToggle">
                   <i class="fas {{#if item.system.damaged}}fa-heart-crack{{else}}fa-heart{{/if}}"></i>
               </div>
-              <div title="External Modifiers">{{#ifGreaterThan item.system.modifier -1}}+{{item.system.modifier}}{{else}}{{item.system.modifier}}{{/ifGreaterThan}}</div>
+              <div title="{{localize 'CRASK.Actor.externalModifiers'}}">{{#ifGreaterThan item.system.modifier -1}}+{{item.system.modifier}}{{else}}{{item.system.modifier}}{{/ifGreaterThan}}</div>
               </div>
           </div>
           </li>
           {{/each}}
       </ul>
     {{else}}
-      <div style="margin: 10px 0px;">No skills selected. Drag and drop Companion Skills from the item pane.</div>
+      <div style="margin: 10px 0px;">{{localize 'CRASK.Actor.companionSkills.missing'}}</div>
     {{/if}}
     
     {{! Editable Character Biography Section }}
-    <h2>{{localize 'CRASK.Actor.base.FIELDS.companiondescription.label'}}</h2>
+    <h2>{{localize 'CRASK.Actor.companion.description'}}</h2>
     {{#if editable}} 
         <prose-mirror name="system.biography" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.biography}}" collaborate="true" toggled="true">
         {{{enrichedBiography}}}

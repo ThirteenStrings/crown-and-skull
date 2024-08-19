@@ -32,7 +32,7 @@
               <option value="Slimshire" {{#ifEquals system.hometown "Slimshire"}}selected{{/ifEquals}}>Slimshire</option>
             </select>
           {{else}}
-            <label for='hometown'>Hometown</label>
+            <label for='hometown'>{{localize 'CRASK.Actor.hometown.label'}}</label>
             <input id='hometown' name='system.hometown' style="width: 230px; font-size: 20px; background: transparent; border-radius: 7px; text-align: center; border-left: none; border-right:" value="{{system.hometown}}">
           {{/if}}
         </div>
@@ -46,7 +46,7 @@
               <option value="Frog-kin" {{#ifEquals system.lineage "Frog-kin"}}selected{{/ifEquals}}>Frog-Kin</option>
             </select>
           {{else}}
-            <label for='lineage'>Lineage</label>
+            <label for='lineage'>{{localize 'CRASK.Actor.lineage.label'}}</label>
             <input id='lineage' name='system.lineage' style="width: 230px; font-size: 20px; background: transparent; border-radius: 7px; text-align: center; border-left: none; border-right:" value="{{system.lineage}}">
           {{/if}}
         </div>
@@ -57,7 +57,7 @@
   {{! Core Ability Section}}
   {{#ifGreaterThan abilities.length 0}}
     <div class="flexcol">
-      <h2>{{localize 'CRASK.Actor.base.FIELDS.coreability.label'}}</h2>
+      <h2>{{localize 'CRASK.Actor.coreability.label'}}</h2>
       <ul class="tab-list" style="margin-top: 5px;">
         {{#each abilities as |item id|}}
           <li class='item flaw flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item' style="width: 378px; height: 116px; background-size: contain; margin-left: 123px;">
@@ -65,12 +65,12 @@
             <div class="flexcol left-simple">
               <div class='item-image'>
                   <a data-action='viewDoc'>
-                    <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
+                    <img src='{{item.img}}' title='{{localize 'CRASK.Actor.coreability.title'}}' width='40' height='40'/>
                   </a>
               </div>
               <div class='item-controls flexrow'>
                   {{#if @root.editable}}
-                  <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Ability'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+                  <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Ability'}} {{localize 'CRASK.Actor.skipDialog'}}' data-action='deleteDoc'>
                       <i class='fas fa-trash'></i>
                   </a>
                   {{/if}}
@@ -87,15 +87,15 @@
     </div>
   {{else}}{{#unless hideEmptyCategories}}
     <div class="flexcol">
-      <h2>{{localize 'CRASK.Actor.base.FIELDS.coreability.label'}}</h2>
-      <div style="margin-top: 10px; margin-bottom: 30px;">Add Core Ability items to the sheet to populate this area.</div>
+      <h2>{{localize 'CRASK.Actor.coreability.label'}}</h2>
+      <div style="margin-top: 10px; margin-bottom: 30px;">{{localize 'CRASK.Actor.coreability.missing'}}</div>
     </div>{{/unless}}
   {{/ifGreaterThan}}
 
   {{! Companion Section }}
   {{#ifGreaterThan companions.length 0}}
     <div class="flexcol">
-      <h2>{{localize 'CRASK.Actor.base.FIELDS.companion.label'}}</h2>
+      <h2>{{localize 'CRASK.Actor.companion.label'}}</h2>
       <ul class="tab-list" style="margin-top: 5px;">
         {{#each companions as |item id|}}
             <li class='item flaw flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'  style="width: 378px; height: 116px; background-size: contain; margin-left: 123px;">
@@ -103,12 +103,12 @@
               <div class="left-simple flexcol">
                 <div class='item-image'>
                     <a data-action='viewDoc'>
-                    <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
+                    <img src='{{item.img}}' title='{{localize 'CRASK.Actor.viewItem'}}' width='40' height='40'/>
                     </a>
                 </div>
                 <div class='item-controls flexrow'>
                     {{#if @root.editable}}
-                    <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Companion'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+                    <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Companion'}}  {{localize 'CRASK.Actor.skipDialog'}}' data-action='deleteDoc'>
                         <i class='fas fa-trash'></i>
                     </a>
                     {{/if}}
@@ -125,14 +125,14 @@
     </div>
   {{else}}{{#unless hideEmptyCategories}}
     <div class="flexcol">
-      <h2>{{localize 'CRASK.Actor.base.FIELDS.companion.label'}}</h2>
-      <div style="margin-top: 10px; margin-bottom: 30px;">Add Comapnion items to the sheet to populate this area.</div>
+      <h2>{{localize 'CRASK.Actor.companion.label'}}</h2>
+      <div style="margin-top: 10px; margin-bottom: 30px;">{{localize 'CRASK.Actor.companion.missing'}}</div>
     </div>{{/unless}}
   {{/ifGreaterThan}}
   
   {{! Flaws Section }}
   {{#ifGreaterThan flaws.length 0}}
-    <h2>{{localize 'CRASK.Actor.base.FIELDS.flaws.label'}}</h2>
+    <h2>{{localize 'CRASK.Actor.flaws.label'}}</h2>
     <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
       {{#each flaws as |item id|}}
       <li class='item flaw flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
@@ -140,12 +140,12 @@
         <div class="flexcol left-simple">
           <div class='item-image'>
             <a data-action='viewDoc'>
-              <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
+              <img src='{{item.img}}' title='{{localize 'CRASK.Actor.viewItem'}}' width='40' height='40'/>
             </a>
           </div>
           <div class='item-controls flexrow'>
             {{#if @root.editable}}
-              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Flaw'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+              <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Flaw'}}  {{localize 'CRASK.Actor.skipDialog'}}' data-action='deleteDoc'>
                 <i class='fas fa-trash'></i>
               </a>
             {{/if}}
@@ -161,14 +161,14 @@
     </ul>
   {{else}}{{#unless hideEmptyCategories}}
     <div class="flexcol">
-      <h2>{{localize 'CRASK.Actor.base.FIELDS.flaws.label'}}</h2>
-      <div style="margin-top: 10px; margin-bottom: 30px;">Add Flaw items to the sheet to populate this area.</div>
+      <h2>{{localize 'CRASK.Actor.flaws.label'}}</h2>
+      <div style="margin-top: 10px; margin-bottom: 30px;">{{localize 'CRASK.Actor.flaws.missing'}}</div>
     </div>{{/unless}}
   {{/ifGreaterThan}}
 
   {{! Rewards Section }}
   {{#ifGreaterThan rewards.length 0}}
-    <h2>{{localize 'CRASK.Actor.base.FIELDS.rewards.label'}}</h2>
+    <h2>{{localize 'CRASK.Actor.rewards.label'}}</h2>
     <ul class="tab-list grid grid-2col" style="margin-top: 5px;">
       {{#each rewards as |item id|}}
         <li class='item reward flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
@@ -176,12 +176,12 @@
           <div class="flexcol left-simple">
             <div class='item-image'>
               <a data-action='viewDoc'>
-                <img src='{{item.img}}' title='View Item ◇ Ctrl: Post Item ◇ Alt: Whisper Self' width='40' height='40'/>
+                <img src='{{item.img}}' title='{{localize 'CRASK.Actor.viewItem'}}' width='40' height='40'/>
               </a>
             </div>
             <div class='item-controls flexrow'>
               {{#if @root.editable}}
-                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Reward'}} ◇ Ctrl: Skip Dialog' data-action='deleteDoc'>
+                <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Reward'}}  {{localize 'CRASK.Actor.skipDialog'}}' data-action='deleteDoc'>
                   <i class='fas fa-trash'></i>
                 </a>
               {{/if}}
@@ -201,13 +201,13 @@
     </ul>
   {{else}}{{#unless hideEmptyCategories}}
     <div class="flexcol">
-      <h2>{{localize 'CRASK.Actor.base.FIELDS.rewards.label'}}</h2>
-      <div style="margin-top: 10px; margin-bottom: 30px;">Add Reward items to the sheet to populate this area.</div>
+      <h2>{{localize 'CRASK.Actor.rewards.label'}}</h2>
+      <div style="margin-top: 10px; margin-bottom: 30px;">{{localize 'CRASK.Actor.rewards.missing'}}</div>
     </div>{{/unless}}
   {{/ifGreaterThan}}
 
   {{! Editable Character Biography Section }}
-  <h2>{{localize 'CRASK.Actor.base.FIELDS.charactersummary.label'}}</h2>
+  <h2>{{localize 'CRASK.Actor.charactersummary.label'}}</h2>
   {{#if editable}} 
     <prose-mirror name="system.biography" data-document-u-u-i-d="{{actor.uuid}}" value="{{system.biography}}" collaborate="true" toggled="true">
       {{{enrichedBiography}}}
