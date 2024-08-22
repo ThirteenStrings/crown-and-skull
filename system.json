@@ -26,7 +26,7 @@
       "thumbnail": "systems/crown-and-skull/assets/anvil-impact.png"
     }
   ],
-  "version": "1.5.7",
+  "version": "1.5.8",
   "compatibility": {
     "minimum": 12,
     "verified": "12.331"
@@ -93,7 +93,7 @@
   "packFolders": [],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/ThirteenStrings/crown-and-skull/main/system.json",
-  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.5.7.zip",
+  "download": "https://github.com/ThirteenStrings/crown-and-skull/archive/refs/tags/v1.5.8.zip",
   "background": "systems/crown-and-skull/assets/anvil-impact.png",
   "grid": {
     "type": 1,

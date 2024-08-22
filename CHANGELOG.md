@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.5.8
+
+- Fixed a bug where clicking on the icon instead of the text for damage, effect, and duration would throw an error
+
 ## 1.5.7
 
 - Fixed an error where spell effect could not be changed

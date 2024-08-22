@@ -749,8 +749,8 @@ export class CraskActorSheet extends api.HandlebarsApplicationMixin(
       let dieCount = 0;
       let gridCount = 0;
       let constant = 0;
-      let rollType = event.target.dataset.rollType;
       let rollString = '';
+      let rollType = event.target.closest('div').dataset.rollType;
 
       if (rollType == "Damage") {
         rollString = item.system.damage;
